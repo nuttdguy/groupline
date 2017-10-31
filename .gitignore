@@ -1,0 +1,8 @@
+## Intellij
+
+.idea
+gl.iml
+package-lock.json
+
+
+/node_modules
