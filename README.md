@@ -11,3 +11,39 @@ An application connecting people interested in doing activities together.
 
 #### _groupline.docx (documentation for app)
 - general specification for application
+
+#### TASKS
+
+VIEWS:
+- about.hbs
+- auth.hbs
+- explore.hbs
+- contact.hbs
+- activity-detail.hbs
+
+
+ROUTES:
+
+Guest (Only):
+- activity/
+- auth/
+- auth/signup
+- auth/login
+- auth/logout
+
+Guest + RUser:
+- activity/
+- activity/:catId
+- activity/:catId/detail/:actId
+
+RUser:
+- usr/activity/:catId/like
+- usr/activity/:catId/favorite
+- usr/activity/:actId/delete
+- usr/activity
+- usr/activity/:actId/update
+- usr/setting
+- usr/activity/:actId/tag
+- usr/activity/:actId/tag/:tagId/delete
+
+
