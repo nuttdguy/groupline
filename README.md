@@ -47,8 +47,23 @@ RUser:
 TODO -- determine view settings
 - usr/setting
 
+Article about sequelize ORM
+https://www.codementor.io/hari577/object-relational-mapping-in-nodejs-with-sequelize-du1088h3l
 
-MODELS:
+
+DB MODELS:
+- Activity 
+- ActivityCategory
+- ActivityTag
+- ActivityDetail
+
+- User
+- UserFavorite
+- UserProfile
+- UserReputation
+- UserReasonCode
+- UserActivity
+
 
 
 
