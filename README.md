@@ -1,5 +1,5 @@
 
-##  Group Line
+##  Groupy
 
 An application connecting people interested in doing activities together.
 
@@ -45,5 +45,10 @@ RUser:
 - usr/setting
 - usr/activity/:actId/tag
 - usr/activity/:actId/tag/:tagId/delete
+
+
+MODELS:
+
+
 
 
