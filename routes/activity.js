@@ -8,6 +8,7 @@ const router = express.Router();
 /*                 /ACTIVITY/                   */
 //==================================================//
 
+
 router.get('/', function(req, res, next) {
     // TODO :: get all activity posts
 
@@ -16,13 +17,27 @@ router.get('/', function(req, res, next) {
 
 
 //==================================================//
-/*              /ACTIVITY/:categoryId             */
+/*              /ACTIVITY/::CATID                */
 //==================================================//
+
 
 router.get('/:catId', function(req, res, next) {
     // TODO :: get activities by category id
 
     // TODO :: determine view to render
+    res.render('/activity', {})
+});
+
+
+//==================================================//
+/*      /ACTIVITY/::CATID/DETAIL/::ACTID       */
+//==================================================//
+
+
+router.get('/:catId/detail/:actId', function(req, res, next) {
+    // TODO :: get activities by category id and activity id
+
+    // TODO :: determine the view to render
     res.render('/activity', {})
 });
 
