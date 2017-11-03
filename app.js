@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 
 // file location of routes
 var index = require('./routes/index');
+var explore = require('./routes/explore');
 var users = require('./routes/users');
 
 var app = express();
@@ -25,7 +26,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // set the routes url
 app.use('/', index);
+app.use('/explore', explore);
 app.use('/users', users);
+
+// app.get('/explore', function(req, res) {
+//   res.render('explore', { title: 'Express' });
+// });
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
