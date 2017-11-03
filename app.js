@@ -8,7 +8,7 @@ var bodyParser = require('body-parser');
 // file location of routes
 var index = require('./routes/index');
 var explore = require('./routes/explore');
-var users = require('./routes/users');
+var users = require('./routes/usr');
 
 // CREATE INSTANCE OF EXPRESS OBJECT
 var app = express();
