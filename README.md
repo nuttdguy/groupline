@@ -1,5 +1,5 @@
 
-##  Group Line
+##  Groupy
 
 An application connecting people interested in doing activities together.
 
@@ -25,25 +25,46 @@ VIEWS:
 ROUTES:
 
 Guest (Only):
-- activity/
-- auth/
-- auth/signup
-- auth/login
-- auth/logout
+- auth/             (added 10/31)
+- auth/signup       (added 10/31)
+- auth/login        (added 10/31)
+- auth/logout       (added 10/31)
 
 Guest + RUser:
-- activity/
-- activity/:catId
-- activity/:catId/detail/:actId
+- activity/         (added 10/31)
+- activity/:catId   (added 10/31)
+- activity/:catId/detail/:actId     (added 10/31)
 
 RUser:
-- usr/activity/:catId/like
-- usr/activity/:catId/favorite
-- usr/activity/:actId/delete
-- usr/activity
-- usr/activity/:actId/update
+- usr/activity                      (added 10/31)
+- usr/activity/:catId/like          (added 10/31)
+- usr/activity/:catId/favorite      (added 10/31)
+- usr/activity/:actId/delete        (added 10/31)
+- usr/activity/:actId/update        (added 10/31)
+- usr/activity/:actId/tag           (added 10/31)
+- usr/activity/:actId/tag/:tagId/delete     (added 10/31)
+
+TODO -- determine view settings
 - usr/setting
-- usr/activity/:actId/tag
-- usr/activity/:actId/tag/:tagId/delete
+
+Article about sequelize ORM
+https://www.codementor.io/hari577/object-relational-mapping-in-nodejs-with-sequelize-du1088h3l
+
+
+SEQUELIZE MODELS (DB):
+- Activity 
+- ActivityCategory
+- ActivityTag
+- ActivityDetail
+
+- User
+- UserFavorite
+- UserProfile
+- UserReputation
+- UserReasonCode
+- UserActivity
+
+
+
 
 
