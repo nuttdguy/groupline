@@ -42,3 +42,4 @@ router.get('/:catId/detail/:actId', function(req, res, next) {
 });
 
 
+module.exports = router;

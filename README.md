@@ -51,7 +51,7 @@ Article about sequelize ORM
 https://www.codementor.io/hari577/object-relational-mapping-in-nodejs-with-sequelize-du1088h3l
 
 
-DB MODELS:
+SEQUELIZE MODELS (DB):
 - Activity 
 - ActivityCategory
 - ActivityTag

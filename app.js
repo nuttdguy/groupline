@@ -34,7 +34,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-
 // SET ROUTE URLS
 app.use('/', index);
 app.use('/usr', usr);  // TODO :: Complete routes for usr
