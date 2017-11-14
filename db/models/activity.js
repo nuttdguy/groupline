@@ -1,6 +1,7 @@
 'use strict';
 
 module.exports = (sequelize, DataTypes) => {
+
     var Activity = sequelize.define('Activity', {
         activity_name: DataTypes.STRING,
         isActive: {

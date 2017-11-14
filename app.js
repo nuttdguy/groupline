@@ -4,28 +4,22 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var passport = require('passport');
+var session = require('express-session');
 
-// file location of routes
-var index = require('./routes/index');
-var explore = require('./routes/explore');
-var users = require('./routes/usr');
+// SET ENVIRONMENT VARIABLE
+require('dotenv').config();  // enable the use of .env variables
+// PASSPORT INSTANCE TO CONFIGURATION
+require('./config/passport')(passport);
 
 // CREATE INSTANCE OF EXPRESS OBJECT
 var app = express();
 
-// MODULE LOCATION FOR ROUTES
-var index = require('./routes/index');
-var usr = require('./routes/usr');
-var auth = require('./routes/auth');
-var activity = require('./routes/activity');
-
 
 // MIDDLE WARE
-
 // SET VIEW ENGINE
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
-
 
 // CONFIGURE EXPRESS APP
 
@@ -37,10 +31,27 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Initialize passport object for Express
+// require('./config/passport')(passport);
+app.use(session({
+    resave: true,
+    saveUninitialized: true,
+    secret: process.env.SECRET_SAUCE })); // Session Secret
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
+
+
+// MODULE LOCATION FOR ROUTES
+var index = require('./routes/index');
+var user = require('./routes/user');
+var auth = require('./routes/auth');
+var activity = require('./routes/activity');
+var explore = require('./routes/explore');
+
 
 // SET ROUTE URLS
 app.use('/', index);
-app.use('/usr', usr);  // TODO :: Complete routes for usr
+app.use('/user', user);  // TODO :: Complete routes for usr
 app.use('/auth', auth);  // TODO :: Complete routes for auth
 app.use('/explore', explore);
 app.use('/activity', activity); // TODO :: Complete routes for activity

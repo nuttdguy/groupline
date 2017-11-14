@@ -1,7 +1,11 @@
 'use strict';
+
 module.exports = (sequelize, DataTypes) => {
     var UserProfile = sequelize.define('UserProfile', {
-        username: DataTypes.STRING,
+        username: {
+            type: DataTypes.STRING,
+            unique: true
+        },
         password: DataTypes.STRING,
         firstName: DataTypes.STRING,
         lastName: DataTypes.STRING,
@@ -17,5 +21,6 @@ module.exports = (sequelize, DataTypes) => {
             }
         }
     });
+
     return UserProfile;
 };
