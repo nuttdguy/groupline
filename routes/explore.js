@@ -1,13 +1,14 @@
-var express = require('express');
-var router = express.Router();
-var models = require('../db/models')
-var ActivityCategory = require('../db/models/index').ActivityCategory
-var Activity = require('../db/models/index').Activity
+const express = require('express');
+const router = express.Router();
+
+// Require Sequelize model in order to use its default methods
+const ActivityCategory = require('../db/models/index').ActivityCategory;
+const Activity = require('../db/models/index').Activity;
 
 
 /* GET home page. */
 router.get('/:id', function(req, res, next) {
-    console.log(req.params.id)
+    console.log(req.params.id);
     // ActivityCategory.findById(req.params.id, { include: Activity}).then((activity) => {
     //     console.log(activity.dataValues)
     // })
