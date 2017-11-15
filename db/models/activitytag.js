@@ -8,7 +8,9 @@ module.exports = (sequelize, DataTypes) => {
     activityTagId: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      field: 'activity_tag_id'
+      field: 'activity_tag_id',
+      onDelete: 'cascade',
+      onUpdate: 'cascade'
     },
     isActive: {
       type: DataTypes.BOOLEAN,
@@ -29,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'activity_id',
         sourceKey: 'activity_id'
       })
-  }
+  };
 
   return ActivityTag;
 };

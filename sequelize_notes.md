@@ -5,26 +5,66 @@
 - By default the foreign key for a belongsTo relation will be generated from the target model name and the target primary key name.
 - Change by defining:
 
-Example: (in create migration)
 
-    `activities_id: {
+#### Eager Loading documentation
+
+http://sequelize.readthedocs.io/en/v3/docs/models-usage/#eager-loading
+
+Example (Activity hasMany > ActivityCategory.belongsTo(Activity): (in create migration)
+- defineprimaryKey:
+
+     `activityId: {
+         allowNull: false,
+         autoIncrement: true,
+         primaryKey: true,
+         type: Sequelize.INTEGER,
+         field: 'activity_id'
+       },`
+
+    `activityCategoriesId: {
+         allowNull: false,
+         autoIncrement: true,
+         primaryKey: true,
+         type: Sequelize.INTEGER,
+         field: 'activity_categories_id'
+       },
+     activityId: {
        type: Sequelize.INTEGER,
-       onDelete: 'CASCADE',
-       references: {
+       field: 'activity_id',
+       foreignKey: {
          model: 'Activities',
-         key: 'activities_id'
+         key: 'activity_id'
        }
      }`
 
-Example: (in define model)
+Example (hasMany > belongsTo): (in define model)
 
-    `associate: function (models) {
-       ActivityCategory.belongsTo(models.Activity, {
-         foreignKey: 'FK_activities_id',
-         targetKey: 'activities_id',
-         onDelete: 'CASCADE'
-       });
-     }
+
+    `activityId: {
+         type: DataTypes.INTEGER,
+         primaryKey: true,
+         field: 'activity_id'
+       },`
+           
+
+    `Activity.associate = function (models) {
+     
+         Activity.hasMany(models.ActivityCategory, {
+           foreignKey: 'activity_id',
+           targetKey: 'activity_id'
+         });
+     
+         Activity.hasMany(models.ActivityTag, {
+           foreignKey: 'activity_id',
+           targetKey: 'activity_id'
+         });
+     
+         Activity.hasMany(models.ActivityDetail, {
+           foreignKey: 'activity_id',
+           targetKey: 'activity_id'
+         });
+     
+       };
     `
 
 #### When defining Model notes, i.e. not in migration
@@ -40,6 +80,3 @@ NOTES #2 ( SEQUELIZE CREATES MODELS AS CAMEL-CASE BY DEFAULT )
 - fieldWithUnderscores: { type: Sequelize.STRING, field: 'field_with_underscores' },
 
 
-#### Eager Loading documentation
-
-http://sequelize.readthedocs.io/en/v3/docs/models-usage/#eager-loading

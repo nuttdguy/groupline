@@ -4,7 +4,9 @@ module.exports = (sequelize, DataTypes) => {
       activityCategoriesId: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        field: 'activity_categories_id'
+        field: 'activity_categories_id',
+        onDelete: 'cascade',
+        onUpdate: 'cascade'
       },
       categoryName: {
         type: DataTypes.STRING,
@@ -23,9 +25,12 @@ module.exports = (sequelize, DataTypes) => {
     });
 
   ActivityCategory.associate = function (models) {
-    ActivityCategory.belongsTo(models.Activity,
-      { foreignKey: 'activity_id',
-        sourceKey: 'activity_id'})
+    ActivityCategory.belongsTo(models.Activity, {
+      foreignKey: 'activity_id',
+      sourceKey: 'activity_id',
+      onDelete: 'cascade',
+      onUpdate: 'cascade'
+    })
   };
   return ActivityCategory;
 };

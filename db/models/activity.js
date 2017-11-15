@@ -24,14 +24,23 @@ module.exports = (sequelize, DataTypes) => {
 
   Activity.associate = function (models) {
 
-    Activity.hasMany(models.ActivityCategory,
-      { foreignKey: 'activity_id',
-        targetKey: 'activity_id' });
+    Activity.hasMany(models.ActivityCategory, {
+      foreignKey: 'activity_id',
+      targetKey: 'activity_id'
+    });
 
     Activity.hasMany(models.ActivityTag, {
       foreignKey: 'activity_id',
-      targetKey: 'activity_id' });
-    };
+      targetKey: 'activity_id'
+    });
+
+    Activity.hasMany(models.ActivityDetail, {
+      foreignKey: 'activity_id',
+      targetKey: 'activity_id'
+    });
+
+  };
+
 
   return Activity;
 };
