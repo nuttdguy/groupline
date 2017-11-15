@@ -2,27 +2,31 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('Activities', {
-      id: {
+      activityId: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        field: 'activity_id'
       },
-      activity_name: {
-        type: Sequelize.STRING
+      activityName: {
+        type: Sequelize.STRING,
+        field: 'activity_name'
       },
       isActive: {
-        type: DataTypes.BOOLEAN,
-        default: true
+        type: Sequelize.BOOLEAN,
+        field: 'is_active'
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        field: 'created_at'
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      },
+        type: Sequelize.DATE,
+        field: 'updated_at'
+      }
     });
   },
   down: (queryInterface, Sequelize) => {

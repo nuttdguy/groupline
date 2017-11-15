@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const bcrypt = require('bcrypt');
-const UserProfile = require('../db/models').UserProfile;
+// const UserProfile = require('../db/models').UserProfile;
 
 
 // TODO :: determine logical flow or signin, signout, registration
@@ -35,21 +35,21 @@ router.get('/signup', function(req, res, next) {
 router.post('/signup', function(req, res, next) {
     // Persist new user to DB
     // res.redirect
-    let newUser = new UserProfile(req.body);
-
-    UserProfile.find({
-        where: {username: newUser.username}}, function(user) {
-            console.log(user);
-        return user;
-    }).then( function(user) {
-
-        let hash = bcrypt.hashSync(newUser.password, bcrypt.genSaltSync(8), null);
-        newUser.password = hash;
-
-        newUser.save().then(err => {
-            res.redirect('/auth/login');
-        })
-    })
+    // let newUser = new UserProfile(req.body);
+    //
+    // UserProfile.find({
+    //     where: {username: newUser.username}}, function(user) {
+    //         console.log(user);
+    //     return user;
+    // }).then( function(user) {
+    //
+    //     let hash = bcrypt.hashSync(newUser.password, bcrypt.genSaltSync(8), null);
+    //     newUser.password = hash;
+    //
+    //     newUser.save().then(err => {
+    //         res.redirect('/auth/login');
+    //     })
+    // })
 
 });
 

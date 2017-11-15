@@ -13,15 +13,25 @@ router.get('/:id', function(req, res, next) {
     //     console.log(activity.dataValues)
     // })
 
-    Activity.findById(req.params.id
-        , {
-        include: ActivityCategory
-        }
+  Activity.findAll({
+      include: [{
+        model: ActivityCategory,
+        as: 'ActivityCategories',
+        where: { activity_id: req.params.id}} ]}
         )
         .then((activity) => {
-        console.log(activity.dataValues)
-    })
-  res.render('explore', { title: 'Explore'});
+          console.log(JSON.stringify(activity));
+          res.render('explore', { title: 'Explore', activity: activity});
+    });
+
+  // Activity.findAll({
+  //     include: [ActivityCategory]}
+  //       )
+  //       .then((activity) => {
+  //         console.log(JSON.stringify(activity));
+  //         res.render('explore', { title: 'Explore', });
+  //   });
+
 });
 
 module.exports = router;

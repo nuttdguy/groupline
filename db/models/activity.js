@@ -1,30 +1,31 @@
 'use strict';
-
 module.exports = (sequelize, DataTypes) => {
-
-    var Activity = sequelize.define('Activity', {
-        activity_name: DataTypes.STRING,
-        isActive: {
-            type: DataTypes.BOOLEAN,
-            default: true
-        }
-    }, {
-        classMethods: {
-            associate: function (models) {
-                Activity.hasMany(models.ActivityTag, {
-                    foreignKey: 'ActivityId',
-                    onDelete: 'CASCADE'
-                });
-                Activity.hasMany(models.ActivityCategory, {
-                    foreignKey: 'ActivityId',
-                    onDelete: 'CASCADE'
-                });
-                Activity.hasMany(models.ActivityDetail, {
-                    foreignKey: 'ActivityId',
-                    onDelete: 'CASCADE'
-                })
-            }
-        }
+  var Activity = sequelize.define('Activity', {
+      activityId: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        field: 'activity_id'
+      },
+      activityName: {
+        type: DataTypes.STRING,
+        field: 'activity_name'
+      },
+      isActive: {
+        type: DataTypes.BOOLEAN,
+        field: 'is_active'
+      }
+    },
+    {
+      underscored: true,
+    },
+    {
+      classMethods: {}
     });
-    return Activity;
+
+  Activity.associate = function (models) {
+    Activity.hasMany(models.ActivityCategory,
+      { foreignKey: 'activity_id',
+        targetKey: 'activity_id' })
+  };
+  return Activity;
 };
