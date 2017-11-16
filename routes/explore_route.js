@@ -10,35 +10,13 @@ const ActivityDetail = require('../db/models/index').ActivityDetail;
 
 
 router.get('/', function (req, res, next) {
-
-  Activity.findAll( {
-      include: [{
-        model: ActivityCategory,
-        as: 'ActivityCategories'
-      },
-        {
-          model: ActivityTag,
-          as: 'ActivityTags'
-        },
-        {
-          model: ActivityDetail,
-          as: 'ActivityDetails'
-        }]
-    }
-  )
-    .then((activities) => {
-      console.log('========================');
-      console.log(JSON.stringify(activities));
-      res.render('explore', {
-        title: 'Explore',
-        // activities: activities
-      });
-    });
+  res.redirect('/explore/1')
 
 });
 
 /* GET home page. */
 router.get('/:id', function (req, res, next) {
+
 
   Activity.findById( req.params.id, {
       include: [{
