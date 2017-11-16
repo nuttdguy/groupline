@@ -29,10 +29,15 @@ router.get('/:id', function (req, res, next) {
         }]
     }
   )
-    .then((activity) => {
+    .then((activities) => {
       console.log('========================');
-      console.log(JSON.stringify(activity));
-      res.render('explore', {title: 'Explore', activity: activity});
+      console.log(JSON.stringify(activities));
+      res.render('explore', {
+        title: 'Explore',
+        activities: activities,
+        categories: activities.ActivityCategories,
+        tags: activities.ActivityTags,
+      });
     });
 
 });

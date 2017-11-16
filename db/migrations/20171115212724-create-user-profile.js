@@ -1,17 +1,33 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('ActivityCategories', {
-      activityCategoriesId: {
+    return queryInterface.createTable('UserProfiles', {
+      userProfileId: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
-        field: 'activity_categories_id'
+        field: 'user_profile_id'
       },
-      categoryName: {
+      userName: {
         type: Sequelize.STRING,
-        field: "category_name"
+        field: 'user_name'
+      },
+      password: {
+        type: Sequelize.STRING,
+        field: 'password'
+      },
+      firstName: {
+        type: Sequelize.STRING,
+        field: 'first_name'
+      },
+      lastName: {
+        type: Sequelize.STRING,
+        field: 'last_name'
+      },
+      bio: {
+        type: Sequelize.TEXT,
+        field: 'bio'
       },
       isActive: {
         type: Sequelize.BOOLEAN,
@@ -26,20 +42,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
         field: 'updated_at'
-      },
-      activityId: {
-        type: Sequelize.INTEGER,
-        field: 'activity_id',
-        onDelete: 'cascade',
-        onUpdate: 'cascade',
-        references: {
-          model: 'Activities',
-          key: 'activity_id'
-        }
       }
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('ActivityCategories');
+    return queryInterface.dropTable('UserProfiles');
   }
 };

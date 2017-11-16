@@ -18,8 +18,13 @@ var app = express();
 
 // MIDDLE WARE
 // SET VIEW ENGINE
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'hbs');
+app.set('views',[
+  __dirname, 'views/',
+  __dirname, 'views/auth',
+  __dirname, 'views/user',
+  __dirname, 'views/activity']);
+
+app.set('view engine', 'pug');
 
 // CONFIGURE EXPRESS APP
 
@@ -42,11 +47,11 @@ app.use(passport.session()); // persistent login sessions
 
 
 // MODULE LOCATION FOR ROUTES
-var index = require('./routes/index');
-var user = require('./routes/user');
-var auth = require('./routes/auth');
-var activity = require('./routes/activity');
-var explore = require('./routes/explore');
+var index = require('./routes/index_route');
+var user = require('./routes/user_route');
+var auth = require('./routes/auth_route');
+var activity = require('./routes/activity_route');
+var explore = require('./routes/explore_route');
 
 
 // SET ROUTE URLS

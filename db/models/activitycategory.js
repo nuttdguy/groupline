@@ -4,9 +4,7 @@ module.exports = (sequelize, DataTypes) => {
       activityCategoriesId: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        field: 'activity_categories_id',
-        onDelete: 'cascade',
-        onUpdate: 'cascade'
+        field: 'activity_categories_id'
       },
       categoryName: {
         type: DataTypes.STRING,

@@ -30,7 +30,9 @@ module.exports = {
       activityId: {
         type: Sequelize.INTEGER,
         field: 'activity_id',
-        foreignKey: {
+        onDelete: 'cascade',
+        onUpdate: 'cascade',
+        references: {
           model: 'Activities',
           key: 'activity_id'
         }

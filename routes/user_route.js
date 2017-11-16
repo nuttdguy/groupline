@@ -1,5 +1,7 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+
+
 
 // TODO :: (NOTE) all redirects require FULL PATH
 
@@ -7,25 +9,27 @@ var router = express.Router();
 // TODO :: double every render is to a valid view
 
 //==================================================//
-/*                 /USR/                   */
+/*                 /USER/                   */
 //==================================================//
+
 
 router.get('/', function(req, res, next) {
     // TODO :: determine how to extract user from DB
     // TODO :: determine whether to use session or token
 
-    res.redirect('/usr/activity', {})
+
+    res.redirect('/user/activity', {})
 });
 
 //==================================================//
-/*                 /USR/SETTING                   */
+/*                 /USER/SETTING                   */
 //==================================================//
 
 router.get('/setting', function(req, res, next) {
     // TODO :: get user settings from DB
     // TODO :: determine whether to use session or token thereafter
 
-    res.render('/usr/settings', {})
+    res.render('/user/settings', {})
 });
 
 
@@ -33,95 +37,95 @@ router.get('/setting', function(req, res, next) {
 
 
 //==================================================//
-/*                 /USR/ACTIVITY                   */
+/*                 /USER/ACTIVITY                   */
 //==================================================//
 
-router.get('/usr/activity', function(req, res, next) {
+router.get('/activity', function(req, res, next) {
     // TODO :: request activities from DB
     // TODO :: request usr preferences from DB
 
     // TODO :: determine view to display
     // TODO :: in view, make sure delete only shows on owned activities
     // TODO :: in view, make sure update only available on owned activities
-    res.render('/usr/activities')
+    res.render('/user/activities')
 });
 
 
 //==================================================//
-/*          /USR/ACTIVITY/:CATID/LIKE               */
+/*          /USER/ACTIVITY/:CATID/LIKE               */
 //==================================================//
 
-router.post('/usr/activity/:catId/like', function(req, res, next) {
+router.post('/activity/:catId/like', function(req, res, next) {
     // TODO :: user should be able to like an activity
 
 
     // TODO :: redirect to page to reload view
-    res.redirect('/usr/activities')
+    res.redirect('/user/activities')
 });
 
 
 //==================================================//
-/*         /USR/ACTIVITY/:CATID/FAVORITE            */
+/*         /USER/ACTIVITY/:CATID/FAVORITE            */
 //==================================================//
 
-router.post('/usr/activity/:catId/favorite', function(req, res, next) {
+router.post('/activity/:catId/favorite', function(req, res, next) {
     // TODO :: user should be able to add cat as favorite
 
     // TODO :: redirect to page to reload view
-    res.redirect('/usr/activities')
+    res.redirect('/user/activities')
 });
 
 
 //==================================================//
-/*         /USR/ACTIVITY/:ACTID/DELETE            */
+/*         /USER/ACTIVITY/:ACTID/DELETE            */
 //==================================================//
 
 
-router.delete('/usr/activity/:catId/delete', function(req, res, next) {
+router.delete('/activity/:catId/delete', function(req, res, next) {
     // TODO :: delete an activity created by usr
 
     // TODO :: redirect to reload view
-    res.redirect('/usr/activities')
+    res.redirect('/user/activities')
 });
 
 
 //==================================================//
-/*         /USR/ACTIVITY/:ACTID/UPDATE            */
+/*         /USER/ACTIVITY/:ACTID/UPDATE            */
 //==================================================//
 
 
-router.put('/usr/activity/:catId/update', function(req, res, next) {
+router.put('/activity/:catId/update', function(req, res, next) {
     // TODO :: update an activity created by usr
 
     // TODO :: redirect to reload view
-    res.redirect('/usr/activities')
+    res.redirect('/user/activities')
 });
 
 
 //==================================================//
-/*         /USR/ACTIVITY/:ACTID/TAG           */
+/*         /USER/ACTIVITY/:ACTID/TAG           */
 //==================================================//
 
 
-router.get('/usr/activity/:actId/tag', function(req, res, next) {
+router.get('/activity/:actId/tag', function(req, res, next) {
     // TODO :: get all tags created by usr
 
     // TODO :: redirect to reload view
-    res.redirect('/usr/activity/tags')
+    res.redirect('/user/activity/tags')
 });
 
 // TODO :: revisit other routes required for tags
 
 //==================================================//
-/*    /USR/ACTIVITY/:ACTID/TAG/:TAGID/DELETE    */
+/*    /USER/ACTIVITY/:ACTID/TAG/:TAGID/DELETE    */
 //==================================================//
 
 
-router.delete('/usr/activity/:actId/tag/delete', function(req, res, next) {
+router.delete('/activity/:actId/tag/delete', function(req, res, next) {
     // TODO :: delete an activity created by usr
 
     // TODO :: redirect to reload view
-    res.redirect('/usr/activities')
+    res.redirect('/user/activities')
 });
 
 
