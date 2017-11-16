@@ -1,36 +1,36 @@
-include navbar
+extends ./layout
 
+//- include navbar
 
 block content
     h1=title
 
-    //p=activities.Activity
-    //p=activities.isActive
+    //- p=activities.Activity
+    //- p=activities.isActive
+    if (activities)
+        each value, key in activities
+            - var categories = activities.ActivityCategories
+            - var tags = activities.ActivityTags
+            - var details = activities.ActivityDetails
 
+            if key == 'ActivityCategories'
+                each category in categories
+                    li=category.categoryName
+                    li=category.isActive
+                    li=category.created_at
 
-    each value, key in activities
-        - var categories = activities.ActivityCategories
-        - var tags = activities.ActivityTags
-        - var details = activities.ActivityDetails
+            if key == 'ActivityTags'
+                each tag in tags
+                    li=tag.activityTagName
+                    li=tag.isActive
+                    li=tag.created_at
 
-        if key == 'ActivityCategories'
-            each category in categories
-                li=category.categoryName
-                li=category.isActive
-                li=category.created_at
-
-        if key == 'ActivityTags'
-            each tag in tags
-                li=tag.activityTagName
-                li=tag.isActive
-                li=tag.created_at
-
-        if key == 'ActivityDetails'
-            each detail in details
-                li=detail.startDate
-                li=detail.endDate
-                li=detail.minActor
-                li=detail.maxActor
+            if key == 'ActivityDetails'
+                each detail in details
+                    li=detail.startDate
+                    li=detail.endDate
+                    li=detail.minActor
+                    li=detail.maxActor
 
 
 

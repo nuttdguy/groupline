@@ -3,22 +3,24 @@ html(lang="en")
         title Groupy
         meta(name="viewport" content="width=device-width, initial-scale=1")
 
-        //// BOOTSTRAP
-        //link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css")
+        //- BOOTSTRAP
+        //- link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css")
 
-        // CUSTOM CSS STYLE
-        link(rel='stylesheet', href='css/style.css')
-        link(rel='stylesheet', href='css/bootstrap.min.css')
+        block script
+            script(src="https://code.jquery.com/jquery-3.1.1.slim.min.js")
+            script(src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js")
+            script(src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js")
+
+        //- CUSTOM CSS STYLE
+        link(rel='stylesheet', href='/css/style.css')
+        link(rel='stylesheet', href='/css/bootstrap.min.css')
 
 
     body.container-fluid
-
         include navbar
 
+        block content
 
-
-    //block script
-    //    script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js")
 
 
 
