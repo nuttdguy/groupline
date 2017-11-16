@@ -10,7 +10,7 @@ var session = require('express-session');
 // SET ENVIRONMENT VARIABLE
 require('dotenv').config();  // enable the use of .env variables
 // PASSPORT INSTANCE TO CONFIGURATION
-require('./config/passport')(passport);
+require('./auth/passport')(passport);
 
 // CREATE INSTANCE OF EXPRESS OBJECT
 var app = express();

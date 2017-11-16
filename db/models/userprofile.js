@@ -42,7 +42,7 @@ module.exports = (sequelize, DataTypes) => {
 
     UserProfile.belongsToMany(models.Activity, {
         as: 'Activities',
-        through: 'profile_activity_favorites',
+        through: 'ProfileActivityFavorite',
         foreignKey: 'activity_id',
         targetKey: 'activity_id'
       });

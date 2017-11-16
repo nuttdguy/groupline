@@ -1,0 +1,16 @@
+extends layout_nav
+
+block content
+
+form
+    div.form-group
+        label Email
+        input.form-control(type="text" name="userName")
+
+        label Password
+        input.form-control(type="password" name="password")
+
+        button.btn.btn-warning(type="button") Login
+
+        div
+            p Need an account? <a href="/auth/signup">Signup</a>

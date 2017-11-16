@@ -33,23 +33,7 @@ router.get('/signup', function(req, res, next) {
 });
 
 router.post('/signup', function(req, res, next) {
-    // Persist new user to DB
-    // res.redirect
-    // let newUser = new UserProfile(req.body);
-    //
-    // UserProfile.find({
-    //     where: {username: newUser.username}}, function(user) {
-    //         console.log(user);
-    //     return user;
-    // }).then( function(user) {
-    //
-    //     let hash = bcrypt.hashSync(newUser.password, bcrypt.genSaltSync(8), null);
-    //     newUser.password = hash;
-    //
-    //     newUser.save().then(err => {
-    //         res.redirect('/auth/login');
-    //     })
-    // })
+
 
 });
 
@@ -69,21 +53,7 @@ router.post('/login', function(req, res, next) {
     // TODO :: authenticate user
     // TODO :: add logic
     // TODO :: res.redirect
-    passport.authenticate('local', {
-        successRedirect: '/',
-        failureRedirect: '/auth/login'
-    }, function(err, user, info) {
-        if (err) {
-            return res.render('/auth/login');
-        }
 
-        return req.logIn(user, function(err) {
-            if (err) {
-                res.redirect('/auth/')
-            }
-            return res.redirect('/')
-        })
-    })
 
 });
 
