@@ -8,6 +8,35 @@ const ActivityTag = require('../db/models/index').ActivityTag;
 const ActivityDetail = require('../db/models/index').ActivityDetail;
 
 
+
+router.get('/', function (req, res, next) {
+
+  Activity.findAll( {
+      include: [{
+        model: ActivityCategory,
+        as: 'ActivityCategories'
+      },
+        {
+          model: ActivityTag,
+          as: 'ActivityTags'
+        },
+        {
+          model: ActivityDetail,
+          as: 'ActivityDetails'
+        }]
+    }
+  )
+    .then((activities) => {
+      console.log('========================');
+      console.log(JSON.stringify(activities));
+      res.render('explore', {
+        title: 'Explore',
+        // activities: activities
+      });
+    });
+
+});
+
 /* GET home page. */
 router.get('/:id', function (req, res, next) {
 
@@ -34,9 +63,7 @@ router.get('/:id', function (req, res, next) {
       console.log(JSON.stringify(activities));
       res.render('explore', {
         title: 'Explore',
-        activities: activities,
-        categories: activities.ActivityCategories,
-        tags: activities.ActivityTags,
+        activities: activities
       });
     });
 

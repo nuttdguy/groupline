@@ -1,0 +1,37 @@
+html(lang="en")
+    head
+        title Groupy
+        meta(name="viewport" content="width=device-width, initial-scale=1")
+
+        // BOOTSTRAP
+        link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css")
+
+        // CUSTOM CSS STYLE
+        link(rel='stylesheet', href='css/style.css')
+        link(rel='stylesheet', href='css/bootstrap.min.css')
+
+        block script
+            script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js")
+
+    body.container-fluid
+        nav.navbar.navbar-expand-lg.navbar-light.bg-light
+
+            button.navbar-toggler(type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation")
+                span.navbar-toggler-icon
+
+            div.collapse.navbar-collapse.justify-content-end
+                div.navbar-nav
+                    a.nav-item.nav-link(href='/explore') Explore
+                    a.nav-item.nav-link(href='/about') About
+
+                a.navbar-brand(href='/') Name Pending
+
+            div.collapse.navbar-collapse.justify-content-start
+                div.navbar-nav
+                    a.nav-item.nav-link(href="/auth") Register
+                    a.nav-item.nav-link(href="/auth") Login
+
+
+
+
+

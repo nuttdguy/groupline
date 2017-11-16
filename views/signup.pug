@@ -1,0 +1,24 @@
+include layout
+
+block content
+
+    div.col-sm-6.col-sm-offset-3
+        h1 <span class="fa fa-sign-in"></span> Signup
+
+        div.alert.alert-danger #{message}
+
+            form
+                div.form-group
+                    label Email
+                    input.form-control(type="text" name="userName")
+
+                div.form-group
+                    label Password
+                    input.form-control(type="password" name="password")
+
+                button.btn.btn-warning.btn-lg Signup
+
+            hr
+
+            p Already have an account? <a href="/auth/login">Login</a>
+            p Or go <a href="/">home</a>

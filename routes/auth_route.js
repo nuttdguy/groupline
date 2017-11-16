@@ -18,7 +18,7 @@ router.get('/', function(req, res, next) {
 
     let user = req.user;
     console.log('in /auth/ route', user);
-    res.render('auth/index', {title: 'TEST', user: user} );
+    res.render('auth_index', {title: 'TEST', user: user} );
 });
 
 
@@ -29,8 +29,9 @@ router.get('/', function(req, res, next) {
 router.get('/signup', function(req, res, next) {
     // TODO :: create view signup.hbs
 
-    res.render('auth/signup', {} );
+    res.render('signup', {} );
 });
+
 
 router.post('/signup', function(req, res, next) {
 
@@ -46,7 +47,7 @@ router.post('/signup', function(req, res, next) {
 router.get('/login', function(req, res, next) {
     // TODO :: create view login.hbs
 
-    res.render('auth/login', {});
+    res.render('login', {});
 });
 
 router.post('/login', function(req, res, next) {

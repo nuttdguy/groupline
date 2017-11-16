@@ -9,6 +9,7 @@ var session = require('express-session');
 
 // SET ENVIRONMENT VARIABLE
 require('dotenv').config();  // enable the use of .env variables
+
 // PASSPORT INSTANCE TO CONFIGURATION
 require('./auth/passport')(passport);
 
@@ -18,11 +19,11 @@ var app = express();
 
 // MIDDLE WARE
 // SET VIEW ENGINE
-app.set('views',[
-  __dirname, 'views/',
-  __dirname, 'views/auth',
-  __dirname, 'views/user',
-  __dirname, 'views/activity']);
+app.set('views', [
+  path.join(__dirname, 'views/'),
+  path.join(__dirname, 'views/auth'),
+  path.join(__dirname, 'views/user'),
+  path.join(__dirname, 'views/activity')]);
 
 app.set('view engine', 'pug');
 
@@ -32,16 +33,17 @@ app.set('view engine', 'pug');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Initialize passport object for Express
 // require('./config/passport')(passport);
 app.use(session({
-    resave: true,
-    saveUninitialized: true,
-    secret: process.env.SECRET_SAUCE })); // Session Secret
+  resave: true,
+  saveUninitialized: true,
+  secret: process.env.SECRET_SAUCE
+})); // Session Secret
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 
@@ -62,9 +64,8 @@ app.use('/explore', explore);
 app.use('/activity', activity); // TODO :: Complete routes for activity
 
 
-
 // CATCH 404 AND FORWARD TO ERROR HANDLER
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
@@ -72,7 +73,7 @@ app.use(function(req, res, next) {
 
 
 // HANDLE ERRORS
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
