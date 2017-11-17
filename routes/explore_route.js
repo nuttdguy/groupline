@@ -7,7 +7,7 @@ const ActivityCategory = require('../db/models/index').ActivityCategory;
 const ActivityTag = require('../db/models/index').ActivityTag;
 const ActivityDetail = require('../db/models/index').ActivityDetail;
 
-module.exports = (app) => {
+module.exports = (app, passport) => {
 
   app.get('/explore', function (req, res, next) {
     res.render('explore', {title: 'Explore'})

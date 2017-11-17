@@ -7,10 +7,6 @@ module.exports = function (passport) {
   // required for persistent login sessions
   // passport needs ability to serialize and unserialize users out of session
   // used to serialize the user for the session
-  passport.serializeUser(function (user, done) {
-    console.log('SERIALIZE USER ========== ');
-    done(null, user.userProfileId);
-  });
 
   // USED TO DESERIALIZE USER -> ID MUST MATCH MODEL PK
   passport.deserializeUser(function (userProfileId, done) {
@@ -18,6 +14,12 @@ module.exports = function (passport) {
     User.findById(userProfileId).then(user => {
       done(null, user);
     });
+  });
+
+
+  passport.serializeUser(function (user, done) {
+    console.log('SERIALIZE USER ========== ');
+    done(null, user.userProfileId);
   });
 
 
@@ -31,7 +33,8 @@ module.exports = function (passport) {
       // by default, local strategy uses username and password, we will override with email
       usernameField: 'username',
       passwordField: 'password',
-      passReqToCallback: true // allows us to pass back the entire request to the callback
+      passReqToCallback: true, // allows us to pass back the entire request to the callback
+      callbackURL: '/'
     },
     function (req, username, password, done) {
       // asynchronous
@@ -88,7 +91,8 @@ module.exports = function (passport) {
       // by default, local strategy uses username and password, we will override with email
       usernameField: 'username',
       passwordField: 'password',
-      passReqToCallback: true // allows us to pass back the entire request to the callback
+      passReqToCallback: true, // allows us to pass back the entire request to the callback
+      callbackURL: '/'
     },
     function (req, username, password, done) { // callback with email and password from our form
       // find a user whose email is the same as the forms email
@@ -97,12 +101,12 @@ module.exports = function (passport) {
         return done(null, false, req.flash('danger', 'You have to enter a username and/or password'));
       } // req.flash is the way to set flashdata using connect-flash
 
-      console.log('THIS IS IN PASSPORT.JS LOGGING IN');
+      // console.log('THIS IS IN PASSPORT.JS LOGGING IN');
       User.find({
         where: {username: username}
       }).then(user => {
         console.log('THIS IS IN PASSPORT.JS FOUND USER');
-        console.log(user);
+        // console.log(user);
         // if there are any errors, return the error before anything else
         // if no user is found, return the message
         if (!user) {

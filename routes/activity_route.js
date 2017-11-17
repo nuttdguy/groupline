@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 
-module.exports = function (app) {
+module.exports = function (app, passport) {
 //      ACTIVITY ROUTES FOR GUEST USERS     //
 
 //==================================================//
