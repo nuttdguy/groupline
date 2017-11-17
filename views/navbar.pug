@@ -17,4 +17,6 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light
                 a.nav-item.nav-link(href="/auth/login") Login
     else
         div.collapse.navbar-collapse.justify-content-start
-            span= user.username
+            div.navbar-nav
+                a#logout.nav-item.nav-link(href='#') Logout
+                a(href="#")= user.username

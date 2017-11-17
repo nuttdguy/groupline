@@ -1,13 +1,14 @@
-include layout
+include ../layout
 
 block content
 
     div.col-sm-6.col-sm-offset-3
         h1 <span class="fa fa-sign-in"></span> Signup
 
-        div.alert.alert-danger #{message}
+        div
+            span#err-message.alert.alert-danger #{ message.error }
 
-            form(action="/auth/signup" method="POST")
+            form
                 div.form-group
                     label Email
                     input.form-control(type="text" name="username")
@@ -16,7 +17,7 @@ block content
                     label Password
                     input.form-control(type="password" name="password")
 
-                button.btn.btn-warning.btn-lg(type="submit") Signup
+                button#signup.btn.btn-warning.btn-lg(type="button") Signup
 
             hr
 

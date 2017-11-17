@@ -44,10 +44,10 @@ module.exports = function (passport) {
       process.nextTick(function () {
 
         if (username == '' || password == '') {
-          return done(null, false, req.flash('danger', 'You can\'t leave username or password empty'));
+          return done(null, false, req.flash('message', 'You can\'t leave username or password empty'));
         }
 
-        // find a user whose email is the same as the forms email
+        // find a user whose username is the same as the forms username
         // we are checking to see if the user trying to login already exists
         User.find({
           where: {username: username}
@@ -56,20 +56,20 @@ module.exports = function (passport) {
           if (err)
             return done(err);
 
-          // check to see if theres already a user with that email
+          // check to see if theres already a user with that username
           if (user) {
-            return done(null, false, req.flash('danger', 'That email is already taken.'));
+            return done(null, false, req.flash('message', 'That username is already taken.'));
             // return done(null, false, {message: 'That email is already taken.'});
           } else {
 
-            // if there is no user with that email
+            // if there is no user with that username
             // create the user
 
             User.create({username: username}).then((newUser) => {
               newUser.password = newUser.generateHash(password);
 
               newUser.save({}).then(() => {
-                return done(null, newUser, req.flash('success', 'Your account was created.'));
+                return done(null, newUser, req.flash('message', 'Your account was created.'));
               });
             });
 
@@ -98,7 +98,7 @@ module.exports = function (passport) {
       // find a user whose email is the same as the forms email
       // we are checking to see if the user trying to login already exists
       if (username == '' || password == '') {
-        return done(null, false, req.flash('danger', 'You have to enter a username and/or password'));
+        return done(null, false, req.flash('message', 'You have to enter a username and/or password'));
       } // req.flash is the way to set flashdata using connect-flash
 
       // console.log('THIS IS IN PASSPORT.JS LOGGING IN');
@@ -106,16 +106,17 @@ module.exports = function (passport) {
         where: {username: username}
       }).then(user => {
         console.log('THIS IS IN PASSPORT.JS FOUND USER');
+        console.log(user);
         // console.log(user);
         // if there are any errors, return the error before anything else
         // if no user is found, return the message
         if (!user) {
-          return done(null, false, req.flash('danger', 'Oops, no user found.'));
+          return done(null, false, req.flash('message', 'Oops, no user found.'));
         } // req.flash is the way to set flashdata using connect-flash
 
         // if the user is found but the password is wrong
         if (!user.validatePassword(password)) {
-          return done(null, false, req.flash('danger', 'Oops! Wrong password or username.'));
+          return done(null, false, req.flash('message', 'Oops! Wrong password or username.'));
           // create the loginMessage and save it to session as flashdata
         }
 

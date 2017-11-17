@@ -34,10 +34,11 @@ module.exports = function (app, passport) {
 
 
   app.get('/auth/login', function (req, res, next) {
-    res.render('login', {});
+      res.render('login', { message: req.flash() });
   });
 
-  // app.post('/auth/login', passport.authenticate('local-login', {}),
+  // app.post('/auth/login',
+  //   passport.authenticate('local-login', {}),
   //   function (req, res) {
   //     res.redirect("/");
   // });
@@ -47,6 +48,16 @@ module.exports = function (app, passport) {
     failureRedirect: '/auth/login', // redirect back to the login page if there is an error
     failureFlash: true
   }));
+
+  //==================================================//
+  /*                  /AUTH/LOGIN                 */
+  //==================================================//
+
+
+  app.post('/auth/logout', function (req, res, next) {
+    req.logOut();
+    res.redirect('/');
+  });
 
 };
 

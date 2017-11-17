@@ -1,5 +1,4 @@
 const express = require('express');
-const router = express.Router();
 
 // Require Sequelize model in order to use its default methods
 const Activity = require('../db/models/index').Activity;
