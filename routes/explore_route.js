@@ -7,10 +7,10 @@ const ActivityCategory = require('../db/models/index').ActivityCategory;
 const ActivityTag = require('../db/models/index').ActivityTag;
 const ActivityDetail = require('../db/models/index').ActivityDetail;
 
-module.exports = (app, passport) => {
+module.exports = (app) => {
 
   app.get('/explore', function (req, res, next) {
-    res.render('explore', {title: 'Explore'})
+    res.render('explore', {title: 'Explore', user: req.user})
   });
 
   /* GET home page. */
@@ -41,7 +41,8 @@ module.exports = (app, passport) => {
           console.log(JSON.stringify(activities));
           res.render('explore', {
             title: 'Explore',
-            activities: activities
+            activities: activities,
+            user: req.user
           });
         });
     }
@@ -50,5 +51,42 @@ module.exports = (app, passport) => {
 
   });
 };
+
+
+  // router.get('/category/:id', function (req, res, next) {
+  //   const categories_id = req.params.id;
+  //
+  //   console.log(categories_id + "=====================");
+  //   if (categories_id !== undefined) {
+  //     Activity.findAll(
+  //         {
+  //         include: [{
+  //           model: ActivityCategory,
+  //           as: 'ActivityCategories',
+  //           where: { activity_id: categories_id}
+  //         },
+  //           {
+  //             model: ActivityTag,
+  //             as: 'ActivityTags',
+  //             where: {activity_id: categories_id}
+  //           },
+  //           {
+  //             model: ActivityDetail,
+  //             as: 'ActivityDetails',
+  //             where: {activity_id: categories_id}
+  //           }]
+  //       }
+  //     )
+  //       .then((activities) => {
+  //         console.log('========================');
+  //         console.log(JSON.stringify(activities));
+  //         res.render('explore', {
+  //           title: 'Explore',
+  //           activities: activities
+  //         });
+  //       });
+  //   }
+
+  // res.redirect('/')
 
 // module.exports = router;
