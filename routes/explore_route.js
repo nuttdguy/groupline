@@ -13,12 +13,21 @@ router.get('/', function (req, res, next) {
 });
 
 /* GET home page. */
+
+// router.get('/category/:categoryid', function (req, res, next) {
+//     const activity_id = req.params.categoryid
+//
+//     if(categories_id !== undefined){
+//         console.log("Routing")
+//         ActivityCategory.findById(activity_id{})
+//     }
+// })
+
 router.get('/:id', function (req, res, next) {
   const categories_id = req.params.id;
 
   console.log(categories_id + "=====================");
   if (categories_id !== undefined) {
-    console.log("THis is the route!!!!!!!!!");
     Activity.findById(categories_id, {
         include: [{
           model: ActivityCategory,
@@ -46,9 +55,43 @@ router.get('/:id', function (req, res, next) {
         });
       });
   }
+  })
+
+
+  // router.get('/category/:id', function (req, res, next) {
+  //   const categories_id = req.params.id;
+  //
+  //   console.log(categories_id + "=====================");
+  //   if (categories_id !== undefined) {
+  //     Activity.findAll(
+  //         {
+  //         include: [{
+  //           model: ActivityCategory,
+  //           as: 'ActivityCategories',
+  //           where: { activity_id: categories_id}
+  //         },
+  //           {
+  //             model: ActivityTag,
+  //             as: 'ActivityTags',
+  //             where: {activity_id: categories_id}
+  //           },
+  //           {
+  //             model: ActivityDetail,
+  //             as: 'ActivityDetails',
+  //             where: {activity_id: categories_id}
+  //           }]
+  //       }
+  //     )
+  //       .then((activities) => {
+  //         console.log('========================');
+  //         console.log(JSON.stringify(activities));
+  //         res.render('explore', {
+  //           title: 'Explore',
+  //           activities: activities
+  //         });
+  //       });
+  //   }
 
   // res.redirect('/')
-
-});
 
 module.exports = router;

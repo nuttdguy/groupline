@@ -50,6 +50,9 @@ INSERT INTO public."ActivityTags"(activity_tag_id, activity_tag_name, is_active,
 VALUES (1, 'drink', true, now(), now(), 1);
 
 INSERT INTO public."ActivityTags"(activity_tag_id, activity_tag_name, is_active, created_at, updated_at, activity_id)
+VALUES (6, 'eat', true, now(), now(), 1);
+
+INSERT INTO public."ActivityTags"(activity_tag_id, activity_tag_name, is_active, created_at, updated_at, activity_id)
 VALUES (2, 'outdoor', true, now(), now(), 2);
 
 INSERT INTO public."ActivityTags"(activity_tag_id, activity_tag_name, is_active, created_at, updated_at, activity_id)
@@ -96,21 +99,3 @@ VALUES (4, 2, 4, true, now(), now());
 
 INSERT INTO public."ProfileActivityFavorites"(profile_activity_favorite_id, user_profile_id, activity_id, is_active, created_at, updated_at)
 VALUES (5, 2, 4, true, now(), now());
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
