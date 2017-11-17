@@ -1,11 +1,12 @@
 $(document).ready(function(){
 
-  // CLIENT-SIDE JQUERY / AJAX ROUTES FOR HANDLING POST, PUT, DELETE RESPONSES
+    // CLIENT-SIDE JQUERY / AJAX ROUTES FOR HANDLING POST, PUT, DELETE REQUESTS
 
   $('#signup').click(function(){
-    console.log('USER SIGNING IN  ...');
+    console.log('USER SIGNING UP  ...');
+    console.log($('#password').val());
 
-    if ( $('#password').val() == '' || $('#username').val() == '' ) {
+    if ( $('#password').val() === '' || $('#username').val() === '' ) {
 
       displayAuthError();
 
@@ -24,7 +25,7 @@ $(document).ready(function(){
   $('#login').click(function(){
     console.log('USER LOGGING IN ...');
 
-    if ( $('#password').val() == '' || $('#username').val() == '' ) {
+    if ( $('#password').val() === '' || $('#username').val() === '' ) {
 
       displayAuthError();
 
