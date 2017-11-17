@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       username: {
         type: DataTypes.STRING,
-        field: 'user_name'
+        field: 'username'
       },
       password: {
         type: DataTypes.STRING,

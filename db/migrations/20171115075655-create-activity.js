@@ -30,17 +30,17 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    queryInterface.removeConstraint('ActivityCategories', 'activity_id').then( () => {
-    });
+    // queryInterface.removeConstraint('ActivityCategories', 'activity_id').then( () => {
+    // });
 
-    queryInterface.removeConstraint('ActivityTags', 'activity_id').then( () => {
-    });
+    // queryInterface.removeConstraint('ActivityTags', 'activity_id').then( () => {
+    // });
 
-    queryInterface.removeConstraint('ProfileActivityFavorites', 'activity_id').then( () => {
-    });
+    // queryInterface.removeConstraint('ProfileActivityFavorites', 'activity_id').then( () => {
+    // });
 
-    queryInterface.removeConstraint('ActivityDetails', 'activity_id').then( () => {
-    });
+    // queryInterface.removeConstraint('ActivityDetails', 'activity_id').then( () => {
+    // });
 
     return queryInterface.dropTable('Activities');
 

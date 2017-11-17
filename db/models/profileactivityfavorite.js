@@ -37,19 +37,19 @@ module.exports = (sequelize, DataTypes) => {
     });
 
   ProfileActivityFavorite.associate = function (models) {
-    ProfileActivityFavorite.belongsTo(models.UserProfile, {
-      foreignKey: 'user_profile_id',
-      targetKey: 'user_profile_id',
-      onDelete: 'cascade',
-      onUpdate: 'cascade'
-    });
-
-    ProfileActivityFavorite.belongsTo(models.Activity, {
-      foreignKey: 'activity_id',
-      targetKey: 'activity_id',
-      onDelete: 'cascade',
-      onUpdate: 'cascade'
-    });
+    // ProfileActivityFavorite.belongsTo(models.UserProfile, {
+    //   foreignKey: 'user_profile_id',
+    //   targetKey: 'user_profile_id',
+    //   onDelete: 'cascade',
+    //   onUpdate: 'cascade'
+    // });
+    //
+    // ProfileActivityFavorite.belongsTo(models.Activity, {
+    //   foreignKey: 'activity_id',
+    //   targetKey: 'activity_id',
+    //   onDelete: 'cascade',
+    //   onUpdate: 'cascade'
+    // });
   };
   return ProfileActivityFavorite;
 };

@@ -5,12 +5,13 @@ module.exports = {
       userProfileId: {
         allowNull: false,
         primaryKey: true,
+        autoIncrement: true,
         type: Sequelize.INTEGER,
         field: 'user_profile_id'
       },
       username: {
         type: Sequelize.STRING,
-        field: 'user_name'
+        field: 'username'
       },
       password: {
         type: Sequelize.STRING,
@@ -45,8 +46,12 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    queryInterface.removeConstraint('UserProfiles', 'user_profile_id').then(function() {
-      return queryInterface.dropTable('UserProfiles');
+    queryInterface.removeConstraint('UserProfiles', 'user_profile_id').then( () => {
     });
+
+    queryInterface.removeConstraint('Activities', 'activity_id').then( () => {
+    });
+
+    return queryInterface.dropTable('UserProfiles');
   }
 };

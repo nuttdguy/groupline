@@ -8,11 +8,13 @@ module.exports = function (passport) {
   // passport needs ability to serialize and unserialize users out of session
   // used to serialize the user for the session
   passport.serializeUser(function (user, done) {
+    console.log('SERIALIZE USER ========== ');
     done(null, user.userProfileId);
   });
 
   // USED TO DESERIALIZE USER -> ID MUST MATCH MODEL PK
   passport.deserializeUser(function (userProfileId, done) {
+    console.log('DESERIALIZE USER ========== ');
     User.findById(userProfileId).then(user => {
       done(null, user);
     });
@@ -35,6 +37,7 @@ module.exports = function (passport) {
       // asynchronous
       // User.findOne wont fire unless data is sent back
 
+      console.log(username, password);
       process.nextTick(function () {
 
         if (username == '' || password == '') {
@@ -58,8 +61,10 @@ module.exports = function (passport) {
 
             // if there is no user with that email
             // create the user
-            User.create({username: username}).then(newUser => {
+
+            User.create({username: username}).then((newUser) => {
               newUser.password = newUser.generateHash(password);
+
               newUser.save({}).then(() => {
                 return done(null, newUser, req.flash('success', 'Your account was created.'));
               });
