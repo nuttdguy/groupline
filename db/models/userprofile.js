@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         field: 'user_profile_id'
       },
-      userName: {
+      username: {
         type: DataTypes.STRING,
         field: 'user_name'
       },
@@ -49,7 +49,9 @@ module.exports = (sequelize, DataTypes) => {
         as: 'Activities',
         through: 'ProfileActivityFavorite',
         foreignKey: 'activity_id',
-        targetKey: 'activity_id'
+        targetKey: 'activity_id',
+        onDelete: 'cascade',
+        onUpdate: 'cascade'
       });
   };
 

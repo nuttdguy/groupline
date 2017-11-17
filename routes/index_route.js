@@ -5,8 +5,9 @@ module.exports = (app) => {
 
   /* GET home page. */
   app.get('/', (req, res, next) => {
-    console.log('in out');
-    res.render('main', {title: 'Express'});
+    console.log('IN INDEX_ROUTE AND MAIN.PUG');
+    console.log(req.user);
+    res.render('main', {title: 'Express', user: req.user});
   });
 
 };

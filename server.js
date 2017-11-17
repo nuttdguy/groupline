@@ -5,70 +5,48 @@ var logger = require('morgan');
 var flash = require('connect-flash');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var methodOverride = require('method-override');
 var passport = require('passport');
 var session = require('express-session');
-
-// SET ENVIRONMENT VARIABLE
-require('dotenv').config();  // enable the use of .env variables
-
-// PASSPORT INSTANCE TO CONFIGURATION
-require('./auth/passport')(passport);
-// console.log(passport);
-
-// CREATE INSTANCE OF EXPRESS OBJECT
-var app = express();
-
+var app = express(); // CREATE INSTANCE OF EXPRESS OBJECT
 
 // MIDDLE WARE
-// SET VIEW ENGINE
+require('dotenv').config();  // ENABLE USE OF .ENV HIDDEN FILE FOR SECRETS
+
 app.set('views', [
   path.join(__dirname, 'views/'),
   path.join(__dirname, 'views/auth'),
   path.join(__dirname, 'views/user'),
   path.join(__dirname, 'views/activity')]);
 
-app.set('view engine', 'pug');
+app.set('view engine', 'pug'); // SET VIEW ENGINE
 
 // CONFIGURE EXPRESS APP
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
+app.use(flash()); // FOR FLASH MESSAGES
+app.use(logger('dev')); // ENABLE LOGGING
+app.use(cookieParser()); // READ COOKIES (REQUIRED FOR AUTH)
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
-app.use(cookieParser());
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, '/public')));
 
-// INITIALIZE PASSPORT
-app.use(passport.initialize());
-app.use(session({secret: process.env.SECRET_SAUCE}));
-app.use(flash());
 
-// require('./auth/passport')(passport);
-// app.use(session({
-//   resave: true,
-//   saveUninitialized: true,
-//   secret: process.env.SECRET_SAUCE
-// }));
-
+app.use(passport.initialize()); // INITIALIZE PASSPORT
+app.use(session({secret: process.env.SECRET_SAUCE})); // PASS SECRET VALUE TO SESSION
 
 // MODULE LOCATION FOR ROUTES
+require('./auth/passport')(passport); // PASSPORT HAS TO BE FIRST ROUTE
+require('./routes/auth_route') (app, passport);
 require('./routes/index_route') (app);
 require('./routes/user_route') (app, passport);
-require('./routes/auth_route') (app, passport);
+
 require('./routes/activity_route') (app);
 require('./routes/explore_route') (app);
 
-// PASSPORT CONFIGURATION
-
-
-// SET ROUTE URLS
-// app.use('/', index);
-// app.use('/user', user);  // TODO :: Complete routes for usr
-// app.use('/auth', auth);  // TODO :: Complete routes for auth
-// app.use('/explore', explore);
-// app.use('/activity', activity); // TODO :: Complete routes for activity
-
+console.log(passport);
 
 // CATCH 404 AND FORWARD TO ERROR HANDLER
 app.use(function (req, res, next) {
@@ -92,3 +70,12 @@ app.use(function (err, req, res, next) {
 
 // EXPORT THE APP MODULE
 module.exports = app;
+
+
+
+// SET ROUTE URLS
+// app.use('/', index);
+// app.use('/user', user);  // TODO :: Complete routes for usr
+// app.use('/auth', auth);  // TODO :: Complete routes for auth
+// app.use('/explore', explore);
+// app.use('/activity', activity); // TODO :: Complete routes for activity

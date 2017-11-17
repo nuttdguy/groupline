@@ -10,7 +10,11 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light
 
         a.navbar-brand(href='/') Name Pending
 
-    div.collapse.navbar-collapse.justify-content-start
-        div.navbar-nav
-            a.nav-item.nav-link(href="/auth/signup") Register
-            a.nav-item.nav-link(href="/auth/login") Login
+    if (!user)
+        div.collapse.navbar-collapse.justify-content-start
+            div.navbar-nav
+                a.nav-item.nav-link(href="/auth/signup") Register
+                a.nav-item.nav-link(href="/auth/login") Login
+    else
+        div.collapse.navbar-collapse.justify-content-start
+            span= user

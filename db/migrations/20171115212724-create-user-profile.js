@@ -8,7 +8,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         field: 'user_profile_id'
       },
-      userName: {
+      username: {
         type: Sequelize.STRING,
         field: 'user_name'
       },
@@ -45,6 +45,8 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('UserProfiles');
+    queryInterface.removeConstraint('UserProfiles', 'user_profile_id').then(function() {
+      return queryInterface.dropTable('UserProfiles');
+    });
   }
 };

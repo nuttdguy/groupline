@@ -7,16 +7,16 @@ block content
 
         div.alert.alert-danger #{message}
 
-            form
+            form(action="/auth/signup" method="POST")
                 div.form-group
                     label Email
-                    input#username.form-control(type="text" name="user_name")
+                    input.form-control(type="text" name="username")
 
                 div.form-group
                     label Password
-                    input#password.form-control(type="password" name="password")
+                    input.form-control(type="password" name="password")
 
-                button#signup.btn.btn-warning.btn-lg(type="button") Signup
+                button.btn.btn-warning.btn-lg(type="submit") Signup
 
             hr
 
