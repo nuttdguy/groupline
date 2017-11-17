@@ -1,62 +1,72 @@
 const express = require('express');
 const router = express.Router();
-const passport = require('passport');
 const bcrypt = require('bcrypt');
-// const UserProfile = require('../db/models').UserProfile;
 
 
-// TODO :: determine logical flow or signin, signout, registration
-// TODO :: finalize routes - whether route is required
+module.exports = function (app, passport) {
 
+  //==================================================//
+    /*                 /AUTH/                   */
+  //==================================================//
 
-//==================================================//
-/*                 /AUTH/                   */
-//==================================================//
-
-router.get('/', function(req, res, next) {
+  app.get('/auth', function (req, res, next) {
     // TODO : add logic for showing signin,register form
 
     let user = req.user;
     console.log('in /auth/ route', user);
-    res.render('auth_index', {title: 'TEST', user: user} );
-});
+    res.render('auth_index', {title: 'TEST', user: user});
+  });
 
 
-//==================================================//
-/*                  /AUTH/SIGNUP                 */
-//==================================================//
+  //==================================================//
+    /*                  /AUTH/SIGNUP                 */
+  //==================================================//
 
-router.get('/signup', function(req, res, next) {
+  app.get('/auth/signup', function (req, res, next) {
     // TODO :: create view signup.hbs
 
-    res.render('signup', {} );
-});
+    res.render('signup', {});
+  });
+
+  // app.post('/auth/signup', function (req, res, next) {
+  //   console.log('SIGNUP POST')
+  // });
+
+  app.post('/auth/signup', passport.authenticate('local-signup', {
+    successRedirect: '/', // redirect to the secure profile section
+    failureRedirect: '/', // redirect back to the signup page if there is an error
+  }));
 
 
-router.post('/signup', function(req, res, next) {
+  //==================================================//
+    /*                  /AUTH/LOGIN                 */
+  //==================================================//
 
 
-});
-
-
-//==================================================//
-/*                  /AUTH/LOGIN                 */
-//==================================================//
-
-
-router.get('/login', function(req, res, next) {
+  app.get('/auth/login', function (req, res, next) {
     // TODO :: create view login.hbs
 
     res.render('login', {});
-});
-
-router.post('/login', function(req, res, next) {
-    // TODO :: authenticate user
-    // TODO :: add logic
-    // TODO :: res.redirect
+  });
 
 
-});
+  app.post('/auth/login', function (req, res, next) {
+    console.log('LOGIN POST')
+  });
 
+  // app.post('/auth/login', passport.authenticate('local-login', {
+  //   successRedirect: '/', // redirect to the secure profile section
+  //   failureRedirect: '/auth/signup', // redirect back to the signup page if there is an error
+  // }));
 
-module.exports = router;
+  function isLoggedIn(req, res, next) {
+    // if user is authenticated in the session, carry on
+    if (req.isAuthenticated())
+      return next();
+    // if they aren't redirect them to the home page
+    res.redirect('/');
+  }
+
+};
+
+// module.exports = router;

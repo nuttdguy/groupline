@@ -2,6 +2,7 @@ var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
+var flash = require('connect-flash');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var passport = require('passport');
@@ -12,6 +13,7 @@ require('dotenv').config();  // enable the use of .env variables
 
 // PASSPORT INSTANCE TO CONFIGURATION
 require('./auth/passport')(passport);
+// console.log(passport);
 
 // CREATE INSTANCE OF EXPRESS OBJECT
 var app = express();
@@ -37,31 +39,35 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '/public')));
 
-// Initialize passport object for Express
-// require('./config/passport')(passport);
-app.use(session({
-  resave: true,
-  saveUninitialized: true,
-  secret: process.env.SECRET_SAUCE
-})); // Session Secret
+// INITIALIZE PASSPORT
 app.use(passport.initialize());
-app.use(passport.session()); // persistent login sessions
+app.use(session({secret: process.env.SECRET_SAUCE}));
+app.use(flash());
+
+// require('./auth/passport')(passport);
+// app.use(session({
+//   resave: true,
+//   saveUninitialized: true,
+//   secret: process.env.SECRET_SAUCE
+// }));
 
 
 // MODULE LOCATION FOR ROUTES
-var index = require('./routes/index_route');
-var user = require('./routes/user_route');
-var auth = require('./routes/auth_route');
-var activity = require('./routes/activity_route');
-var explore = require('./routes/explore_route');
+require('./routes/index_route') (app);
+require('./routes/user_route') (app, passport);
+require('./routes/auth_route') (app, passport);
+require('./routes/activity_route') (app);
+require('./routes/explore_route') (app);
+
+// PASSPORT CONFIGURATION
 
 
 // SET ROUTE URLS
-app.use('/', index);
-app.use('/user', user);  // TODO :: Complete routes for usr
-app.use('/auth', auth);  // TODO :: Complete routes for auth
-app.use('/explore', explore);
-app.use('/activity', activity); // TODO :: Complete routes for activity
+// app.use('/', index);
+// app.use('/user', user);  // TODO :: Complete routes for usr
+// app.use('/auth', auth);  // TODO :: Complete routes for auth
+// app.use('/explore', explore);
+// app.use('/activity', activity); // TODO :: Complete routes for activity
 
 
 // CATCH 404 AND FORWARD TO ERROR HANDLER

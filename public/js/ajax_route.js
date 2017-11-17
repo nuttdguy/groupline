@@ -1,7 +1,8 @@
 $(document).ready(function(){
 
-  $('#signUp').click(function(){
-    $.post('/sign-up', {username : $('#username').val() , password : $('#password').val()}, function(){
+  $('#signup').click(function(){
+    console.log('IN SIGNUP ...');
+    $.post('/auth/signup', {username : $('#username').val() , password : $('#password').val()}, function(){
       location.reload();
     });
   });
@@ -18,4 +19,4 @@ $(document).ready(function(){
     });
   });
 
-})
+});

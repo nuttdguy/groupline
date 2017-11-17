@@ -1,8 +1,13 @@
 'use strict';
+
+const bcrypt = require('bcrypt');
+
+
 module.exports = (sequelize, DataTypes) => {
   var UserProfile = sequelize.define('UserProfile', {
       userProfileId: {
         type: DataTypes.INTEGER,
+        autoIncrement: true,
         primaryKey: true,
         field: 'user_profile_id'
       },
@@ -46,7 +51,15 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'activity_id',
         targetKey: 'activity_id'
       });
+  };
 
+  UserProfile.prototype.generateHash = function (password) {
+    let hashedPass = bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+    return hashedPass;
+  };
+
+  UserProfile.prototype.validatePassword = function (password) {
+    return bcrypt.compareSync(password, this.password);
   };
   return UserProfile;
 }

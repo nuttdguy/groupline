@@ -1,14 +1,4 @@
-html(lang="en")
-    head
-        title Groupy
-        meta(name="viewport" content="width=device-width, initial-scale=1")
-
-        //// BOOTSTRAP
-        //link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css")
-
-        // CUSTOM CSS STYLE
-        link(rel='stylesheet', href='style.css')
-        link(rel='stylesheet', href='bootstrap.min.css')
+include layout
 
 block content
 
@@ -20,13 +10,13 @@ block content
             form
                 div.form-group
                     label Email
-                    input.form-control(type="text" name="userName")
+                    input#username.form-control(type="text" name="user_name")
 
                 div.form-group
                     label Password
-                    input.form-control(type="password" name="password")
+                    input#password.form-control(type="password" name="password")
 
-                button.btn.btn-warning.btn-lg Signup
+                button#signup.btn.btn-warning.btn-lg(type="button") Signup
 
             hr
 

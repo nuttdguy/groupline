@@ -1,10 +1,13 @@
-const LocalStrategy = require('passport-local').Strategy;
-const UserProfile = require('../db/models/index').UserProfile;
-const bcrypt = require('bcrypt');
+// config/passport.js
 
+// load all the things we need
+var LocalStrategy = require('passport-local').Strategy;
+
+// load up the user model
+var User = require('../db/models/index').UserProfile;
 
 // expose this function to our app using module.exports
-module.exports = (passport) => {
+module.exports = function (passport) {
 
   // =========================================================================
   // passport session setup ==================================================
@@ -13,17 +16,15 @@ module.exports = (passport) => {
   // passport needs ability to serialize and unserialize users out of session
 
   // used to serialize the user for the session
-  passport.serializeUser((user, done) => {
+  passport.serializeUser(function (user, done) {
     done(null, user.id);
   });
 
   // used to deserialize the user
   passport.deserializeUser(function (id, done) {
-
-    User.findOne({where: {userProfileId: id}})
-      .then(function (err, user) {
-        done(err, user);
-      });
+    User.findById(id).then(user => {
+      done(null, user);
+    });
   });
 
   // =========================================================================
@@ -44,7 +45,7 @@ module.exports = (passport) => {
 
       process.nextTick(function () {
 
-        console.log(username, password);
+
         if (username == '' || password == '') {
           return done(null, false, req.flash('danger', 'You can\'t leave username or password empty'));
         }
@@ -52,8 +53,9 @@ module.exports = (passport) => {
         // find a user whose email is the same as the forms email
         // we are checking to see if the user trying to login already exists
         User.find({
-          where: {username: username}
+          where: {user_name: username}
         }).then(user => {
+          console.log(user);
           // if there are any errors, return the error
           // if (err)
           //     return done(err);
@@ -66,7 +68,8 @@ module.exports = (passport) => {
 
             // if there is no user with that email
             // create the user
-            User.create({username: username}).then(newUser => {
+            User.create({userName: username}).then(newUser => {
+              console.log(newUser);
               newUser.password = newUser.generateHash(password);
               newUser.save({}).then(() => {
                 return done(null, newUser, req.flash('success','Your account was created.'));
@@ -119,6 +122,5 @@ module.exports = (passport) => {
       });
 
     }));
-
 
 };

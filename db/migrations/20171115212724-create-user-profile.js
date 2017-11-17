@@ -4,7 +4,6 @@ module.exports = {
     return queryInterface.createTable('UserProfiles', {
       userProfileId: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
         field: 'user_profile_id'
