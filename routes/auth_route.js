@@ -37,12 +37,6 @@ module.exports = function (app, passport) {
       res.render('login', { message: req.flash() });
   });
 
-  // app.post('/auth/login',
-  //   passport.authenticate('local-login', {}),
-  //   function (req, res) {
-  //     res.redirect("/");
-  // });
-
   app.post('/auth/login', passport.authenticate('local-login', {
     successRedirect: '/', // redirect to the secure profile section
     failureRedirect: '/auth/login', // redirect back to the login page if there is an error
