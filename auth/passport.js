@@ -43,7 +43,7 @@ module.exports = function (passport) {
       console.log(username, password);
       process.nextTick(function () {
 
-        if (username == '' || password == '') {
+        if (username === '' || password === '') {
           return done(null, false, req.flash('message', 'You can\'t leave username or password empty'));
         }
 
@@ -96,7 +96,7 @@ module.exports = function (passport) {
     function (req, username, password, done) { // callback with email and password from our form
       // find a user whose email is the same as the forms email
       // we are checking to see if the user trying to login already exists
-      if (username == '' || password == '') {
+      if (username === '' || password === '') {
         return done(null, false, req.flash('message', 'You have to enter a username and/or password'));
       } // req.flash is the way to set flashdata using connect-flash
 

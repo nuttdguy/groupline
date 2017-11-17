@@ -3,20 +3,24 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light
     button.navbar-toggler(type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation")
         span.navbar-toggler-icon
 
-    div.collapse.navbar-collapse.justify-content-end
-        div.navbar-nav
-            a.nav-item.nav-link(href='/explore') Explore
-            a.nav-item.nav-link(href='/about') About
+    div.collapse.navbar-collapse
+        div.navbar.navbar-nav
+            div.nav-item
+                a.nav-link(href='/explore') Explore
+            div.nav-item
+                a.nav-link(href='/about') About
+            if (!user)
+                div.nav-item
+                    a.nav-link.navbar-brand(href='/') Name Pending
+            else
+                div.nav-item
+                    a.nav-link.navbar-brand(href="/user/show")= user.username
+            if (!user)
+                div.nav-item
+                    a.nav-link(href="/auth/signup") Register
+                div.nav-item
+                    a.nav-link(href="/auth/login") Login
+            else
+                div.nav-item
+                    a#logout.nav-link(href='#') Logout
 
-        a.navbar-brand(href='/') Name Pending
-
-    if (!user)
-        div.collapse.navbar-collapse.justify-content-start
-            div.navbar-nav
-                a.nav-item.nav-link(href="/auth/signup") Register
-                a.nav-item.nav-link(href="/auth/login") Login
-    else
-        div.collapse.navbar-collapse.justify-content-start
-            div.navbar-nav
-                a#logout.nav-item.nav-link(href='#') Logout
-                a(href="#")= user.username

@@ -16,7 +16,7 @@ require('dotenv').config();  // ENABLE USE OF .ENV HIDDEN FILE FOR SECRETS
 app.set('views', [
   path.join(__dirname, 'views/'),
   path.join(__dirname, 'views/auth'),
-  path.join(__dirname, 'views/user'),
+  path.join(__dirname, 'views/profile'),
   path.join(__dirname, 'views/activity')]);
 
 app.set('view engine', 'pug'); // SET VIEW ENGINE
@@ -39,17 +39,18 @@ const sessionOptions = {
   secret: process.env.SECRET_SAUCE
 };
 
-app.use(session(sessionOptions)); // ADD SESSION OPTIONS
-app.use(passport.initialize()); // INITIALIZE PASSPORT
-app.use(flash()); // FOR FLASH MESSAGES
 
-app.use(passport.session());  // RESTORE THE SESSION
+app.use(session(sessionOptions)); // 1. ADD SESSION OPTIONS
+app.use(passport.initialize()); // 2. INITIALIZE PASSPORT
+app.use(flash()); // 3. FOR FLASH MESSAGES
+
+app.use(passport.session());  // 4. RESTORE THE SESSION
 
 // MODULE LOCATION FOR ROUTES
 require('./auth/passport')(passport); // PASSPORT HAS TO BE FIRST ROUTE
 require('./routes/auth_route') (app, passport);
 require('./routes/index_route') (app);
-require('./routes/user_route') (app);
+require('./routes/user_route') (app, passport);
 
 require('./routes/activity_route') (app);
 require('./routes/explore_route') (app);
