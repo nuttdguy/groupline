@@ -4,17 +4,21 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light
         span.navbar-toggler-icon
 
     div.collapse.navbar-collapse
-        div.navbar.navbar-nav
+        div.nav.navbar-nav.navbar-brand.d-flex.w-50.mr-auto
             div.nav-item
                 a.nav-link(href='/explore') Explore
             div.nav-item
                 a.nav-link(href='/about') About
+
+        div.nav.navbar-nav.mx-auto.w-100.justify-content-center
             if (!user)
                 div.nav-item
                     a.nav-link.navbar-brand(href='/') Name Pending
             else
                 div.nav-item
                     a.nav-link.navbar-brand(href="/user/show")= user.username
+
+        div.nav.navbar-nav.mx-auto.w-50.justify-content-end
             if (!user)
                 div.nav-item
                     a.nav-link(href="/auth/signup") Register
