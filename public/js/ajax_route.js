@@ -2,6 +2,10 @@ $(document).ready(function(){
 
     // CLIENT-SIDE JQUERY / AJAX ROUTES FOR HANDLING POST, PUT, DELETE REQUESTS
 
+  //======================================================
+  // BEGIN == AUTHENTICATION ROUTES
+  //======================================================
+
   $('#signup').click(function(){
     console.log('USER SIGNING UP  ...');
     console.log($('#password').val());
@@ -57,5 +61,9 @@ $(document).ready(function(){
     $('#err-message').text('username and/or password cannot be empty');
     $('#err-message').css({'display': 'block'});
   }
+
+
+
+
 
 });
