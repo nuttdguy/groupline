@@ -69,10 +69,10 @@ $(document).ready(function() {
   }
 
   //======================================================
-  // BEGIN == USER HELPER FUNCTIONS
+  // BEGIN == JQUERY SIMPLE UPLOAD
   //======================================================
 
-  $('input[type=file]').change(function(){
+  $('input[type=file]').change(function() {
 
     $(this).simpleUpload("/ajax/upload.php", {
 
@@ -80,7 +80,7 @@ $(document).ready(function() {
       allowedTypes: ["image/pjpeg", "image/jpeg", "image/png", "image/x-png", "image/gif", "image/x-gif"],
       maxFileSize: 5000000, //5MB in bytes
 
-      start: function(file){
+      start: function (file) {
         //upload started
 
         this.block = $('<div class="block"></div>');
@@ -95,7 +95,7 @@ $(document).ready(function() {
 
         var that = this;
 
-        this.cancelButton.click(function(){
+        this.cancelButton.click(function () {
           that.upload.cancel();
           //now, the cancel callback will be called
         });
@@ -105,12 +105,12 @@ $(document).ready(function() {
 
       },
 
-      progress: function(progress){
+      progress: function (progress) {
         //received progress
         this.progressBar.width(progress + "%");
       },
 
-      success: function(data){
+      success: function (data) {
         //upload successful
 
         this.progressBar.remove();
@@ -130,7 +130,7 @@ $(document).ready(function() {
 
       },
 
-      error: function(error){
+      error: function (error) {
         //upload failed
         this.progressBar.remove();
         this.cancelButton.remove();
@@ -139,15 +139,15 @@ $(document).ready(function() {
         this.block.append(errorDiv);
       },
 
-      cancel: function(){
+      cancel: function () {
         //upload cancelled
-        this.block.fadeOut(400, function(){
+        this.block.fadeOut(400, function () {
           $(this).remove();
         });
       }
 
     });
-
+  });
 
 });
 
