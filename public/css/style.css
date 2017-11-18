@@ -20,8 +20,10 @@ a:hover {
             ERROR STYLES
 =======================================*/
 
-#err-message {
+#err-message,
+#success-message {
     display: none;
+    text-transform: capitalize;
 }
 
 /*=======================================
@@ -64,4 +66,8 @@ label {
     content: ' /';
     color: #95a5a6;
 }
+
+/*=======================================
+        USER FORM STYLES
+=======================================*/
 

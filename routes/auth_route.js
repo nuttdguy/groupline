@@ -18,7 +18,7 @@ module.exports = function (app, passport) {
   //==================================================//
 
   app.get('/auth/signup', function (req, res, next) {
-    res.render('signup', {});
+    res.render('signup', { message: req.flash() });
   });
 
   app.post('/auth/signup', passport.authenticate('local-signup', {

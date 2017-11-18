@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const User = require('../db/models/index').UserProfile;
 
 
 module.exports = (app, passport) => {
@@ -13,11 +14,12 @@ module.exports = (app, passport) => {
     /*                 /USER/                   */
   //==================================================//
 
-  //
+  // GET THE USERS PROFILE PAGE
   app.get('/user', function (req, res, next) {
     console.log("IN USER SHOW ROUTE");
+
     if (req.user) {
-      res.render('./index_user', {user: req.user});
+      res.render('./index_user', {user: req.user });
     } else {
       res.redirect('/');
     }
@@ -25,13 +27,35 @@ module.exports = (app, passport) => {
   });
 
   app.put('/user/update', function(req, res, next) {
-    // TODO :: check if password is empty or new, if new, rehash new password
-    console.log('UPDATING USER =============== ');
-    console.log(req.body);
 
+    let json_user = User.build(JSON.parse(req.body.user));
+    User.find({ where: { username: json_user.username}}).then(user => {
+      user = serializeUser(json_user, user);
+      User.update({
+        username: user.username,
+        password: user.password,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        bio: user.bio,
+        isActive: true
+      }, {where: {
+        userProfileId: user.userProfileId},
+        returning: true
+      }).then((result) => {
+        res.status(200).json({success: 'update successful'})
+      });
 
-
+    })
   });
+
+  function serializeUser(json_user, user ) {
+    user.username = json_user.username;
+    user.password = json_user.password;
+    user.firstName = json_user.firstName;
+    user.lastName = json_user.lastName;
+    user.bio = json_user.bio;
+    return user;
+  }
 
   //==================================================//
     /*                 /USER/SETTING                   */
@@ -140,16 +164,7 @@ module.exports = (app, passport) => {
     res.redirect('/user/activities')
   });
 
-  function isLoggedIn() {
-    // if user is authenticated in the session, carry on
-    if (req.isAuthenticated()) {
-      console.log("IS AUTHENTICATED");
-      return
-    } else {
-      // if they aren't redirect them to the home page
-      res.redirect('/');
-    }
-  }
+
 
 };
 
