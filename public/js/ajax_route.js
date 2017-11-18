@@ -1,16 +1,16 @@
-$(document).ready(function(){
+$(document).ready(function () {
 
-    // CLIENT-SIDE JQUERY / AJAX ROUTES FOR HANDLING POST, PUT, DELETE REQUESTS
+  // CLIENT-SIDE JQUERY / AJAX ROUTES FOR HANDLING POST, PUT, DELETE REQUESTS
 
   //======================================================
   // BEGIN == AUTHENTICATION ROUTES
   //======================================================
 
-  $('#signup').click(function(){
+  $('#signup').click(function () {
     console.log('USER SIGNING UP  ...');
     console.log($('#password').val());
 
-    if ( $('#password').val() === '' || $('#username').val() === '' ) {
+    if ($('#password').val() === '' || $('#username').val() === '') {
 
       displayAuthError();
 
@@ -26,10 +26,10 @@ $(document).ready(function(){
     }
   });
 
-  $('#login').click(function(){
+  $('#login').click(function () {
     console.log('USER LOGGING IN ...');
 
-    if ( $('#password').val() === '' || $('#username').val() === '' ) {
+    if ($('#password').val() === '' || $('#username').val() === '') {
 
       displayAuthError();
 
@@ -46,24 +46,21 @@ $(document).ready(function(){
     }
   });
 
-  $('#logout').click(function(){
-    $.post('/auth/logout', function(){
+  $('#logout').click(function () {
+    $.post('/auth/logout', function () {
       location.reload();  // RELOADS THE CURRENT WINDOW
     });
   });
 
 
   function displayAuthError() {
-    setTimeout(function() {
+    setTimeout(function () {
       $('#err-message').css({'display': 'none'});
     }, 2000);
 
     $('#err-message').text('username and/or password cannot be empty');
     $('#err-message').css({'display': 'block'});
   }
-
-
-
 
 
 });

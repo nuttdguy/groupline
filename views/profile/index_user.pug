@@ -40,18 +40,23 @@ block content
                     // FOR DASHBOARD VIEW
                     // REPLACE CONTENT WITH DATA FROM DATABASE
                     label(for="username") Username
-                    input.form-control#username(type="username" placeholder="username")
+                    input.form-control#username(type="username" placeholder="username" value=user.username)
+
+                    // TODO :: REMOVE USER PASSWORD AFTER VALIDATION
                     label(for="password") Password
-                    input.form-control#password(type="password" placeholder="password")
+                    input.form-control#password(type="password" placeholder="password" value=user.password)
+
                     label(for="firstname") First name
-                    input.form-control#firstname(type="text" placeholder="first name")
+                    input.form-control#firstname(type="text" placeholder="first name" value=user.firstName)
+
                     label(for="lastName") Last name
-                    input.form-control#lastname(type="text" placeholder="last name")
-                    label(for="bio") bio
-                    textarea.form-control#bio(placeholder="some text about you" rows="10" )
+                    input.form-control#lastname(type="text" placeholder="last name" value=user.lastName)
+
+                    label(for="bio") Bio
+                    textarea.form-control#bio(placeholder="some text about you" rows="5" ) #{user.bio}
                     button#updateProfile.btn.btn-dark(type="button") Update
 
-                    
+
                 div.col-md-6.form-group
                     // SETTTINGS FOR SECOND HALF OF PAGE
                     div.text-center

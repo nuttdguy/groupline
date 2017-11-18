@@ -41,10 +41,20 @@ a.tag {
     width: 98%!important;
 }
 
+.form-control, .btn {
+    font-size: 1em;
+    margin: .2em;
+    padding-top: 0;
+    padding-bottom: 0;
+}
 
 /*=======================================
         USER DASHBOARD STYLES
 =======================================*/
+
+label {
+    padding: .14em 0;
+}
 
 .profile a {
     padding-right: .35em;

@@ -14,12 +14,23 @@ module.exports = (app, passport) => {
   //==================================================//
 
   //
-  app.get('/user/show', function (req, res, next) {
+  app.get('/user', function (req, res, next) {
     console.log("IN USER SHOW ROUTE");
-    if (isLoggedIn(req, res, next)) {
-      res.render('./index_user', {user: req.user})
-    };
-    next();
+    if (req.user) {
+      res.render('./index_user', {user: req.user});
+    } else {
+      res.redirect('/');
+    }
+
+  });
+
+  app.put('/user/update', function(req, res, next) {
+    // TODO :: check if password is empty or new, if new, rehash new password
+    console.log('UPDATING USER =============== ');
+    console.log(req.body);
+
+
+
   });
 
   //==================================================//
@@ -129,11 +140,11 @@ module.exports = (app, passport) => {
     res.redirect('/user/activities')
   });
 
-  function isLoggedIn(req, res, next) {
+  function isLoggedIn() {
     // if user is authenticated in the session, carry on
     if (req.isAuthenticated()) {
       console.log("IS AUTHENTICATED");
-      return true
+      return
     } else {
       // if they aren't redirect them to the home page
       res.redirect('/');
