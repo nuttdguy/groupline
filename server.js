@@ -51,7 +51,7 @@ require('./auth/passport')(passport); // PASSPORT HAS TO BE FIRST ROUTE
 require('./routes/auth_route') (app, passport);
 require('./routes/index_route') (app);
 require('./routes/user_route') (app, passport);
-
+require('./routes/upload_route') (app);
 require('./routes/activity_route') (app);
 require('./routes/explore_route') (app);
 

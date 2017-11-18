@@ -32,7 +32,7 @@ block content
                     li.breadcrumb-item.active
                         a Dashboard
 
-            form.row.profile
+            div.row
                 h4#success-message.alert.alert-success.w-100
 
                 // TODO :: DISABLE BUTTON ON VIEW
@@ -42,24 +42,25 @@ block content
                     a#Edit(href="#") Edit
 
                 div.col-md-6.form-group
-                    // FOR DASHBOARD VIEW
-                    // REPLACE CONTENT WITH DATA FROM DATABASE
-                    label(for="username") Username
-                    input.form-control#username(type="username" placeholder="username" value=user.username)
+                    form.profile
+                        // FOR DASHBOARD VIEW
+                        // REPLACE CONTENT WITH DATA FROM DATABASE
+                        label(for="username") Username
+                        input.form-control#username(type="username" placeholder="username" value=user.username)
 
-                    // TODO :: REMOVE USER PASSWORD AFTER VALIDATION
-                    label(for="password") Password
-                    input.form-control#password(type="password" placeholder="password" value=user.password)
+                        // TODO :: REMOVE USER PASSWORD AFTER VALIDATION
+                        label(for="password") Password
+                        input.form-control#password(type="password" placeholder="password" value=user.password)
 
-                    label(for="firstname") First name
-                    input.form-control#firstname(type="text" placeholder="first name" value=user.firstName)
+                        label(for="firstname") First name
+                        input.form-control#firstname(type="text" placeholder="first name" value=user.firstName)
 
-                    label(for="lastName") Last name
-                    input.form-control#lastname(type="text" placeholder="last name" value=user.lastName)
+                        label(for="lastName") Last name
+                        input.form-control#lastname(type="text" placeholder="last name" value=user.lastName)
 
-                    label(for="bio") Bio
-                    textarea.form-control#bio(placeholder="some text about you" rows="5" ) #{user.bio}
-                    button#updateProfile.btn.btn-dark(type="button") Update
+                        label(for="bio") Bio
+                        textarea.form-control#bio(placeholder="some text about you" rows="5" ) #{user.bio}
+                        button#updateProfile.btn.btn-dark(type="button") Update
 
 
                 div.col-md-6.form-group
@@ -68,5 +69,10 @@ block content
                         img.avatar.img-circle(src="//placehold.it/100" alt="avatar")
                         h6 Upload a different photo...
 
-                        input.form-control(type="file")
+                    div.text-right
+                        h4#status
+                        form(action="/upload" enctype="multipart/form-data" method="post" )
+                            input.form-control(type="file" name="profileImg")
+                            button.btn.btn-dark(type="submit") Upload
+
 
