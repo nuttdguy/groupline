@@ -6,9 +6,9 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         field: 'activity_id'
       },
-      activityName: {
+      activityHeading: {
         type: DataTypes.STRING,
-        field: 'activity_name'
+        field: 'activity_heading'
       },
       isActive: {
         type: DataTypes.BOOLEAN,

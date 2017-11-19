@@ -10,6 +10,14 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.TEXT,
       field: 'summary'
     },
+    detailImg: {
+      type: DataTypes.STRING,
+      field: 'detail_img'
+    },
+    detailTitle: {
+      type: DataTypes.STRING,
+      field: 'detail_title'
+    },
     startDate: {
       type: DataTypes.DATE,
       field: 'start_date'
@@ -32,16 +40,25 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     underscored: true,
-    classMethods: {
-    }
+    classMethods: {}
   });
 
-  ActivityDetail.associate = function(models) {
+  ActivityDetail.associate = function (models) {
     ActivityDetail.belongsTo(models.Activity, {
       foreignKey: 'activity_id',
       sourceKey: 'activity_id',
       onDelete: 'cascade',
       onUpdate: 'cascade'
+    });
+
+    ActivityDetail.hasMany(models.ActivityImage, {
+      foreignKey: 'activity_detail_id',
+      targetKey: 'activity_detail_id'
+    });
+
+    ActivityDetail.hasMany(models.ActivityLocation, {
+      foreignKey: 'activity_detail_id',
+      targetKey: 'activity_detail_id'
     })
   };
   return ActivityDetail;

@@ -13,6 +13,14 @@ module.exports = {
         type: Sequelize.TEXT,
         field: 'summary'
       },
+      detailImg: {
+        type: Sequelize.STRING,
+        field: 'detail_img'
+      },
+      detailTitle: {
+        type: Sequelize.STRING,
+        field: 'detail_title'
+      },
       startDate: {
         type: Sequelize.DATE,
         field: 'start_date'
@@ -52,6 +60,12 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
+    queryInterface.removeConstraint('ActivityLocations', 'activity_detail_id').then( () => {
+    });
+
+    queryInterface.removeConstraint('ActivityImages', 'activity_detail_id').then( () => {
+    });
+
     return queryInterface.dropTable('ActivityDetails');
   }
 };

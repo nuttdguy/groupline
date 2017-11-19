@@ -6,12 +6,12 @@ block content
     div.row
         each activity in activities
             div.col-sm-6
-                h2= activity.activityName
+                h2= activity.activityHeading
                 hr
                 div.col-sm-6
                     h3 Summary: 
                     each detail in activity.ActivityDetails
-                        p= activity.ActivityDetails.summary
+                        p= detail.summary
                 div.col-sm-6.justify-content-end
                     each detail in activity.ActivityDetails
                         table.table.table-bordered

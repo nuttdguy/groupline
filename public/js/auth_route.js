@@ -8,74 +8,101 @@ $(document).ready(function () {
 
   //=====================================
   //== SIGNUP
-  $('#signup').click(function () {
+
+  $('#signup').click(function (e) {
+    e.preventDefault();
     console.log('USER SIGNING UP  ...');
     let username = $('#username').val();
     let password = $('#password').val();
 
     if (password === '' || username === '') {
-      displayAuthError();
-      return null
+      displayMessage({fail: 'username and/or password cannot be empty'});
     }
 
-    let user = {
+    let data = {
       "username": username.toLowerCase(),
       "password": password.toLowerCase()
     };
 
-    $.post('/auth/signup', user, function () {
+    $.ajax({
+      url: '/auth/signup',
+      type: 'POST',
+      ContentType: 'application/json; charset=utf-8',
+      dataType: 'json',
+      timeout: 30000,
+      data: data
+    }).done(function(data){
       location = '/auth/login'
+    }).fail(function (data) {
+      data = {fail: 'username exists'};
+      displayMessage(data);
+    }).always(function () {
+      console.log('always');
+    });
+
+  });
+
+  //=====================================
+  //== LOGIN
+
+  $('#login').click(function (e) {
+    e.preventDefault();
+    console.log('USER LOGGING IN ...');
+    let username = $('#username').val();
+    let password = $('#password').val();
+
+    if (password === '' || username === '') {
+      displayMessage({fail: 'username and/or password cannot be empty'});
+      return null
+    }
+
+    let data = {
+      "username": username.toLowerCase(),
+      "password": password.toLowerCase()
+    };
+
+    $.ajax({
+      url: '/auth/login',
+      type: 'POST',
+      ContentType: 'application/json; charset=utf-8',
+      dataType: 'json',
+      timeout: 30000,
+      data: data
+    }).done(function(data){
+      location = '/'
+    }).fail(function (data) {
+      console.log(data);
+      data = {fail: 'Something happened'};
+      displayMessage(data);
+    }).always(function () {
+      console.log('always');
+    });
+
+  });
+
+
+  $('#logout').click(function () {
+    $.post('/auth/logout', function () {
+      location.reload();  // RELOADS THE CURRENT WINDOW
     });
   });
 
-    //=====================================
-    //== LOGIN
-    $('#login').click(function () {
-      console.log('USER LOGGING IN ...');
-      let username = $('#username').val();
-      let password = $('#password').val();
 
-      if (password === '' || username === '') {
-        displayAuthError();
-        return null
-      }
+  //======================================================
+  // BEGIN == ERROR MESSAGES
+  //======================================================
 
-      let user = {
-        "username": username.toLowerCase(),
-        "password": password.toLowerCase()
-      };
+  function displayMessage(data) {
+    setTimeout(function () {
+      $('#fileToUpload').val('');
+      $(':input').val('');
+      $('#message').css({'display': 'none'});
+    }, 4000);
 
-      $.post('/auth/login', user, function () {
-        location = '/'
-      });
-
-    });
-
-
-    $('#logout').click(function () {
-      $.post('/auth/logout', function () {
-        location.reload();  // RELOADS THE CURRENT WINDOW
-      });
-    });
-
-
-    function displayAuthError() {
-      setTimeout(function () {
-        $('#err-message').css({'display': 'none'});
-      }, 4000);
-
-      $('#err-message').text('username and/or password cannot be empty');
-      $('#err-message').css({'display': 'block'});
-    }
-
-    function displaySignupError() {
-      setTimeout(function () {
-        $('#err-message').css({'display': 'none'});
-      }, 4000);
-
-      $('#err-message').text('Username exist. Try a different username');
-      $('#err-message').css({'display': 'block'});
-    }
+    $('#message').text(data.success);
+    $('#message').text(data.fail);
+    $('#message').css({'display': 'block'});
+  }
 
 
 });

@@ -1,6 +1,5 @@
-const express = require('express');
-const router = express.Router();
 const User = require('../db/models/index').UserProfile;
+const ActivityDetail = require('../db/models/index').ActivityDetail;
 
 
 module.exports = (app, passport) => {
@@ -17,12 +16,17 @@ module.exports = (app, passport) => {
   // GET THE USERS PROFILE PAGE
   app.get('/user', function (req, res, next) {
     console.log("IN USER SHOW ROUTE");
-
+    // TEMPORARY USER -- REMOVE AFTER ROUTE IS COMPLETED
+    let user = new User();
+    user.userProfileId = 1;
     if (req.user) {
-      res.render('./index_user', {user: req.user });
-    } else {
-      res.redirect('/');
+      user = req.user;
     }
+    // if (req.user) {
+    res.render('index_dashboard', {user: req.user });
+    // } else {
+    //   res.redirect('/');
+    // }
 
   });
 
@@ -57,8 +61,9 @@ module.exports = (app, passport) => {
     return user;
   }
 
+
   //==================================================//
-    /*                 /USER/SETTING                   */
+  /*                 /USER/SETTING                   */
   //==================================================//
 
   app.get('/user/setting', function (req, res, next) {
@@ -83,7 +88,8 @@ module.exports = (app, passport) => {
     // TODO :: determine view to display
     // TODO :: in view, make sure delete only shows on owned activities
     // TODO :: in view, make sure update only available on owned activities
-    res.render('/user/activities')
+    let detail = new ActivityDetail();
+    res.render('index_dashboard', {activity: detail})
   });
 
 

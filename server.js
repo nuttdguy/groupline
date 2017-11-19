@@ -28,7 +28,7 @@ app.set('view engine', 'pug'); // SET VIEW ENGINE
 app.use(logger('dev')); // ENABLE LOGGING
 app.use(cookieParser()); // READ COOKIES (REQUIRED FOR AUTH)
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, '/public')));
 

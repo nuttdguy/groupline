@@ -47,7 +47,7 @@ module.exports = function (passport) {
       process.nextTick(function () {
 
         if (username === '' || password === '') {
-          done(null, false, {message: 'You can\'t leave username or password empty'});
+          return done(null, false, {fail: 'You can\'t leave username or password empty'});
         }
 
         // find a user whose username is the same as the forms username
@@ -58,17 +58,18 @@ module.exports = function (passport) {
 
           // check to see if theres already a user with that username
           if (user) {
-            done(null, false, {message: 'That username is already taken.'});
+            return done(null, false, {fail: 'That username is already taken.'});
           } else {
 
             // if there is no user with that username
             // create the user
 
             User.create({username: username}).then((newUser) => {
+              console.log(newUser);
               newUser.password = newUser.generateHash(password);
 
               newUser.save({}).then(() => {
-                done(null, newUser, {message: 'Your account was created.'});
+                return done(null, newUser, {success: 'Your account was created.'});
               });
             });
 
@@ -99,7 +100,7 @@ module.exports = function (passport) {
       password = req.body.password;
 
       if (username === '' || password === '') {
-        done(null, false, {message: 'You have to enter a username and/or password'});
+        return done(null, false, {fail: 'You have to enter a username and/or password'});
       } // req.flash is the way to set flashdata using connect-flash
 
       // console.log('THIS IS IN PASSPORT.JS LOGGING IN');
@@ -107,17 +108,20 @@ module.exports = function (passport) {
         where: {username: username}
       }).then(user => {
         console.log('THIS IS IN PASSPORT.JS FOUND USER');
-        console.log(user);
         // console.log(user);
         // if there are any errors, return the error before anything else
         // if no user is found, return the message
         if (!user) {
-          done(null, false, {message: 'Oops, no user found.'});
+          return done(null, false, {fail: 'Oops, no user found.'});
+        } // req.flash is the way to set flashdata using connect-flash
+
+        if (user === null || user === undefined) {
+          return done(null, false, {fail: 'Oops, no user found.'});
         } // req.flash is the way to set flashdata using connect-flash
 
         // if the user is found but the password is wrong
         if (!user.validatePassword(password)) {
-          done(null, false, {message: 'Oops! Wrong password or username.'});
+          return done(null, false, {fail: 'Oops! Wrong password or username.'});
           // create the loginMessage and save it to session as flashdata
         }
 
