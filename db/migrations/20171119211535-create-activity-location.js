@@ -47,8 +47,7 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    queryInterface.removeConstraint('ActivityLocations', 'activity_detail_id').then( () => {
-    });
+
     return queryInterface.dropTable('ActivityLocations');
   }
 };

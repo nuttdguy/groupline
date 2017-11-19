@@ -33,15 +33,13 @@ module.exports = {
         onUpdate: 'cascade',
         field: 'activity_detail_id',
         references: {
-          model: 'ActivitiesDetails',
+          model: 'ActivityDetails',
           key: 'activity_detail_id'
         }
       }
     });
   },
   down: (queryInterface, Sequelize) => {
-    queryInterface.removeConstraint('ActivityImages', 'activity_detail_id').then( () => {
-    });
 
     return queryInterface.dropTable('ActivityImages');
   }
