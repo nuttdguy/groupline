@@ -3,7 +3,8 @@ extends ./layout
 //- include navbar
 
 block content
-    h1=title
+    h1(style="text-align: center")=activities.activityName
+    br
     //- p=activities.Activity
     //- p=activities.isActive
     //- if (activities)
@@ -32,12 +33,40 @@ block content
     //-                 li=detail.maxActor
 
     div.row.justify-content-center
-        div.col-sm-5
+        div.col-sm-6
+            
+    
+    div.row.justify-content-center
+        div.col-sm-4
             img.img-fluid(src="../img/testimg.png")
             div.categories
-                //- each tags in activities.ActivityTags
+            p Tags:
+            each category in activities.ActivityCategories
+                button.btn.btn-outline-primary(href="#")=category.categoryName
                 //-    button.btn.btn-outline-primary(href="#")=tags.activityTagName
         div.col-sm-6
+            //- This is where the summary would be
             p Lorem ipsum dolor sit amet, lorem aeque vis ei, ex assum dicit est. Ne quo debitis delectus mediocrem. His omnes affert appetere te, graece utamur ex sit. Vim cu mucius verterem. Abhorreant incorrupte quo ad, ad mel tacimates dissentiet.
+    hr.style1
 
-        hr
+    div.row
+        div.col-sm-6
+            each detail in activities.ActivityDetails
+                table.table.table-bordered
+                    thead
+                        th(colspan="2") Details
+                    tbody
+                        tr
+                            th(scope="row") Start Date
+                            td= detail.startDate
+                        tr
+                            th(scope="row") End Date
+                            td= detail.endDate
+                        tr
+                            th(scope="row") Min Participants
+                            td= detail.min_actor
+                        tr
+                            th(scope="row") Max Participants
+                            td= detail.max_actor
+                    
+                
