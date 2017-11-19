@@ -9,6 +9,10 @@ module.exports = {
         type: Sequelize.INTEGER,
         field: 'activity_detail_id'
       },
+      summary: {
+        type: Sequelize.TEXT,
+        field: 'summary'
+      },
       startDate: {
         type: Sequelize.DATE,
         field: 'start_date'

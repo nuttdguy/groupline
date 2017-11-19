@@ -50,11 +50,11 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    queryInterface.removeConstraint('UserProfiles', 'user_profile_id').then( () => {
-    });
-
-    queryInterface.removeConstraint('Activities', 'activity_id').then( () => {
-    });
+    // queryInterface.removeConstraint('UserProfiles', 'user_profile_id').then( () => {
+    // });
+    //
+    // queryInterface.removeConstraint('Activities', 'activity_id').then( () => {
+    // });
 
     return queryInterface.dropTable('UserProfiles');
   }

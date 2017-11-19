@@ -6,6 +6,10 @@ module.exports = (sequelize, DataTypes) => {
       field: 'activity_detail_id',
       primaryKey: true
     },
+    summary: {
+      type: DataTypes.TEXT,
+      field: 'summary'
+    },
     startDate: {
       type: DataTypes.DATE,
       field: 'start_date'

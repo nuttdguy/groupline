@@ -1,0 +1,33 @@
+div.col-md-6.form-group
+    form.profile
+        // FOR DASHBOARD VIEW
+        // REPLACE CONTENT WITH DATA FROM DATABASE
+        label(for="username") Username
+        input.form-control#username(type="username" placeholder="username" value=user.username)
+
+        // TODO :: REMOVE USER PASSWORD AFTER VALIDATION
+        label(for="password") Password
+        input.form-control#password(type="password" placeholder="password" value=user.password)
+
+        label(for="firstname") First name
+        input.form-control#firstname(type="text" placeholder="first name" value=user.firstName)
+
+        label(for="lastName") Last name
+        input.form-control#lastname(type="text" placeholder="last name" value=user.lastName)
+
+        label(for="bio") Bio
+        textarea.form-control#bio(placeholder="some text about you" rows="5" ) #{user.bio}
+        button#updateProfile.btn.btn-dark(type="button") Update
+
+
+div.col-md-6.form-group
+    // SETTTINGS FOR SECOND HALF OF PROFILE PAGE
+    div.avatar.text-center
+        img.avatar-img.img-circle(src=user.profileUrl alt="avatar")
+        h6 Upload a different photo...
+
+    div.text-right
+        h4#status
+        form#uploadForm(action="/upload" method="POST" enctype="multipart/form-data")
+            input#fileToUpload.form-control(type="file" name="profileImg")
+            button.btn.btn-dark(type="submit") Upload

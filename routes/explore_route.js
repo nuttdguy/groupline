@@ -9,7 +9,34 @@ const ActivityDetail = require('../db/models/index').ActivityDetail;
 module.exports = (app) => {
 
   app.get('/explore', function (req, res, next) {
-    res.render('explore', {title: 'Explore', user: req.user})
+    Activity.findAll({
+        include: [{
+          model: ActivityCategory,
+          as: 'ActivityCategories'
+        },
+          {
+            model: ActivityTag,
+            as: 'ActivityTags'
+          },
+          {
+            model: ActivityDetail,
+            as: 'ActivityDetails'
+          }]
+      }
+    )
+      .then((activities) => {
+        console.log('========================');
+        // console.log(JSON.stringify(activities));
+        console.log(JSON.parse(JSON.stringify(activities)));
+        activities = JSON.parse(JSON.stringify(activities))[0];
+        res.render('explore', {
+          title: 'Explore',
+          activities: activities,
+          activityDetails: activities.ActivityDetails,
+          user: req.user
+        });
+      });
+
   });
 
   /* GET home page. */
