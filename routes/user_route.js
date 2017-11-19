@@ -88,8 +88,9 @@ module.exports = (app, passport) => {
     // TODO :: determine view to display
     // TODO :: in view, make sure delete only shows on owned activities
     // TODO :: in view, make sure update only available on owned activities
-    let detail = new ActivityDetail();
-    res.render('index_dashboard', {activity: detail})
+
+
+    res.render('index_dashboard', {activity: '#'})
   });
 
 
