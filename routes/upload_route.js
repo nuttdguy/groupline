@@ -35,12 +35,16 @@ module.exports = (app) => {
       }
 
       // UPDATE THE USER'S PROFILE IMAGE URL
-      User.findById(userId).then(function(user) {
-        user.update({ profileUrl: data.location });
-        res.send({success: 'Upload Successful'});
+      User.update({
+          profileUrl: data.Location
+        }, { where: {
+          userProfileId: userId},
+          returning: true
+        }).then(function(user) {
+          console.log(user);
+          res.send({success: 'Upload Successful'});
+        });
       })
-
-    });
 
   });
 
