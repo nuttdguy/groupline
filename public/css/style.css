@@ -20,7 +20,7 @@ a:hover {
             ERROR STYLES
 =======================================*/
 
-#err-message,
+#message,
 #success-message {
     display: none;
     text-transform: capitalize;

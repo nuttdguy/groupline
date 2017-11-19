@@ -19,11 +19,17 @@ module.exports = function (app, passport) {
     res.render('signup', {message: req.flash('message')});
   });
 
-  app.post('/auth/signup', passport.authenticate('local-signup', {
-    successRedirect: '/auth/login', // redirect to the secure profile section
-    failureRedirect: '/auth/signup', // redirect back to the signup page if there is an error
-    failureFlash: true
-  }));
+  app.post('/auth/signup', function(req, res, next) {
+    passport.authenticate('local-signup', function(err, user, info) {
+      if (err) { return next(err); }
+      if (!user) { return res.redirect('/auth/signup'); }
+
+      req.logIn(user, function(err) {
+        if (err) { return next(err); }
+        return res.json({success: 'Registration successful'});
+      });
+    })(req, res, next);
+  });
 
   //==================================================//
   /*                  /AUTH/LOGIN                 */
@@ -35,11 +41,18 @@ module.exports = function (app, passport) {
     res.render('login', {message: req.flash('message')});
   });
 
-  app.post('/auth/login', passport.authenticate('local-login', {
-    successRedirect: '/', // redirect to the secure profile section
-    failureRedirect: '/auth/login', // redirect back to the login page if there is an error
-    failureFlash: true
-  }));
+  app.post('/auth/login',  function(req, res, next) {
+    passport.authenticate('local-login', function(err, user, info) {
+        if (err) { return next(err); }
+        if (!user) { return res.redirect('/auth/login'); }
+
+        req.logIn(user, function(err) {
+          if (err) { return next(err); }
+          return res.json({success: 'Login successful'});
+        });
+      })(req, res, next);
+  });
+
 
   //==================================================//
   /*                  /AUTH/LOGIN                 */
