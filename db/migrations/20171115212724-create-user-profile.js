@@ -25,6 +25,10 @@ module.exports = {
         type: Sequelize.STRING,
         field: 'last_name'
       },
+      profileUrl: {
+        type: Sequelize.STRING,
+        field: 'profile_url'
+      },
       bio: {
         type: Sequelize.TEXT,
         field: 'bio'

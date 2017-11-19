@@ -11,7 +11,7 @@ module.exports = function (passport) {
   // USED TO DESERIALIZE USER -> ID MUST MATCH MODEL PK
   passport.deserializeUser(function (userProfileId, done) {
     console.log('DESERIALIZE USER ========== ');
-    User.findById(userProfileId).then(user => {
+    User.findById(userProfileId).then((user) => {
       done(null, user);
     });
   });
@@ -34,31 +34,31 @@ module.exports = function (passport) {
       usernameField: 'username',
       passwordField: 'password',
       passReqToCallback: true, // allows us to pass back the entire request to the callback
-      callbackURL: '/'
     },
     function (req, username, password, done) {
       // asynchronous
       // User.findOne wont fire unless data is sent back
+      console.log(req.body.username);
+      console.log(req.body.password);
+      // console.log(username, password);
+      username = req.body.username;
+      password = req.body.password;
 
-      console.log(username, password);
       process.nextTick(function () {
 
         if (username === '' || password === '') {
-          return done(null, false, req.flash('message', 'You can\'t leave username or password empty'));
+          done(null, false, {message: 'You can\'t leave username or password empty'});
         }
 
         // find a user whose username is the same as the forms username
         // we are checking to see if the user trying to login already exists
         User.find({
           where: {username: username}
-        }).then((err, user) => {
-          // if there are any errors, return the error
-          if (err)
-            return done(err);
+        }).then((user) => {
 
           // check to see if theres already a user with that username
           if (user) {
-            return done(null, false, req.flash('message', 'That username is already taken.'));
+            done(null, false, {message: 'That username is already taken.'});
           } else {
 
             // if there is no user with that username
@@ -68,7 +68,7 @@ module.exports = function (passport) {
               newUser.password = newUser.generateHash(password);
 
               newUser.save({}).then(() => {
-                return done(null, newUser, req.flash('message', 'Your account was created.'));
+                done(null, newUser, {message: 'Your account was created.'});
               });
             });
 
@@ -91,13 +91,15 @@ module.exports = function (passport) {
       usernameField: 'username',
       passwordField: 'password',
       passReqToCallback: true, // allows us to pass back the entire request to the callback
-      callbackURL: '/'
     },
-    function (req, username, password, done) { // callback with email and password from our form
-      // find a user whose email is the same as the forms email
+    function (req, username, password, done) { // callback with username and password from our form
+      // find a user whose username is the same as the forms username
       // we are checking to see if the user trying to login already exists
+      username = req.body.username;
+      password = req.body.password;
+
       if (username === '' || password === '') {
-        return done(null, false, req.flash('message', 'You have to enter a username and/or password'));
+        done(null, false, {message: 'You have to enter a username and/or password'});
       } // req.flash is the way to set flashdata using connect-flash
 
       // console.log('THIS IS IN PASSPORT.JS LOGGING IN');
@@ -110,16 +112,16 @@ module.exports = function (passport) {
         // if there are any errors, return the error before anything else
         // if no user is found, return the message
         if (!user) {
-          return done(null, false, req.flash('message', 'Oops, no user found.'));
+          done(null, false, {message: 'Oops, no user found.'});
         } // req.flash is the way to set flashdata using connect-flash
 
         // if the user is found but the password is wrong
         if (!user.validatePassword(password)) {
-          return done(null, false, req.flash('message', 'Oops! Wrong password or username.'));
+          done(null, false, {message: 'Oops! Wrong password or username.'});
           // create the loginMessage and save it to session as flashdata
         }
 
-        return done(null, user); // RETURN SUCCESSFUL USER
+        done(null, user); // RETURN SUCCESSFUL USER
       });
 
     }));
