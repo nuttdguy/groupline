@@ -1,0 +1,34 @@
+extends ./layout
+
+//- include navbar
+
+block content
+    div.row
+        each activity in activities
+            div.col-sm-6
+                h2= activity.activityName
+                hr
+                div.col-sm-6
+                    h3 Summary: 
+                    each detail in activity.ActivityDetails
+                        p= activity.ActivityDetails.summary
+                div.col-sm-6.justify-content-end
+                    each detail in activity.ActivityDetails
+                        table.table.table-bordered
+                            tbody
+                                tr
+                                    th(scope="row") Start Date
+                                    td= detail.startDate
+                                tr
+                                    th(scope="row") End Date
+                                    td= detail.endDate
+                                tr
+                                    th(scope="row") Min Participants
+                                    td= detail.minActor
+                                tr
+                                    th(scope="row") Max Participants
+                                    td= detail.maxActor
+                        button.btn.btn-outline-primary
+                            a(href="/explore/" + activity.activityId) Details
+
+            
