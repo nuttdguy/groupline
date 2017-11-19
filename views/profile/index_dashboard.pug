@@ -86,14 +86,14 @@ block content
 
                 div.col-md-6.form-group
                     // SETTTINGS FOR SECOND HALF OF PROFILE PAGE
-                    div.detail.text-center
-                        img.detail-img.img-circle(src=activity.detailImg alt="activity image")
+                    div.activity.text-center
+                        img.activity-img.img-circle(src=activity.imageUrl alt="activity image")
                         h6 Upload a different photo...
 
                     div.text-right
                         h4#status
                         form#uploadForm(action="/upload" method="POST" enctype="multipart/form-data")
-                            input#fileToUpload.form-control(type="file" name="detailImg")
+                            input#fileToUpload.form-control(type="file" name="imageUrl")
                             button.btn.btn-dark(type="submit") Upload
 
 

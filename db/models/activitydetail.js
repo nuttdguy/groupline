@@ -49,6 +49,16 @@ module.exports = (sequelize, DataTypes) => {
       sourceKey: 'activity_id',
       onDelete: 'cascade',
       onUpdate: 'cascade'
+    });
+
+    ActivityDetail.hasMany(models.ActivityImage, {
+      foreignKey: 'activity_detail_id',
+      targetKey: 'activity_detail_id'
+    });
+
+    ActivityDetail.hasMany(models.ActivityLocation, {
+      foreignKey: 'activity_detail_id',
+      targetKey: 'activity_detail_id'
     })
   };
   return ActivityDetail;
