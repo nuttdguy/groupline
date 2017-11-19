@@ -71,8 +71,11 @@ block content
 
                     div.text-right
                         h4#status
-                        form(action="/upload" enctype="multipart/form-data" method="post" )
-                            input.form-control(type="file" name="profileImg")
+                        form#uploadForm(action="/upload" method="POST" enctype="multipart/form-data")
+                            input#fileToUpload.form-control(type="file" name="profileImg")
                             button.btn.btn-dark(type="submit") Upload
+                        //form(action="/upload" enctype="multipart/form-data" method="post" )
+                        //    input.form-control(type="file" name="profileImg")
+                        //    button.btn.btn-dark(type="submit") Upload
 
 

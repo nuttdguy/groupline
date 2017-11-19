@@ -8,9 +8,6 @@ module.exports = function (app, passport) {
   /*                 /AUTH/                   */
   //==================================================//
 
-  app.get('/auth', function (req, res, next) {
-    res.render('auth_index', {title: 'TEST', user: user});
-  });
 
 
   //==================================================//
