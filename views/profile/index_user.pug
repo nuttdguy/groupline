@@ -65,14 +65,17 @@ block content
 
                 div.col-md-6.form-group
                     // SETTTINGS FOR SECOND HALF OF PAGE
-                    div.text-center
-                        img.avatar.img-circle(src="//placehold.it/100" alt="avatar")
+                    div.avatar.text-center
+                        img.avatar-img.img-circle(src=user.profileUrl alt="avatar")
                         h6 Upload a different photo...
 
                     div.text-right
                         h4#status
-                        form(action="/upload" enctype="multipart/form-data" method="post" )
-                            input.form-control(type="file" name="profileImg")
+                        form#uploadForm(action="/upload" method="POST" enctype="multipart/form-data")
+                            input#fileToUpload.form-control(type="file" name="profileImg")
                             button.btn.btn-dark(type="submit") Upload
+                        //form(action="/upload" enctype="multipart/form-data" method="post" )
+                        //    input.form-control(type="file" name="profileImg")
+                        //    button.btn.btn-dark(type="submit") Upload
 
 

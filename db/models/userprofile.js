@@ -27,6 +27,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         field: 'last_name'
       },
+      profileUrl: {
+        type: DataTypes.STRING,
+        field: 'profile_url'
+      },
       bio: {
         type: DataTypes.TEXT,
         field: 'bio'
