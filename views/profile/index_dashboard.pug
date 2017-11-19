@@ -1,0 +1,100 @@
+include ../layout
+
+block content
+
+    div.row
+        div.col-md-2
+            ul.list-group
+                li.list-group-item
+                    span.glyphicon.glyphicon-list-alt
+                        a.tag.tag-default.tag-pill.float-xs-right(href="#") Dashboard
+                li.list-group-item
+                    span.glyphicon.glyphicon-list-alt
+                        a.tag.tag-default.tag-pill.float-xs-right(href="#") Activities
+                li.list-group-item
+                    span.glyphicon.glyphicon-list-alt
+                        a.tag.tag-default.tag-pill.float-xs-right(href="#") Favorites
+                li.list-group-item
+                    span.glyphicon.glyphicon-envelope
+                        a.tag.tag-default.tag-pill.float-xs-right(href="#") Profile
+                li.list-group-item
+                    span.glyphicon.glyphicon-cog
+                        a.tag.tag-default.tag-pill.float-xs-right(href="#") Settings
+
+
+        //- (NOTES) ALL ROUTES MARKED WITH AN 'ID' NAME ARE JQUERY ROUTES
+        //- (TODO) :: ADD JQUERY FORM VALIDATION
+        div.col-md-10
+            div.row
+                ol.breadcrumb.mr-auto.w-100
+                    li.breadcrumb-item
+                        a(href="/") Home
+                    li.breadcrumb-item.active
+                        // a Dashboard
+                        a Activities
+
+            div.row
+                h4#success-message.alert.alert-success.w-100
+
+                // TODO :: DISABLE BUTTON ON VIEW
+                // TODO :: ENABLE FORM ON SELECT EDIT
+                legend
+                    a#View(href="#") View
+                    a#Edit(href="#") Edit
+                    a#New(href="#") New
+
+
+                // TODO :: ADD CONDITIONAL TO DISPLAY DASHBOARD
+                // UNCOMMENT DASHBOARD COMMENT TO SHOW
+                // include dashboard
+
+                // TODO :: ADD CONDITIONAL TO DISPLAY ACTIVITIES
+
+                div.col-md-6.form-group
+                    form.activity
+                        // FOR DASHBOARD VIEW
+                        // REPLACE CONTENT WITH DATA FROM DATABASE
+                        label(for="activityHeading") Heading
+                            input.form-control#activityHeading(type="text"
+                                placeholder="Drinking Excitement" value=activity.activityHeading)
+
+                        // TODO :: CONVERT INTO A DROP DOWN
+                        label(for="activityCategoryName") Category
+                            input.form-control#activityCategoryName(type="text"
+                            placeholder="Drinking Excitement" value=activity.activityCategoryName)
+
+                        label(for="start") Listing Start Date
+                            input.form-control#start(type="date"
+                            placeholder="Let's meet and drink" value=activity.startDate)
+
+                        label(for="end") Listing End Date
+                            input.form-control#end(type="date"
+                            placeholder="Let's meet and drink" value=activity.endDate)
+
+                        label(for="minActor") Min. People
+                            input.form-control#minActor(type="number" min=1 value=activity.minActor)
+                        label(for="maxActor") max. People
+                            input.form-control#maxActor(type="number" min=2 value=activity.maxActor)
+
+                        label(for="title") Details Title
+                            textarea.form-control#title(type="text" rows="3" cols="50")=activity.detailTitle
+
+                        label(for="summary") Summary
+                            textarea.form-control#summary(type="text" rows="3" cols="50")=activity.summary
+                        button#newActivity.btn.btn-dark(type="submit") Add Activity
+
+
+                div.col-md-6.form-group
+                    // SETTTINGS FOR SECOND HALF OF PROFILE PAGE
+                    div.detail.text-center
+                        img.detail-img.img-circle(src=activity.detailImg alt="activity image")
+                        h6 Upload a different photo...
+
+                    div.text-right
+                        h4#status
+                        form#uploadForm(action="/upload" method="POST" enctype="multipart/form-data")
+                            input#fileToUpload.form-control(type="file" name="detailImg")
+                            button.btn.btn-dark(type="submit") Upload
+
+
+

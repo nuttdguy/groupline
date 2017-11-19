@@ -51,8 +51,33 @@ a.tag {
 }
 
 /*=======================================
+     IMAGE DASHBOARD STYLES
+=======================================*/
+
+.avatar,
+.detailUrl-img {
+    padding-top: 2.5em;
+    padding-bottom: 2.5em;
+}
+
+.avatar-img,
+.detailUrl-img {
+    max-height: 224px;
+    max-width: 176px;
+    min-height: 96px;
+    min-width: 84px;
+    width: 176px;
+    height: 224px;
+}
+
+
+/*=======================================
         USER DASHBOARD STYLES
 =======================================*/
+
+.breadcrumb {
+    margin-bottom: 1em;
+}
 
 label {
     padding: .14em 0;
@@ -67,25 +92,35 @@ label {
     color: #95a5a6;
 }
 
+legend {
+    margin-bottom: 1em;
+    padding-bottom: .5em;
+}
+
+legend a:after {
+    content: ' / ';
+    color: #95a5a6;
+}
+
+legend a:last-child:after {
+    content: '';
+    color: #95a5a6;
+}
+
 #status {
     display: none;
 }
 
-.avatar {
-    padding-top: 2.5em;
-    padding-bottom: 2.5em;
-}
-
-.avatar-img {
-    max-height: 224px;
-    max-width: 176px;
-    min-height: 96px;
-    min-width: 84px;
-    width: 176px;
-    height: 224px;
-}
 
 /*=======================================
-        USER FORM STYLES
+     ACTIVITY DASHBOARD STYLES
 =======================================*/
+
+.activity {
+
+}
+
+
+
+
 

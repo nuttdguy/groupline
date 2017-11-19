@@ -1,18 +1,18 @@
 ﻿﻿-- SEED DATA FOR ACTIVITIES
 
-INSERT INTO public."Activities"(activity_id, activity_name, is_active, created_at, updated_at)
+INSERT INTO public."Activities"(activity_id, activity_heading, is_active, created_at, updated_at)
 VALUES (1, 'Happy hour at Jacks', true, now(), now());
 
-INSERT INTO public."Activities"(activity_id, activity_name, is_active, created_at, updated_at)
+INSERT INTO public."Activities"(activity_id, activity_heading, is_active, created_at, updated_at)
 VALUES (2, 'Mountain Climbing at Mt. Everest', true, now(), now());
 
-INSERT INTO public."Activities"(activity_id, activity_name, is_active, created_at, updated_at)
+INSERT INTO public."Activities"(activity_id, activity_heading, is_active, created_at, updated_at)
 VALUES (3, 'Salsa Dancing at Samba', true, now(), now());
 
-INSERT INTO public."Activities"(activity_id, activity_name, is_active, created_at, updated_at)
+INSERT INTO public."Activities"(activity_id, activity_heading, is_active, created_at, updated_at)
 VALUES (4, 'VR wednesdays', true, now(), now());
 
-INSERT INTO public."Activities"(activity_id, activity_name, is_active, created_at, updated_at)
+INSERT INTO public."Activities"(activity_id, activity_heading, is_active, created_at, updated_at)
 VALUES (5, 'Lets pair program', true, now(), now());
 
 -- SEED DATA FOR ACTIVITIES_CATEGORIES

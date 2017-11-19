@@ -13,6 +13,14 @@ module.exports = {
         type: Sequelize.TEXT,
         field: 'summary'
       },
+      detailImg: {
+        type: Sequelize.STRING,
+        field: 'detail_img'
+      },
+      detailTitle: {
+        type: Sequelize.STRING,
+        field: 'detail_title'
+      },
       startDate: {
         type: Sequelize.DATE,
         field: 'start_date'

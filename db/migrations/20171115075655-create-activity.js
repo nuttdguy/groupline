@@ -9,9 +9,9 @@ module.exports = {
         type: Sequelize.INTEGER,
         field: 'activity_id'
       },
-      activityName: {
+      activityHeading: {
         type: Sequelize.STRING,
-        field: 'activity_name'
+        field: 'activity_heading'
       },
       isActive: {
         type: Sequelize.BOOLEAN,
