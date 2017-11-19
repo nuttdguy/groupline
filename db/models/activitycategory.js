@@ -1,10 +1,10 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var ActivityCategory = sequelize.define('ActivityCategory', {
-      activityCategoriesId: {
+      activityCategoryId: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        field: 'activity_categories_id'
+        field: 'activity_category_id'
       },
       categoryName: {
         type: DataTypes.STRING,

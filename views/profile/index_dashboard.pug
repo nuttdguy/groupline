@@ -59,8 +59,9 @@ block content
 
                         // TODO :: CONVERT INTO A DROP DOWN
                         label(for="activityCategoryName") Category
-                            input.form-control#activityCategoryName(type="text"
-                            placeholder="Drinking Excitement" value="Select category")
+                            select.form-control#activityCategoryName
+                                each category in categories
+                                    option(value=category.activityCategoryId)=category.categoryName
 
                         label(for="start") Listing Start Date
                             input.form-control#start(type="date"

@@ -2,12 +2,12 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('ActivityCategories', {
-      activityCategoriesId: {
+      activityCategoryId: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
-        field: 'activity_categories_id'
+        field: 'activity_category_id'
       },
       categoryName: {
         type: Sequelize.STRING,

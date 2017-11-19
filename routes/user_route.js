@@ -1,5 +1,6 @@
 const User = require('../db/models/index').UserProfile;
 const ActivityDetail = require('../db/models/index').ActivityDetail;
+const Categories = require('../db/models/index').ActivityCategory;
 
 
 module.exports = (app, passport) => {
@@ -13,7 +14,7 @@ module.exports = (app, passport) => {
     /*                 /USER/                   */
   //==================================================//
 
-  // GET THE USERS PROFILE PAGE
+  // GET USERS PROFILE
   app.get('/user', function (req, res, next) {
     console.log("IN USER SHOW ROUTE");
     // TEMPORARY USER -- REMOVE AFTER ROUTE IS COMPLETED
@@ -30,6 +31,7 @@ module.exports = (app, passport) => {
 
   });
 
+  // UPDATE USER PROFILE
   app.put('/user/update', function(req, res, next) {
 
     let json_user = User.build(JSON.parse(req.body.user));
@@ -88,9 +90,10 @@ module.exports = (app, passport) => {
     // TODO :: determine view to display
     // TODO :: in view, make sure delete only shows on owned activities
     // TODO :: in view, make sure update only available on owned activities
+    Categories.findAll({ActivityCategoryId: true, ActivityCategoryName: true}).then(categories => {
+      res.render('index_dashboard', {categories: categories})
+    });
 
-
-    res.render('index_dashboard', {activity: '#'})
   });
 
 
