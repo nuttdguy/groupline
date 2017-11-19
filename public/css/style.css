@@ -71,6 +71,20 @@ label {
     display: none;
 }
 
+.avatar {
+    padding-top: 2.5em;
+    padding-bottom: 2.5em;
+}
+
+.avatar-img {
+    max-height: 224px;
+    max-width: 176px;
+    min-height: 96px;
+    min-width: 84px;
+    width: 176px;
+    height: 224px;
+}
+
 /*=======================================
         USER FORM STYLES
 =======================================*/
