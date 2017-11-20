@@ -6,9 +6,10 @@ block content
 
     div.row
         form(method="GET", action="/explore/search", class="form-inline")
-            input(type="text", name="term")
+            input(name="term")
             select(name="search")
-                option(value="activityHeading") title
+                option(value="activityHeading") Title
+                option(value="ActivityDetails.minActor") Min Participants 
                 
     div.row
         each activity in activities

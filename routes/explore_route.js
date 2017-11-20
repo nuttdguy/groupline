@@ -43,7 +43,10 @@ module.exports = (app) => {
     //   res.send(req.query)
         var search = req.query.search
         var term = req.query.term
+
     Activity.findAll({
+        // Below won't work with items inside ActivityCategories
+        where: { [search] : term },
         include: [{
               model: ActivityCategory,
               as: 'ActivityCategories'
@@ -55,10 +58,8 @@ module.exports = (app) => {
               {
                 model: ActivityDetail,
                 as: 'ActivityDetails'
-        }],
-        where: {[search] : term}
-      }
-    )
+        }]
+    })
       .then((activities) => {
         console.log('========================');
         // console.log(JSON.stringify(activities));
