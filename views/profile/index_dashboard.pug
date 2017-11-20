@@ -46,60 +46,32 @@ block content
 
                 // TODO :: ADD CONDITIONAL TO DISPLAY DASHBOARD
                 // UNCOMMENT DASHBOARD COMMENT TO SHOW
-                // include dashboard
+                // include profile_dashboard
 
                 // TODO :: ADD CONDITIONAL TO DISPLAY ACTIVITIES
+                // include activities_new
                 form.activity
-                    div.col-md-6.form-group
-                        // FOR DASHBOARD VIEW
-                        // REPLACE CONTENT WITH DATA FROM DATABASE
-                        label(for="activityHeading") Heading
-                            input.form-control#activityHeading(type="text"
-                                placeholder="Drinking Excitement" value='Come enjoy VR with us!')
-
-                        label(for="activityCategoryName") Category
-                            select.form-control#activityCategoryName
-                                each category in categories
-                                    option(value=category.activityCategoryId)=category.categoryName
-
-                        label(for="start") Listing Start Date
-                            input.form-control#start(type="date"
-                            placeholder="Let's meet and drink" )
-
-                        label(for="end") Listing End Date
-                            input.form-control#end(type="date"
-                            placeholder="Let's meet and drink" )
-
-                        label(for="minActor") Min. People
-                            input.form-control#minActor(type="number" min=1 )
-                        label(for="maxActor") max. People
-                            input.form-control#maxActor(type="number" min=2 )
-
-                        label(for="summary") Summary
-                            textarea.form-control#summary(rows="3" cols="50")
-
-                        label(for="title") Details
-                            textarea.form-control#title(rows="3" cols="50")
-
-                        button#newActivity.btn.btn-dark(type="submit") Add Activity
-
-
-                    div.col-md-6.form-group
-                        // SETTTINGS FOR SECOND HALF OF PROFILE PAGE
-                        div.activity
-                            label(for="activityLocation") Location
-                                input.form-control#activityLocation(type="text"
-                                placeholder="2444 VR Drive, SF, CA, 98411" )
-
-                        div.activity.text-center
-                            img.activity-img.img-circle(src="http://via.placeholder.com/350x150" alt="activity image")
-                            h6 Upload a different photo...
-
-                        div.text-right
-                            h4#status
-                            form#uploadForm(action="/upload" method="POST" enctype="multipart/form-data")
-                                input#fileToUpload.form-control(type="file" name="imageUrl")
-                                button.btn.btn-dark(type="submit") Upload
-
+                    div.col-md-12
+                        table.table.table-striped.table-hover.table-bordered
+                            thead.thead-dark
+                                tr
+                                    th ID
+                                    th Heading
+                                    th Active
+                                    th Create Date
+                                    th Edit
+                                    th Delete
+                            tbody
+                            each activity in activitiesData
+                                - var active = activity.isActive === true ? 'YES' : 'NO'
+                                tr
+                                    td= activity.activityId
+                                    td= activity.activityHeading
+                                    td= active
+                                    td= moment(activity.created_at).format('MM/DD/YYYY')
+                                    td
+                                        input.btn.btn-outline-primary(type="button" value="Edit" name=activity.activityId )
+                                    td
+                                        input.btn.btn-outline-danger(type="button" value="Delete" name=activity.activityId )
 
 

@@ -1,6 +1,10 @@
 const User = require('../db/models/index').UserProfile;
 const ActivityDetail = require('../db/models/index').ActivityDetail;
+const Activity = require('../db/models/index').Activity;
+const ActivityFavorite = require('../db/models/index').ProfileActivityFavorite;
 const Categories = require('../db/models/index').ActivityCategory;
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 
 module.exports = (app, passport) => {
@@ -86,10 +90,18 @@ module.exports = (app, passport) => {
   app.get('/user/activity', function (req, res, next) {
     User.findAll({
       include: [{all: true}],
-      where: { userProfileId: 1}
+      where: {
+        userProfileId: 1  // TODO :: REPLACE HARDCODED VALUE
+      }
     }).then(activities => {
-      console.log(JSON.stringify(activities));
-      res.render('index_dashboard', {activities: activities, view: 'View'})
+
+      let data = JSON.parse(JSON.stringify(activities));
+      let activitiesData = data[0].UserProfiles;
+      let userData = data[0];
+
+      console.log(data[0]);
+      console.log(activitiesData);
+      res.render('index_dashboard', {userData: userData, activitiesData: activitiesData, view: 'View'})
     });
 
   });

@@ -1,4 +1,5 @@
 'use strict';
+
 module.exports = (sequelize, DataTypes) => {
   var Activity = sequelize.define('Activity', {
       activityId: {
@@ -19,7 +20,8 @@ module.exports = (sequelize, DataTypes) => {
       underscored: true,
     },
     {
-      classMethods: {}
+      classMethods: {},
+      instanceMethods: {}
     });
 
   Activity.associate = function (models) {
