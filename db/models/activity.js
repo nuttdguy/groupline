@@ -5,6 +5,7 @@ module.exports = (sequelize, DataTypes) => {
       activityId: {
         type: DataTypes.INTEGER,
         primaryKey: true,
+        autoIncrement: true,
         field: 'activity_id'
       },
       activityHeading: {
@@ -20,7 +21,9 @@ module.exports = (sequelize, DataTypes) => {
       underscored: true,
     },
     {
-      classMethods: {},
+      classMethods: {
+        
+      },
       instanceMethods: {}
     });
 

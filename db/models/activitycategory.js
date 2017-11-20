@@ -19,8 +19,15 @@ module.exports = (sequelize, DataTypes) => {
       underscored: true,
     },
     {
-      classMethods: {}
+      classMethods: {
+
+      }
     });
+
+  ActivityCategory.findAll({
+    ActivityCategoryId: true,
+    ActivityCategoryName: true
+  });
 
   ActivityCategory.associate = function (models) {
     ActivityCategory.belongsTo(models.Activity, {

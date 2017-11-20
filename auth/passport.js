@@ -115,9 +115,6 @@ module.exports = function (passport) {
           return done(null, false, {fail: 'Oops, no user found.'});
         } // req.flash is the way to set flashdata using connect-flash
 
-        if (user === null || user === undefined) {
-          return done(null, false, {fail: 'Oops, no user found.'});
-        } // req.flash is the way to set flashdata using connect-flash
 
         // if the user is found but the password is wrong
         if (!user.validatePassword(password)) {

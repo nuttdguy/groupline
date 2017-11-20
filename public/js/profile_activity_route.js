@@ -8,28 +8,54 @@ $(document).ready(function() {
 
 
   // TODO :: ADD VALIDATION TO PREVENT EMPTY FIELD ON UPDATE
-  $("#activityNew").click(function(e) {
+  $("#activityNew").submit(function(e) {
     e.preventDefault();
+    let data = $('#activityNew');
+    console.log(data[0].elements);
 
-    // TODO :: ACTIVITY, ADD NEW
-    let data = JSON.stringify(createUserProfile());
-
-    $.ajax({
-      url: '/user/activity',
+    // SUBMIT THE FORM
+    $(this).ajaxSubmit({
+      url: '/user/activity/new',
       type: 'POST',
-      ContentType: 'application/json; charset=utf-8',
-      dataType: 'json',
-      timeout: 30000,
-      data: {'user': data}
-    }).done(function(data){
-      displayMessage(data);
-    }).fail(function (data) {
-      console.log(data + ' == failed');
-    }).always(function () {
-      console.log('always');
-    })
+      contentType: 'application/json',
+      data: data,
+      success: function (data) {
+        displayMessage(data);
+      }
+    });
+
   });
 
+  function validateForm() {
+    let heading = $('#activityHeading').val();
+    let category = $('#activityCategoryName option:selected').val();
+    let start = $('#start').val();
+    let end = $('#end').val();
+    let minActor = $('#minActor').val();
+    let maxActor = $('#maxActor').val();
+    let summary = $('#summary').val();
+    let detail = $('#detail').val();
+    let location = $('#activityLocation').val();
+    // let file = $('#activityFile');
+    // let fileData = file.files[0];
+    // let formData = new FormData();
+    // formData('file', fileData);
+
+
+    console.log(heading);
+    console.log(category);
+    console.log(start);
+    console.log(end);
+    console.log(minActor);
+    console.log(maxActor);
+    console.log(summary);
+    console.log(detail);
+    console.log(location);
+    // console.log(file);
+    // console.log(formData);
+
+
+  }
 
   //======================================================
   // BEGIN == USER ACTIVITY UPLOAD ROUTES

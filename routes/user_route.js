@@ -101,7 +101,12 @@ module.exports = (app, passport) => {
     });
   });
 
-  // CREATE NEW ACTIVITY
+
+  //==================================================//
+  /*   /USER/ACTIVITY/NEW                   */
+  //==================================================//
+
+  // GET NEW ACTIVITY VIEW
   app.get('/user/activity/new', function (req, res, next) {
 
     // GET CATEGORIES FOR DROP-DOWN
@@ -110,6 +115,15 @@ module.exports = (app, passport) => {
       ActivityCategoryName: true}).then(categories => {
         res.render('index-dashboard', {categories: categories, view: 'View'});
       });
+  });
+
+  // CREATE NEW ACTIVITY
+  app.post('/user/activity/new', function (req, res, next) {
+      console.log('POSTING ACTIVITY NEW');
+      console.log(req.body);
+
+
+      res.render('index-dashboard', {success: 'Activity saved'});
   });
 
 

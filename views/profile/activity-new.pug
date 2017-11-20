@@ -1,10 +1,9 @@
-form.activity
+form#activityNew.activity(enctype="multipart/form-data")
     div.col-md-6.form-group
         // FOR DASHBOARD VIEW
         // REPLACE CONTENT WITH DATA FROM DATABASE
         label(for="activityHeading") Heading
-            input.form-control#activityHeading(type="text"
-            placeholder="Drinking Excitement" value='Come enjoy VR with us!')
+            input.form-control#activityHeading(type="text")
 
         label(for="activityCategoryName") Category
             select.form-control#activityCategoryName
@@ -28,10 +27,10 @@ form.activity
         label(for="summary") Summary
             textarea.form-control#summary(rows="3" cols="50")
 
-        label(for="title") Details
-            textarea.form-control#title(rows="3" cols="50")
+        label(for="detail") Details
+            textarea.form-control#detail(rows="3" cols="50")
 
-        button#newActivity.btn.btn-dark(type="submit") Add Activity
+        button.btn.btn-dark(type="submit") Add Activity
 
 
     div.col-md-6.form-group
@@ -42,11 +41,10 @@ form.activity
                 placeholder="2444 VR Drive, SF, CA, 98411" )
 
         div.activity.text-center
-            img.activity-img.img-circle(src="http://via.placeholder.com/350x150" alt="activity image")
+            img#activityImg.activity-img.img-circle(src="http://via.placeholder.com/350x150" alt="activity image")
             h6 Upload a different photo...
 
         div.text-right
             h4#status
-            form#uploadForm(action="/upload" method="POST" enctype="multipart/form-data")
-                input#fileToUpload.form-control(type="file" name="imageUrl")
-                button.btn.btn-dark(type="submit") Upload
+            input#activityFile.form-control(type="file" name="activityImg")
+            button.btn.btn-dark(type="submit") Upload
