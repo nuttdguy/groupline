@@ -1,5 +1,10 @@
 const User = require('../db/models/index').UserProfile;
 const ActivityDetail = require('../db/models/index').ActivityDetail;
+const Activity = require('../db/models/index').Activity;
+const ActivityFavorite = require('../db/models/index').ProfileActivityFavorite;
+const Categories = require('../db/models/index').ActivityCategory;
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 
 module.exports = (app, passport) => {
@@ -13,7 +18,7 @@ module.exports = (app, passport) => {
     /*                 /USER/                   */
   //==================================================//
 
-  // GET THE USERS PROFILE PAGE
+  // GET USERS PROFILE
   app.get('/user', function (req, res, next) {
     console.log("IN USER SHOW ROUTE");
     // TEMPORARY USER -- REMOVE AFTER ROUTE IS COMPLETED
@@ -30,6 +35,7 @@ module.exports = (app, passport) => {
 
   });
 
+  // UPDATE USER PROFILE
   app.put('/user/update', function(req, res, next) {
 
     let json_user = User.build(JSON.parse(req.body.user));
@@ -82,15 +88,33 @@ module.exports = (app, passport) => {
   //==================================================//
 
   app.get('/user/activity', function (req, res, next) {
-    // TODO :: request activities from DB
-    // TODO :: request usr preferences from DB
+    User.findAll({
+      include: [{all: true}],
+      where: {
+        userProfileId: 1  // TODO :: REPLACE HARDCODED VALUE
+      }
+    }).then(activities => {
 
-    // TODO :: determine view to display
-    // TODO :: in view, make sure delete only shows on owned activities
-    // TODO :: in view, make sure update only available on owned activities
-    let detail = new ActivityDetail();
-    res.render('index_dashboard', {activity: detail})
+      let data = JSON.parse(JSON.stringify(activities));
+      let activitiesData = data[0].UserProfiles;
+      let userData = data[0];
+
+      console.log(data[0]);
+      console.log(activitiesData);
+      res.render('index_dashboard', {userData: userData, activitiesData: activitiesData, view: 'View'})
+    });
+
   });
+
+  app.get('/user/activity/new', function (req, res, next) {
+    Categories.findAll({
+      ActivityCategoryId: true,
+      ActivityCategoryName: true}).then(categories => {
+
+        res.render('index_dashboard', {categories: categories, view: 'View'})
+    });
+  });
+
 
 
   //==================================================//

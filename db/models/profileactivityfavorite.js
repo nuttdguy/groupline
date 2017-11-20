@@ -36,20 +36,20 @@ module.exports = (sequelize, DataTypes) => {
       }
     });
 
-  ProfileActivityFavorite.associate = function (models) {
-    // ProfileActivityFavorite.belongsTo(models.UserProfile, {
-    //   foreignKey: 'user_profile_id',
-    //   targetKey: 'user_profile_id',
-    //   onDelete: 'cascade',
-    //   onUpdate: 'cascade'
-    // });
-    //
-    // ProfileActivityFavorite.belongsTo(models.Activity, {
-    //   foreignKey: 'activity_id',
-    //   targetKey: 'activity_id',
-    //   onDelete: 'cascade',
-    //   onUpdate: 'cascade'
-    // });
+  ProfileActivityFavorite.associate = function (m) {
+
+    m.UserProfile.belongsToMany(m.Activity,
+      { as: 'UserProfiles',
+        through: {
+          model: m.ProfileActivityFavorite, unique: false },
+          foreignKey: 'user_profile_id' });
+
+    m.Activity.belongsToMany(m.UserProfile,
+      { as: 'Activities',
+        through: {
+          model: m.ProfileActivityFavorite, unique: false },
+          foreignKey: 'activity_id' });
+
   };
   return ProfileActivityFavorite;
 };

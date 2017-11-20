@@ -17,9 +17,9 @@ module.exports = {
         type: Sequelize.STRING,
         field: 'detail_img'
       },
-      detailTitle: {
+      detail: {
         type: Sequelize.STRING,
-        field: 'detail_title'
+        field: 'detail'
       },
       startDate: {
         type: Sequelize.DATE,
@@ -60,11 +60,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    queryInterface.removeConstraint('ActivityLocations', 'activity_detail_id').then( () => {
-    });
-
-    queryInterface.removeConstraint('ActivityImages', 'activity_detail_id').then( () => {
-    });
 
     return queryInterface.dropTable('ActivityDetails');
   }

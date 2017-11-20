@@ -14,9 +14,9 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       field: 'detail_img'
     },
-    detailTitle: {
+    detail: {
       type: DataTypes.STRING,
-      field: 'detail_title'
+      field: 'detail'
     },
     startDate: {
       type: DataTypes.DATE,

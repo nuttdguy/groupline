@@ -1,4 +1,5 @@
 'use strict';
+
 module.exports = (sequelize, DataTypes) => {
   var Activity = sequelize.define('Activity', {
       activityId: {
@@ -19,7 +20,8 @@ module.exports = (sequelize, DataTypes) => {
       underscored: true,
     },
     {
-      classMethods: {}
+      classMethods: {},
+      instanceMethods: {}
     });
 
   Activity.associate = function (models) {
@@ -39,12 +41,6 @@ module.exports = (sequelize, DataTypes) => {
       targetKey: 'activity_id'
     });
 
-    Activity.belongsToMany(models.UserProfile, {
-      as: 'UserProfiles',
-      through: 'ProfileActivityFavorites',
-      foreignKey: 'user_profile_id',
-      targetKey: 'user_profile_id'
-    });
 
   };
 

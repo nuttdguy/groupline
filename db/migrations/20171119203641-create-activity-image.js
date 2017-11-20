@@ -40,6 +40,8 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
+    queryInterface.removeConstraint('ActivityImages', 'ActivityImages_activity_detail_id_fkey').then( () => {
+    });
 
     return queryInterface.dropTable('ActivityImages');
   }

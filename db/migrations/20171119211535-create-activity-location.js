@@ -25,17 +25,6 @@ module.exports = {
         type: Sequelize.BOOLEAN,
         field: 'is_active'
       },
-      activityDetailId: {
-        type: Sequelize.INTEGER,
-        field: 'activity_detail_id',
-        foreignKey: 'activity_detail_id',
-        onDelete: 'cascade',
-        onUpdate: 'cascade',
-        references: {
-          model: 'ActivityDetails',
-          key: 'activity_detail_id'
-        }
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -43,11 +32,22 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
+      },
+      activityDetailId: {
+        type: Sequelize.INTEGER,
+        field: 'activity_detail_id',
+        onDelete: 'cascade',
+        onUpdate: 'cascade',
+        references: {
+          model: 'ActivityDetails',
+          key: 'activity_detail_id'
+        }
       }
     });
   },
   down: (queryInterface, Sequelize) => {
-
+    queryInterface.removeConstraint('ActivityLocations', 'ActivityLocations_activity_detail_id_fkey').then( () => {
+    });
     return queryInterface.dropTable('ActivityLocations');
   }
 };

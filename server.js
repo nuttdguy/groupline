@@ -12,6 +12,7 @@ var app = express(); // CREATE INSTANCE OF EXPRESS OBJECT
 
 // MIDDLE WARE
 require('dotenv').config();  // ENABLE USE OF .ENV HIDDEN FILE FOR SECRETS
+app.locals.moment = require('moment');
 
 app.set('views', [
   path.join(__dirname, 'views/'),

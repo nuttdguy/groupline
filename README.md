@@ -15,11 +15,20 @@ An application connecting people interested in doing activities together.
 #### TASKS
 
 VIEWS:
-- about.hbs
-- auth.hbs
-- explore.hbs
-- contact.hbs
-- activity-detail.hbs
+- about.pug
+- auth_index.pug
+- /auth/signup
+- /auth/login
+- /profile/dashboard.pug
+- /profile/index_dashboard.pug
+- explore.pug
+- contact.pug
+- activity-detail.pug
+- error.pug
+- layout.pug
+- main.pug
+- navbar.pug
+
 
 
 ROUTES:
@@ -36,16 +45,20 @@ Guest + RUser:
 - activity/:catId/detail/:actId     (added 10/31)
 
 RUser:
-- usr/activity                      (added 10/31)
-- usr/activity/:catId/like          (added 10/31)
-- usr/activity/:catId/favorite      (added 10/31)
-- usr/activity/:actId/delete        (added 10/31)
-- usr/activity/:actId/update        (added 10/31)
-- usr/activity/:actId/tag           (added 10/31)
-- usr/activity/:actId/tag/:tagId/delete     (added 10/31)
+- user                               (added 11/19)
+- user/activity                      (added 10/31)
+- user/activity/new                  (added 11/19)
+- user/activity/:id/edit             (added 11/19)
+- user/activity/:id/delete           (added 11/19)
+- user/activity/:catId/like          (added 10/31)
+- user/activity/:catId/favorite      (added 10/31)
+- user/activity/:actId/delete        (added 10/31)
+- user/activity/:actId/update        (added 10/31)
+- user/activity/:actId/tag           (added 10/31)
+- user/activity/:actId/tag/:tagId/delete     (added 10/31)
 
 TODO -- determine view settings
-- usr/setting
+- user/setting
 
 Article about sequelize ORM
 https://www.codementor.io/hari577/object-relational-mapping-in-nodejs-with-sequelize-du1088h3l

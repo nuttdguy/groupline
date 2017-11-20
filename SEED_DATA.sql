@@ -17,19 +17,19 @@ VALUES (5, 'Lets pair program', true, now(), now());
 
 -- SEED DATA FOR ACTIVITIES_CATEGORIES
 
-INSERT INTO public."ActivityCategories"(activity_categories_id, category_name, is_active, created_at, updated_at, activity_id)
+INSERT INTO public."ActivityCategories"(activity_category_id, category_name, is_active, created_at, updated_at, activity_id)
 VALUES (1, 'Bar', true, now(), now(), 1);
 
-INSERT INTO public."ActivityCategories"(activity_categories_id, category_name, is_active, created_at, updated_at, activity_id)
+INSERT INTO public."ActivityCategories"(activity_category_id, category_name, is_active, created_at, updated_at, activity_id)
 VALUES (2, 'Hiking', true, now(), now(), 2);
 
-INSERT INTO public."ActivityCategories"(activity_categories_id, category_name, is_active, created_at, updated_at, activity_id)
+INSERT INTO public."ActivityCategories"(activity_category_id, category_name, is_active, created_at, updated_at, activity_id)
 VALUES (3, 'Dancing', true, now(), now(), 3);
 
-INSERT INTO public."ActivityCategories"(activity_categories_id, category_name, is_active, created_at, updated_at, activity_id)
+INSERT INTO public."ActivityCategories"(activity_category_id, category_name, is_active, created_at, updated_at, activity_id)
 VALUES (4, 'Gaming', true, now(), now(), 4);
 
-INSERT INTO public."ActivityCategories"(activity_categories_id, category_name, is_active, created_at, updated_at, activity_id)
+INSERT INTO public."ActivityCategories"(activity_category_id, category_name, is_active, created_at, updated_at, activity_id)
 VALUES (5, 'Technology', true, now(), now(), 5);
 
 -- SEED DATA FOR USERS_PROFILES
