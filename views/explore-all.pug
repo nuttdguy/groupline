@@ -3,6 +3,13 @@ extends ./layout
 //- include navbar
 
 block content
+
+    div.row
+        form(method="GET", action="/explore/search", class="form-inline")
+            input(type="text", name="term")
+            select(name="search")
+                option(value="activityHeading") title
+                
     div.row
         each activity in activities
             div.col-sm-6

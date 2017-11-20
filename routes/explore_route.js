@@ -39,6 +39,41 @@ module.exports = (app) => {
   //
   // });
 
+  app.get('/explore/search', function (req, res, next) {
+    //   res.send(req.query)
+        var search = req.query.search
+        var term = req.query.term
+    Activity.findAll({
+        include: [{
+              model: ActivityCategory,
+              as: 'ActivityCategories'
+            },
+              {
+                model: ActivityTag,
+                as: 'ActivityTags'
+              },
+              {
+                model: ActivityDetail,
+                as: 'ActivityDetails'
+        }],
+        where: {[search] : term}
+      }
+    )
+      .then((activities) => {
+        console.log('========================');
+        // console.log(JSON.stringify(activities));
+        console.log(JSON.parse(JSON.stringify(activities)));
+        activities = JSON.parse(JSON.stringify(activities));
+        res.render('explore-all', {
+          title: 'Explore',
+          activities: activities,
+          activityDetails: activities.ActivityDetails,
+          user: req.user
+        });
+      });
+
+  });
+
   app.get('/explore', function (req, res, next) {
     Activity.findAll({
         include: [{
