@@ -1,0 +1,25 @@
+
+// DISPLAYS ALL ACTIVITIES CREATED BY LOGGED-IN USER
+form.activity
+    div.col-md-12
+        table.table.table-striped.table-hover.table-bordered
+            thead.thead-dark
+                tr
+                    th ID
+                    th Heading
+                    th Active
+                    th Create Date
+                    th Edit
+                    th Delete
+            tbody
+            each activity in activitiesData
+                - var active = activity.isActive === true ? 'YES' : 'NO'
+                tr
+                    td= activity.activityId
+                    td= activity.activityHeading
+                    td= active
+                    td= moment(activity.created_at).format('MM/DD/YYYY')
+                    td
+                        a.btn.btn-outline-primary(href='/user/activity/' + activity.activityId + '/update' ) Edit
+                    td
+                        a.btn.btn-outline-danger(href='/user/activity/' + activity.activityId + '/delete' ) Delete

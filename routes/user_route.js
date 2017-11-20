@@ -28,7 +28,7 @@ module.exports = (app, passport) => {
       user = req.user;
     }
     // if (req.user) {
-    res.render('index_dashboard', {user: req.user });
+    res.render('index-dashboard', {user: req.user });
     // } else {
     //   res.redirect('/');
     // }
@@ -80,13 +80,11 @@ module.exports = (app, passport) => {
   });
 
 
-  // TODO :: add other routes for settings
-
-
   //==================================================//
     /*                 /USER/ACTIVITY                   */
   //==================================================//
 
+  // SHOW USERS LISTED ACTIVITIES
   app.get('/user/activity', function (req, res, next) {
     User.findAll({
       include: [{all: true}],
@@ -99,22 +97,33 @@ module.exports = (app, passport) => {
       let activitiesData = data[0].UserProfiles;
       let userData = data[0];
 
-      console.log(data[0]);
-      console.log(activitiesData);
-      res.render('index_dashboard', {userData: userData, activitiesData: activitiesData, view: 'View'})
+      res.render('index-dashboard', {userData: userData, activitiesData: activitiesData, view: 'View'})
     });
-
   });
 
+  // CREATE NEW ACTIVITY
   app.get('/user/activity/new', function (req, res, next) {
+
+    // GET CATEGORIES FOR DROP-DOWN
     Categories.findAll({
       ActivityCategoryId: true,
       ActivityCategoryName: true}).then(categories => {
-
-        res.render('index_dashboard', {categories: categories, view: 'View'})
-    });
+        res.render('index-dashboard', {categories: categories, view: 'View'});
+      });
   });
 
+
+  //==================================================//
+  /*         /USER/ACTIVITY/:ACTID/UPDATE            */
+  //==================================================//
+
+
+  app.put('/user/activity/:catId/update', function (req, res, next) {
+    // TODO :: update an activity created by usr
+
+    // TODO :: redirect to reload view
+    res.redirect('/user/activities')
+  });
 
 
   //==================================================//
@@ -149,19 +158,6 @@ module.exports = (app, passport) => {
 
   app.delete('/user/activity/:catId/delete', function (req, res, next) {
     // TODO :: delete an activity created by usr
-
-    // TODO :: redirect to reload view
-    res.redirect('/user/activities')
-  });
-
-
-  //==================================================//
-    /*         /USER/ACTIVITY/:ACTID/UPDATE            */
-  //==================================================//
-
-
-  app.put('/user/activity/:catId/update', function (req, res, next) {
-    // TODO :: update an activity created by usr
 
     // TODO :: redirect to reload view
     res.redirect('/user/activities')

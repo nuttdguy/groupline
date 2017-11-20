@@ -8,9 +8,9 @@ form.activity
 
         label(for="activityCategoryName") Category
             select.form-control#activityCategoryName
-            if categories
-                each category in categories
-                    option(value=category.activityCategoryId)=category.categoryName
+                if categories
+                    each category in categories
+                        option(value=category.activityCategoryId)=category.categoryName
 
         label(for="start") Listing Start Date
             input.form-control#start(type="date"

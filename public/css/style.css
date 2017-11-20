@@ -21,7 +21,8 @@ a:hover {
 =======================================*/
 
 #err-message,
-#success-message {
+#success-message,
+#message {
     display: none;
     text-transform: capitalize;
 }

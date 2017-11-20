@@ -20,8 +20,8 @@ $(document).ready(function () {
     }
 
     let data = {
-      "username": username.toLowerCase(),
-      "password": password.toLowerCase()
+      "username": username.toLowerCase().trim(),
+      "password": password.toLowerCase().trim()
     };
 
     $.ajax({
@@ -57,8 +57,8 @@ $(document).ready(function () {
     }
 
     let data = {
-      "username": username.toLowerCase(),
-      "password": password.toLowerCase()
+      "username": username.toLowerCase().trim(),
+      "password": password.toLowerCase().trim()
     };
 
     $.ajax({
