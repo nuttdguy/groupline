@@ -49,14 +49,6 @@ module.exports = (sequelize, DataTypes) => {
 
   UserProfile.associate = function (models) {
 
-    UserProfile.belongsToMany(models.Activity, {
-        as: 'Activities',
-        through: 'ProfileActivityFavorite',
-        foreignKey: 'activity_id',
-        targetKey: 'activity_id',
-        onDelete: 'cascade',
-        onUpdate: 'cascade'
-      });
   };
 
   UserProfile.prototype.generateHash = function (password) {

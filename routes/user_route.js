@@ -84,17 +84,25 @@ module.exports = (app, passport) => {
   //==================================================//
 
   app.get('/user/activity', function (req, res, next) {
-    // TODO :: request activities from DB
-    // TODO :: request usr preferences from DB
-
-    // TODO :: determine view to display
-    // TODO :: in view, make sure delete only shows on owned activities
-    // TODO :: in view, make sure update only available on owned activities
-    Categories.findAll({ActivityCategoryId: true, ActivityCategoryName: true}).then(categories => {
-      res.render('index_dashboard', {categories: categories})
+    User.findAll({
+      include: [{all: true}],
+      where: { userProfileId: 1}
+    }).then(activities => {
+      console.log(JSON.stringify(activities));
+      res.render('index_dashboard', {activities: activities, view: 'View'})
     });
 
   });
+
+  app.get('/user/activity/new', function (req, res, next) {
+    Categories.findAll({
+      ActivityCategoryId: true,
+      ActivityCategoryName: true}).then(categories => {
+
+        res.render('index_dashboard', {categories: categories, view: 'View'})
+    });
+  });
+
 
 
   //==================================================//
