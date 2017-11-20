@@ -50,10 +50,12 @@ block content
 
                 // TODO :: ADD CONDITIONAL TO DISPLAY ACTIVITIES
                 // CREATE A NEW ACTIVITY
-                include activity-new
+                if view === "new"
+                    include activity-new
 
                 // FOR VIEWING ALL ACTIVITIES CREATED BY USER
-                //include activity-all
+                if view === "view"
+                    include activity-all
 
 
 
