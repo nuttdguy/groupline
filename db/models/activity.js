@@ -2,26 +2,46 @@
 
 module.exports = (sequelize, DataTypes) => {
   var Activity = sequelize.define('Activity', {
-      activityId: {
-        primaryKey: true,
-        autoIncrement: true,
-        allowNull: false,
-        type: DataTypes.INTEGER,
-        field: 'activity_id'
-      },
-      title: {
-        type: DataTypes.STRING,
-        field: 'title'
-      },
-      isActive: {
-        type: DataTypes.BOOLEAN,
-        field: 'is_active'
-      }
-    }, {
-      underscored: true,
-      classMethods: {},
-      instanceMethods: {}
-    });
+    activityId: {
+      primaryKey: true,
+      autoIncrement: true,
+      allowNull: false,
+      type: DataTypes.INTEGER,
+      field: 'activity_id'
+    },
+    title: {
+      type: DataTypes.STRING,
+      field: 'title'
+    },
+    summary: {
+      type: DataTypes.TEXT,
+      field: 'summary'
+    },
+    startDate: {
+      type: DataTypes.DATE,
+      field: 'start_date'
+    },
+    endDate: {
+      type: DataTypes.DATE,
+      field: 'end_date'
+    },
+    minActor: {
+      type: DataTypes.INTEGER,
+      field: 'min_actor'
+    },
+    maxActor: {
+      type: DataTypes.INTEGER,
+      field: 'max_actor'
+    },
+    isActive: {
+      type: DataTypes.BOOLEAN,
+      field: 'is_active'
+    },
+  }, {
+    underscored: true,
+    classMethods: {},
+    instanceMethods: {}
+  });
 
   Activity.associate = function (m) {
 

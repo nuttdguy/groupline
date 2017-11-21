@@ -10,23 +10,23 @@ module.exports = {
         field: 'activity_meet_location_id'
       },
       latitude: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.FLOAT,
         field: 'latitude'
       },
       longitude: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.FLOAT,
         field: 'longitude'
       },
       address: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         field: 'address'
       },
       detail: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.TEXT,
         field: 'detail'
       },
       isActive: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.BOOLEAN,
         field: 'is_active'
       },
       created_at: {
@@ -50,8 +50,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    queryInterface.removeConstraint('ActivityMeetLocations', 'ActivityMeetLocations_activity_id_fkey').then( () => {
-    });
     return queryInterface.dropTable('ActivityMeetLocations');
   }
 };
