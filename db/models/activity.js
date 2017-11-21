@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       classMethods: {
-        
+
       },
       instanceMethods: {}
     });
@@ -42,6 +42,11 @@ module.exports = (sequelize, DataTypes) => {
     Activity.hasMany(models.ActivityDetail, {
       foreignKey: 'activity_id',
       targetKey: 'activity_id'
+    });
+
+    Activity.hasMany(models.ActivityMeetLocation, {
+        foreignKey: 'activity_id',
+        targetKey: 'activity_id'
     });
 
 
