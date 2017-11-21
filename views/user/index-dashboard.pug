@@ -46,16 +46,18 @@ block content
 
                 // TODO :: ADD CONDITIONAL TO DISPLAY DASHBOARD
                 // UNCOMMENT DASHBOARD COMMENT TO SHOW
-                // include profile-dashboard
+                // include user-dashboard
 
                 // TODO :: ADD CONDITIONAL TO DISPLAY ACTIVITIES
-                // CREATE A NEW ACTIVITY
-                if view === "new"
-                    include activity-new
 
                 // FOR VIEWING ALL ACTIVITIES CREATED BY USER
                 if view === "view"
                     include activity-all
+
+                // CREATE A NEW ACTIVITY
+                if view === "new"
+                    include activity-new
+
 
 
 

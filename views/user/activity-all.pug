@@ -6,10 +6,12 @@ form.activity
             thead.thead-dark
                 tr
                     th ID
-                    th Heading
+                    th Title
+                    th Summary
+                    th Min / Max Person(s)
+                    th Start Date
+                    th End Date
                     th Active
-                    th Create Date
-                    th Edit
                     th Delete
             tbody
             each activity in activitiesData
@@ -17,8 +19,12 @@ form.activity
                 tr
                     td= activity.activityId
                     td= activity.title
+                    td= activity.summary
+                    td= moment(activity.startDate).format('MM/DD/YYYY')
+                    td= moment(activity.endDate).format('MM/DD/YYYY')
+                    td= activity.minActor
+                    span= activity.maxActor
                     td= active
-                    td= moment(activity.created_at).format('MM/DD/YYYY')
                     td
                         a.btn.btn-outline-primary(href='/user/activity/' + activity.activityId + '/update' ) Edit
                     td

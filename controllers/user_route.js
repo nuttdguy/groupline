@@ -86,6 +86,7 @@ module.exports = (app, passport) => {
 
   // SHOW USERS LISTED ACTIVITIES
   app.get('/user/activity', function (req, res, next) {
+
     User.findAll({
       include: [{all: true}],
       where: {
@@ -94,10 +95,12 @@ module.exports = (app, passport) => {
     }).then(activities => {
 
       let data = JSON.parse(JSON.stringify(activities));
-      let activitiesData = data[0].UserProfiles;
+      let activitiesData = data;
       let userData = data[0];
 
-      res.render('index-dashboard', {userData: userData, activitiesData: activitiesData, view: 'View'})
+      console.log(activitiesData);
+      res.render('index-dashboard', {
+        userData: userData, activitiesData: activitiesData, view: 'view'})
     });
   });
 
