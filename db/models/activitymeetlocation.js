@@ -1,23 +1,52 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var ActivityMeetLocation = sequelize.define('ActivityMeetLocation', {
-    activityMeetLocationId: DataTypes.INTEGER,
-    latitude: DataTypes.FLOAT,
-    longitude: DataTypes.FLOAT,
-    address: DataTypes.STRING,
-    detail: DataTypes.STRING,
-    isActive: DataTypes.BOOLEAN,
-    activityId: DataTypes.INTEGER
+    activityMeetLocationId: {
+      primaryKey: true,
+      autoIncrement: true,
+      allowNull: false,
+      type: DataTypes.INTEGER,
+      field: 'activity_meet_location_id'
+    },
+    latitude: {
+      type: DataTypes.INTEGER,
+      field: 'latitude'
+    },
+    longitude: {
+      type: DataTypes.INTEGER,
+      field: 'longitude'
+    },
+    address: {
+      type: DataTypes.INTEGER,
+      field: 'address'
+    },
+    detail: {
+      type: DataTypes.INTEGER,
+      field: 'detail'
+    },
+    isActive: {
+      type: DataTypes.INTEGER,
+      field: 'is_active'
+    },
+    activityId: {
+      type: DataTypes.INTEGER,
+      field: 'activity_id'
+    },
   }, {
     underscored: true,
     classMethods: {}
   });
 
-  ActivityMeetLocation.associate = function(models) {
-    ActivityMeetLocation.belongsTo(models.Activity, {
-      foreignKey: 'activity_id',
-      sourceKey: 'activity_id'
+  ActivityMeetLocation.associate = function(m) {
+    ActivityMeetLocation.belongsTo(m.Activity, {
+      sourceKey: 'activity_id',
+      onDelete: 'cascade',
+      onUpdate: 'cascade'
     });
+
+    m.Activity.hasMany(m.ActivityTime, {
+      targetKey: 'activity_meet_location_id'
+    })
   };
 
   return ActivityMeetLocation;

@@ -3,12 +3,13 @@
 module.exports = (sequelize, DataTypes) => {
   var Activity = sequelize.define('Activity', {
       activityId: {
-        type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
+        allowNull: false,
+        type: DataTypes.INTEGER,
         field: 'activity_id'
       },
-      activityHeading: {
+      title: {
         type: DataTypes.STRING,
         field: 'activity_heading'
       },
@@ -16,39 +17,33 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.BOOLEAN,
         field: 'is_active'
       }
-    },
-    {
+    }, {
       underscored: true,
-    },
-    {
-      classMethods: {
-
-      },
+      classMethods: {},
       instanceMethods: {}
     });
 
-  Activity.associate = function (models) {
+  Activity.associate = function (m) {
 
-    Activity.hasMany(models.ActivityCategory, {
+    Activity.hasMany(m.ActivityCategory, {
       foreignKey: 'activity_id',
       targetKey: 'activity_id'
     });
 
-    Activity.hasMany(models.ActivityTag, {
+    Activity.hasMany(m.ActivityTag, {
       foreignKey: 'activity_id',
       targetKey: 'activity_id'
     });
 
-    Activity.hasMany(models.ActivityDetail, {
+    Activity.hasMany(m.ActivityImage, {
       foreignKey: 'activity_id',
       targetKey: 'activity_id'
     });
 
-    Activity.hasMany(models.ActivityMeetLocation, {
-        foreignKey: 'activity_id',
-        targetKey: 'activity_id'
+    Activity.hasMany(m.ActivityMeetLocation, {
+      foreignKey: 'activity_id',
+      targetKey: 'activity_id'
     });
-
 
   };
 

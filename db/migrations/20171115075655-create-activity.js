@@ -9,9 +9,29 @@ module.exports = {
         type: Sequelize.INTEGER,
         field: 'activity_id'
       },
-      activityHeading: {
+      title: {
         type: Sequelize.STRING,
-        field: 'activity_heading'
+        field: 'title'
+      },
+      summary: {
+        type: Sequelize.TEXT,
+        field: 'summary'
+      },
+      startDate: {
+        type: Sequelize.DATE,
+        field: 'start_date'
+      },
+      endDate: {
+        type: Sequelize.DATE,
+        field: 'end_date'
+      },
+      minActor: {
+        type: Sequelize.INTEGER,
+        field: 'min_actor'
+      },
+      maxActor: {
+        type: Sequelize.INTEGER,
+        field: 'max_actor'
       },
       isActive: {
         type: Sequelize.BOOLEAN,
@@ -26,21 +46,11 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
         field: 'updated_at'
-      }
+      },
+
     });
   },
   down: (queryInterface, Sequelize) => {
-    // queryInterface.removeConstraint('ActivityCategories', 'activity_id').then( () => {
-    // });
-
-    // queryInterface.removeConstraint('ActivityTags', 'activity_id').then( () => {
-    // });
-
-    // queryInterface.removeConstraint('ProfileActivityFavorites', 'activity_id').then( () => {
-    // });
-
-    // queryInterface.removeConstraint('ActivityDetails', 'activity_id').then( () => {
-    // });
 
     return queryInterface.dropTable('Activities');
 

@@ -2,8 +2,10 @@
 module.exports = (sequelize, DataTypes) => {
   var ActivityCategory = sequelize.define('ActivityCategory', {
       activityCategoryId: {
-        type: DataTypes.INTEGER,
         primaryKey: true,
+        autoIncrement: true,
+        allowNull: false,
+        type: DataTypes.INTEGER,
         field: 'activity_category_id'
       },
       categoryName: {
@@ -13,15 +15,15 @@ module.exports = (sequelize, DataTypes) => {
       isActive: {
         type: DataTypes.BOOLEAN,
         field: 'is_active'
+      },
+      activityId: {
+        type: DataTypes.INTEGER,
+        field: 'activity_id'
       }
     },
     {
       underscored: true,
-    },
-    {
-      classMethods: {
-
-      }
+      classMethods: {}
     });
 
   ActivityCategory.findAll({
@@ -29,9 +31,8 @@ module.exports = (sequelize, DataTypes) => {
     ActivityCategoryName: true
   });
 
-  ActivityCategory.associate = function (models) {
-    ActivityCategory.belongsTo(models.Activity, {
-      foreignKey: 'activity_id',
+  ActivityCategory.associate = function (m) {
+    ActivityCategory.belongsTo(m.Activity, {
       sourceKey: 'activity_id',
       onDelete: 'cascade',
       onUpdate: 'cascade'

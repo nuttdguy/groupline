@@ -1,36 +1,35 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var ActivityImage = sequelize.define('ActivityImage', {
-    activityImageId: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true,
-      field: 'activity_image_id'
+      activityImageId: {
+        primaryKey: true,
+        autoIncrement: true,
+        allowNull: false,
+        type: DataTypes.INTEGER,
+        field: 'activity_image_id'
+      },
+      imageUrl: {
+        type: DataTypes.STRING,
+        field: 'image_url'
+      },
+      isActive: {
+        type: DataTypes.BOOLEAN,
+        field: 'is_active'
+      },
+      activityId: {
+        type: DataTypes.INTEGER,
+        field: 'activity_id'
+      }
     },
-    imageUrl: {
-      type: DataTypes.STRING,
-      field: 'image_url'
-    },
-    isActive: {
-      type: DataTypes.BOOLEAN,
-      field: 'is_active'
-    },
-    activityDetailId: {
-      type: DataTypes.INTEGER,
-      field: 'activity_detail_id'
-    }
-  }, {
-    underscored: true,
-    classMethods: {
+    {
+      underscored: true,
+      classMethods: {}
+    });
 
-    }
-  });
+  ActivityImage.associate = function (m) {
 
-  ActivityImage.associate = function(models) {
-
-    ActivityImage.belongsTo(models.ActivityDetail, {
-      foreignKey: 'activity_detail_id',
-      sourceKey: 'activity_detail_id',
+    ActivityImage.belongsTo(m.Activity, {
+      sourceKey: 'activity_id',
       onDelete: 'cascade',
       onUpdate: 'cascade'
     })

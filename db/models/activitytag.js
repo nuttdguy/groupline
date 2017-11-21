@@ -1,16 +1,16 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var ActivityTag = sequelize.define('ActivityTag', {
+    activityTagId: {
+      primaryKey: true,
+      autoIncrement: true,
+      allowNull: false,
+      type: DataTypes.INTEGER,
+      field: 'activity_tag_id'
+    },
     activityTagName: {
       type: DataTypes.STRING,
       field: 'activity_tag_name'
-    },
-    activityTagId: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      field: 'activity_tag_id',
-      onDelete: 'cascade',
-      onUpdate: 'cascade'
     },
     isActive: {
       type: DataTypes.BOOLEAN,
@@ -25,11 +25,12 @@ module.exports = (sequelize, DataTypes) => {
     classMethods: {}
   });
 
-  ActivityTag.associate = function (models) {
-    ActivityTag.belongsTo(models.Activity, {
-        foreignKey: 'activity_id',
-        sourceKey: 'activity_id'
-      })
+  ActivityTag.associate = function (m) {
+    ActivityTag.belongsTo(m.Activity, {
+      sourceKey: 'activity_id',
+      onDelete: 'cascade',
+      onUpdate: 'cascade'
+    })
   };
 
   return ActivityTag;

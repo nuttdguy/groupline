@@ -8,13 +8,13 @@ block content
         form(method="GET", action="/explore/search", class="form-inline")
             input(name="term")
             select(name="search")
-                option(value="activityHeading") Title
+                option(value="title") Title
                 option(value="ActivityDetails.minActor") Min Participants 
                 
     div.row
         each activity in activities
             div.col-sm-6
-                h2= activity.activityHeading
+                h2= activity.title
                 hr
                 div.col-sm-6
                     h3 Summary: 

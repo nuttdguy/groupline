@@ -27,7 +27,7 @@ $(document).ready(function() {
   });
 
   function validateForm() {
-    let heading = $('#activityHeading').val();
+    let heading = $('#title').val();
     let category = $('#activityCategoryName option:selected').val();
     let start = $('#start').val();
     let end = $('#end').val();

@@ -16,7 +16,7 @@ form.activity
                 - var active = activity.isActive === true ? 'YES' : 'NO'
                 tr
                     td= activity.activityId
-                    td= activity.activityHeading
+                    td= activity.title
                     td= active
                     td= moment(activity.created_at).format('MM/DD/YYYY')
                     td

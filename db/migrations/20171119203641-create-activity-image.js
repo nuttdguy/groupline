@@ -27,20 +27,20 @@ module.exports = {
         type: Sequelize.DATE,
         field: 'updated_at'
       },
-      activityDetailId: {
+      activityId: {
         type: Sequelize.INTEGER,
         onDelete: 'cascade',
         onUpdate: 'cascade',
-        field: 'activity_detail_id',
+        field: 'activity_id',
         references: {
-          model: 'ActivityDetails',
-          key: 'activity_detail_id'
+          model: 'Activities',
+          key: 'activity_id'
         }
       }
     });
   },
   down: (queryInterface, Sequelize) => {
-    queryInterface.removeConstraint('ActivityImages', 'ActivityImages_activity_detail_id_fkey').then( () => {
+    queryInterface.removeConstraint('ActivityImages', 'ActivityImages_activity_id_fkey').then( () => {
     });
 
     return queryInterface.dropTable('ActivityImages');
