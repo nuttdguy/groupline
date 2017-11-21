@@ -2,7 +2,7 @@ const User = require('../db/models/index').UserProfile;
 const ActivityDetail = require('../db/models/index').ActivityDetail;
 const Activity = require('../db/models/index').Activity;
 const ActivityFavorite = require('../db/models/index').ProfileActivityFavorite;
-const Categories = require('../db/models/index').ActivityCategory;
+const ActivityCategories = require('../db/models/index').ActivityCategory;
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 
@@ -15,20 +15,23 @@ module.exports = (app, passport) => {
   const page_title = "user profile";
 
   //==================================================//
-    /*                 /USER/                   */
+  /*                 /USER/                   */
   //==================================================//
 
   // GET USERS PROFILE
   app.get('/user', function (req, res, next) {
     console.log("IN USER SHOW ROUTE");
     // TEMPORARY USER -- REMOVE AFTER ROUTE IS COMPLETED
-    let user = new User();
-    user.userProfileId = 1;
-    if (req.user) {
-      user = req.user;
-    }
+
+    // REMOVE THIS
+    User.findById(1).then(user => {
+      res.render('index-dashboard', {user: user, view: 'dashboard'});
+    })
+
+
+    // ENABLE THIS WHEN COMPLETE
     // if (req.user) {
-    res.render('index-dashboard', {user: req.user });
+    // res.render('index-dashboard', {user: req.user, view: 'dashboard' });
     // } else {
     //   res.redirect('/');
     // }
@@ -36,10 +39,10 @@ module.exports = (app, passport) => {
   });
 
   // UPDATE USER PROFILE
-  app.put('/user/update', function(req, res, next) {
+  app.put('/user/update', function (req, res, next) {
 
     let json_user = User.build(JSON.parse(req.body.user));
-    User.find({ where: { username: json_user.username}}).then(user => {
+    User.find({where: {username: json_user.username}}).then(user => {
       user = serializeUser(json_user, user);
       User.update({
         username: user.username,
@@ -48,8 +51,10 @@ module.exports = (app, passport) => {
         lastName: user.lastName,
         bio: user.bio,
         isActive: true
-      }, {where: {
-        userProfileId: user.userProfileId},
+      }, {
+        where: {
+          userProfileId: user.userProfileId
+        },
         returning: true
       }).then((result) => {
         res.status(200).json({success: 'update successful'})
@@ -58,7 +63,7 @@ module.exports = (app, passport) => {
     })
   });
 
-  function serializeUser(json_user, user ) {
+  function serializeUser(json_user, user) {
     user.username = json_user.username;
     user.password = json_user.password;
     user.firstName = json_user.firstName;
@@ -81,11 +86,11 @@ module.exports = (app, passport) => {
 
 
   //==================================================//
-    /*                 /USER/ACTIVITY                   */
+  /*                 /USER/ACTIVITY                   */
   //==================================================//
 
   // SHOW USERS LISTED ACTIVITIES
-  app.get('/user/activity', function (req, res, next) {
+  app.get('/user/activities', function (req, res, next) {
 
     User.findAll({
       include: [{all: true}],
@@ -95,12 +100,12 @@ module.exports = (app, passport) => {
     }).then(activities => {
 
       let data = JSON.parse(JSON.stringify(activities));
-      let activitiesData = data;
-      let userData = data[0];
+      let activitiesData = data[0].UserProfiles;
 
       console.log(activitiesData);
       res.render('index-dashboard', {
-        userData: userData, activitiesData: activitiesData, view: 'view'})
+        activitiesData: activitiesData, view: 'activities'
+      })
     });
   });
 
@@ -109,26 +114,83 @@ module.exports = (app, passport) => {
   /*   /USER/ACTIVITY/NEW                   */
   //==================================================//
 
-  // GET NEW ACTIVITY VIEW
+  // COMPLETED 11/20
+  // METHOD [GET] == LOADS AVAILABLE CATEGORIES & NEW ACTIVITY FORM
   app.get('/user/activity/new', function (req, res, next) {
 
-    // GET CATEGORIES FOR DROP-DOWN
-    Categories.findAll({
-      ActivityCategoryId: true,
-      ActivityCategoryName: true}).then(categories => {
-        res.render('index-dashboard', {categories: categories, view: 'View'});
+    ActivityCategories.findAll({
+      attributes: ['activity_category_id', 'category_name']
+    }).then(data => {
+
+      let categories = JSON.parse(JSON.stringify(data));
+      res.render('index-dashboard', {
+        categories: categories, view: 'activities-new'
       });
+    });
   });
 
-  // CREATE NEW ACTIVITY
+  // STEP 1: CREATE A NEW RECORD, IN ORDER TO GENERATE ID
+  // Activity.create()
+  //   .then(activity => {
+  //
+  //   // STEP 2: SET ACTIVITY ID
+  //   // activityData.set('activityId', activity.activityId);
+  //   // console.log(activityData);
+  //   // STEP 3: UPDATE THE RECORD WITH FORM DATA
+  //   activity.updateAttributes(activityData, {returning: true})
+  //     .then(result => {
+  //
+  //     console.log(result.dataValues);
+  //     res.render('index-dashboard', {success: 'Activity saved'});
+  //   });
+  // });
+
+  // METHOD [POST] == CREATE NEW ACTIVITY
   app.post('/user/activity/new', function (req, res, next) {
-      console.log('POSTING ACTIVITY NEW');
-      console.log(req.body);
+    console.log('POSTING ACTIVITY NEW');
+    let model = new Activity(req.body);
+    let userId = 1;
 
 
-      res.render('index-dashboard', {success: 'Activity saved'});
+    Activity.create().then(activity => {
+      let activityToUpdate = setActivityProperties(activity, model);
+      return activity.updateAttributes(activityToUpdate);
+
+    }).then(result => {
+
+      ActivityFavorite.create().then(activityFav => {
+        let activityId = result.activityId;
+        let activityFavToUpdate = setActivityFavProperties(activityFav, userId, activityId);
+        console.log(activityFavToUpdate);
+        return activityFav.updateAttributes(activityFavToUpdate);
+
+      }).then(result => {
+
+        console.log(result.dataValues);
+        res.render('index-dashboard', {success: 'Activity saved'});
+
+      });
+    });
   });
 
+  function setActivityFavProperties(activityFav, userId, activityId) {
+    activityFav.set('userProfileId', userId);
+    activityFav.set('activityId', activityId);
+    return activityFav.dataValues;
+  }
+
+  function setActivityProperties(activity, model) {
+    activity.set('title', model.title);
+    activity.set('summary', model.summary);
+    activity.set('detail', model.detail);
+    activity.set('startDate', model.startDate);
+    activity.set('endDate', model.endDate);
+    activity.set('minActor', model.minActor);
+    activity.set('maxActor', model.maxActor);
+    activity.set('isActive', model.isActive);
+    // return activity;
+    return activity.dataValues;
+  }
 
   //==================================================//
   /*         /USER/ACTIVITY/:ACTID/UPDATE            */
@@ -144,7 +206,7 @@ module.exports = (app, passport) => {
 
 
   //==================================================//
-    /*          /USER/ACTIVITY/:CATID/LIKE               */
+  /*          /USER/ACTIVITY/:CATID/LIKE               */
   //==================================================//
 
   app.post('/user/activity/:catId/like', function (req, res, next) {
@@ -157,7 +219,7 @@ module.exports = (app, passport) => {
 
 
   //==================================================//
-    /*         /USER/ACTIVITY/:CATID/FAVORITE            */
+  /*         /USER/ACTIVITY/:CATID/FAVORITE            */
   //==================================================//
 
   app.post('/user/activity/:catId/favorite', function (req, res, next) {
@@ -169,7 +231,7 @@ module.exports = (app, passport) => {
 
 
   //==================================================//
-    /*         /USER/ACTIVITY/:ACTID/DELETE            */
+  /*         /USER/ACTIVITY/:ACTID/DELETE            */
   //==================================================//
 
 
@@ -182,7 +244,7 @@ module.exports = (app, passport) => {
 
 
   //==================================================//
-    /*         /USER/ACTIVITY/:ACTID/TAG           */
+  /*         /USER/ACTIVITY/:ACTID/TAG           */
   //==================================================//
 
 
@@ -196,7 +258,7 @@ module.exports = (app, passport) => {
   // TODO :: revisit other routes required for tags
 
   //==================================================//
-    /*    /USER/ACTIVITY/:ACTID/TAG/:TAGID/DELETE    */
+  /*    /USER/ACTIVITY/:ACTID/TAG/:TAGID/DELETE    */
   //==================================================//
 
 
@@ -206,7 +268,6 @@ module.exports = (app, passport) => {
     // TODO :: redirect to reload view
     res.redirect('/user/activities')
   });
-
 
 
 };

@@ -2,16 +2,17 @@
 // DISPLAYS ALL ACTIVITIES CREATED BY LOGGED-IN USER
 form.activity
     div.col-md-12
-        table.table.table-striped.table-hover.table-bordered
+        table.table.table-striped.table-hover.table-bordered.text-center.activity-table
             thead.thead-dark
                 tr
                     th ID
                     th Title
                     th Summary
-                    th Min / Max Person(s)
+                    th.actor-head Min / Max
                     th Start Date
                     th End Date
                     th Active
+                    th Edit
                     th Delete
             tbody
             each activity in activitiesData
@@ -20,10 +21,11 @@ form.activity
                     td= activity.activityId
                     td= activity.title
                     td= activity.summary
+                    td= activity.minActor
+                        | /
+                        span= activity.maxActor
                     td= moment(activity.startDate).format('MM/DD/YYYY')
                     td= moment(activity.endDate).format('MM/DD/YYYY')
-                    td= activity.minActor
-                    span= activity.maxActor
                     td= active
                     td
                         a.btn.btn-outline-primary(href='/user/activity/' + activity.activityId + '/update' ) Edit

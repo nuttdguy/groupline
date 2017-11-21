@@ -1,23 +1,21 @@
-form#activityNew.activity(enctype="multipart/form-data")
-    div.col-md-6.form-group
-        // FOR DASHBOARD VIEW
-        // REPLACE CONTENT WITH DATA FROM DATABASE
-        label(for="title") Heading
-            input.form-control#activityHeading(type="text")
 
-        label(for="activityCategoryName") Category
-            select.form-control#activityCategoryName
+// FOR CREATING NEW ACTIVITIES
+form#activityNew.activity
+    div.col-md-6.form-group
+        label(for="title") Title
+            input.form-control#title(type="text")
+
+        label(for="categoryName") Category
+            select.form-control#categoryName
                 if categories
                     each category in categories
-                        option(value=category.activityCategoryId)=category.categoryName
+                        option(value=category.activity_category_id)= category.category_name
 
         label(for="start") Listing Start Date
-            input.form-control#start(type="date"
-            placeholder="Let's meet and drink" )
+            input.form-control#start(type="date")
 
         label(for="end") Listing End Date
-            input.form-control#end(type="date"
-            placeholder="Let's meet and drink" )
+            input.form-control#end(type="date" )
 
         label(for="minActor") Min. People
             input.form-control#minActor(type="number" min=1 )
@@ -38,13 +36,16 @@ form#activityNew.activity(enctype="multipart/form-data")
         div.activity
             label(for="activityLocation") Location
                 input.form-control#activityLocation(type="text"
-                placeholder="2444 VR Drive, SF, CA, 98411" )
+                value="2444 VR Drive, SF, CA, 98411" )
 
         div.activity.text-center
             img#activityImg.activity-img.img-circle(src="http://via.placeholder.com/350x150" alt="activity image")
             h6 Upload a different photo...
 
-        div.text-right
-            h4#status
-            input#activityFile.form-control(type="file" name="activityImg")
-            button.btn.btn-dark(type="submit") Upload
+        //div.text-right
+        //    form#uploadForm(action="/upload" method="POST" enctype="multipart/form-data")
+        //        input#fileToUpload.form-control(type="file" name="imgfile")
+        //        button.btn.btn-dark(type="submit") Upload
+
+                //input#activityFile.form-control(type="file" name="imgfile")
+                //button.btn.btn-dark(type="submit") Upload

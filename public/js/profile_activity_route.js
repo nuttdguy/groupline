@@ -1,20 +1,19 @@
 
-$(document).ready(function() {
+$(document).ready(function () {
 
 
   //======================================================
   // BEGIN == USER ACTIVITY ROUTES
   //======================================================
 
-
+  // METHOD [POST] == SUBMIT THE ACTIVITY LISTING
   // TODO :: ADD VALIDATION TO PREVENT EMPTY FIELD ON UPDATE
   $("#activityNew").submit(function(e) {
     e.preventDefault();
-    let data = $('#activityNew');
-    console.log(data[0].elements);
+    let data = validateForm($(this));
 
     // SUBMIT THE FORM
-    $(this).ajaxSubmit({
+    $.ajax({
       url: '/user/activity/new',
       type: 'POST',
       contentType: 'application/json',
@@ -26,9 +25,10 @@ $(document).ready(function() {
 
   });
 
+
   function validateForm() {
-    let heading = $('#title').val();
-    let category = $('#activityCategoryName option:selected').val();
+    let title = $('#title').val();
+    let category = $('#categoryName option:selected').val();
     let start = $('#start').val();
     let end = $('#end').val();
     let minActor = $('#minActor').val();
@@ -36,24 +36,20 @@ $(document).ready(function() {
     let summary = $('#summary').val();
     let detail = $('#detail').val();
     let location = $('#activityLocation').val();
-    // let file = $('#activityFile');
-    // let fileData = file.files[0];
-    // let formData = new FormData();
-    // formData('file', fileData);
 
+    let data = {
+      "title": title,
+      "category": category,
+      "startDate": start,
+      "endDate": end,
+      "minActor": minActor,
+      "maxActor": maxActor,
+      "summary": summary,
+      "detail": detail,
+      "location": location
+    };
 
-    console.log(heading);
-    console.log(category);
-    console.log(start);
-    console.log(end);
-    console.log(minActor);
-    console.log(maxActor);
-    console.log(summary);
-    console.log(detail);
-    console.log(location);
-    // console.log(file);
-    // console.log(formData);
-
+    return JSON.stringify(data);
 
   }
 
@@ -95,12 +91,12 @@ $(document).ready(function() {
   function displayMessage(data) {
     setTimeout(function () {
       $('#fileToUpload').val('');
-      $('#success-message').css({'display': 'none'});
+      $('#message').css({'display': 'none'});
     }, 4000);
 
-    $('#success-message').text(data.success);
-    $('#success-message').text(data.fail);
-    $('#success-message').css({'display': 'block'});
+    $('#message').text(data.success);
+    $('#message').text(data.fail);
+    $('#message').css({'display': 'block'});
   }
 
 

@@ -17,6 +17,10 @@ module.exports = {
         type: Sequelize.TEXT,
         field: 'summary'
       },
+      detail: {
+        type: Sequelize.TEXT,
+        field: 'detail'
+      },
       startDate: {
         type: Sequelize.DATE,
         field: 'start_date'

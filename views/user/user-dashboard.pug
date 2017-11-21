@@ -1,7 +1,7 @@
+
+// FOR UPDATING USER INFORMATION
 div.col-md-6.form-group
     form.profile
-        // FOR DASHBOARD VIEW
-        // REPLACE CONTENT WITH DATA FROM DATABASE
         label(for="username") Username
         input.form-control#username(type="username" placeholder="username" value=user.username)
 
@@ -28,6 +28,6 @@ div.col-md-6.form-group
 
     div.text-right
         h4#status
-        form#uploadForm(action="/upload" method="POST" enctype="multipart/form-data")
+        form#uploadFile(action="/upload" method="POST" enctype="multipart/form-data")
             input#fileToUpload.form-control(type="file" name="profileImg")
             button.btn.btn-dark(type="submit") Upload

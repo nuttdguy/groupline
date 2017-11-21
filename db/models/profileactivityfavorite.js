@@ -18,7 +18,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     isActive: {
       type: DataTypes.BOOLEAN,
-      field: 'is_active'
+      field: 'is_active',
+      defaultValue: true
     }
   }, {
     underscored: true,
@@ -28,21 +29,21 @@ module.exports = (sequelize, DataTypes) => {
   ProfileActivityFavorite.associate = function (m) {
 
     m.UserProfile.belongsToMany(m.Activity, {
-      as: 'UserProfiles',
+      as: 'Activities',
       through: {
-        model: m.ProfileActivityFavorite, unique: false
+        model: ProfileActivityFavorite
       },
-      foreignKey: 'user_profile_id',
+      foreignKey: 'activity_id',
       onDelete: 'cascade',
       onUpdate: 'cascade'
     });
 
     m.Activity.belongsToMany(m.UserProfile, {
-      as: 'Activities',
+      as: 'userProfiles',
       through: {
-        model: m.ProfileActivityFavorite, unique: false
+        model: ProfileActivityFavorite
       },
-      foreignKey: 'activity_id',
+      foreignKey: 'user_profile_id',
       onDelete: 'cascade',
       onUpdate: 'cascade'
     });

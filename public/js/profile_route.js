@@ -31,35 +31,6 @@ $(document).ready(function() {
 
 
   //======================================================
-  // BEGIN == UPLOAD ROUTES
-  //======================================================
-
-  // TODO :: VERIFY CORRECT FILE FORMAT, IMAGE TYPE
-
-  $('#uploadForm').submit(function(e) {
-    e.preventDefault();
-
-    // VERIFY FILE-NAME IS NOT EMPTY
-    let file = $('#fileToUpload').val();
-    if (file === undefined || file === '') {
-      let data = {"fail": "Select a file to upload"};
-      displayMessage(data);
-
-    } else {
-      // SUBMIT THE FORM AND FILE
-      $(this).ajaxSubmit({
-        contentType: 'application/json',
-        success: function (data) {
-          displayMessage(data);
-        }
-      });
-    }
-
-    return false
-  });
-
-
-  //======================================================
   // BEGIN == USER HELPER FUNCTIONS
   //======================================================
 
@@ -89,12 +60,12 @@ $(document).ready(function() {
   function displayMessage(data) {
     setTimeout(function () {
       $('#fileToUpload').val('');
-      $('#success-message').css({'display': 'none'});
+      $('#message').css({'display': 'none'});
     }, 4000);
 
-    $('#success-message').text(data.success);
-    $('#success-message').text(data.fail);
-    $('#success-message').css({'display': 'block'});
+    $('#message').text(data.success);
+    $('#message').text(data.fail);
+    $('#message').css({'display': 'block'});
   }
 
   // TODO :: add form validation for user profile

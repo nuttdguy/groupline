@@ -44,11 +44,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    // queryInterface.removeConstraint('ProfileActivityFavorites', 'user_profile_id').then( () => {
-    // });
-    //
-    // queryInterface.removeConstraint('ProfileActivityFavorites', 'activity_id').then( () => {
-    // });
 
     return queryInterface.dropTable('ProfileActivityFavorites');
   }

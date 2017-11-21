@@ -8,11 +8,13 @@ const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 const passport = require('passport');
 const session = require('express-session');
+const formidable = require('express-formidable');
 const app = express(); // CREATE INSTANCE OF EXPRESS OBJECT
 
 // MIDDLE WARE
 require('dotenv').config();  // ENABLE USE OF .ENV HIDDEN FILE FOR SECRETS
 app.locals.moment = require('moment');
+// app.use(formidable());
 
 // SET VIEW DIRECTORIES
 app.set('views', [
@@ -30,7 +32,7 @@ app.set('view engine', 'pug'); // SET VIEW ENGINE
 app.use(logger('dev')); // ENABLE LOGGING
 app.use(cookieParser()); // READ COOKIES (REQUIRED FOR AUTH)
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, '/public')));
 

@@ -21,7 +21,7 @@ a:hover {
 =======================================*/
 
 #err-message,
-#success-message,
+#message,
 #message {
     display: none;
     text-transform: capitalize;
@@ -87,5 +87,14 @@ label {
 }
 
 /*=======================================
-        USER FORM STYLES
+        ACTIVITY STYLES
 =======================================*/
+
+.actor-head {
+    text-wrap: normal;
+}
+
+.activity-table td:nth-child(2),
+.activity-table td:nth-child(3) {
+    text-align: left!important;
+}

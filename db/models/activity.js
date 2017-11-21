@@ -17,6 +17,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.TEXT,
       field: 'summary'
     },
+    detail: {
+      type: DataTypes.TEXT,
+      field: 'detail'
+    },
     startDate: {
       type: DataTypes.DATE,
       field: 'start_date'
@@ -35,12 +39,16 @@ module.exports = (sequelize, DataTypes) => {
     },
     isActive: {
       type: DataTypes.BOOLEAN,
-      field: 'is_active'
+      field: 'is_active',
+      defaultValue: true
     },
   }, {
     underscored: true,
-    classMethods: {},
-    instanceMethods: {}
+    classMethods: {
+
+    },
+    instanceMethods: {
+    }
   });
 
   Activity.associate = function (m) {

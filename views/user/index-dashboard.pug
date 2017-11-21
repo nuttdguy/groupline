@@ -7,10 +7,10 @@ block content
             ul.list-group
                 li.list-group-item
                     span.glyphicon.glyphicon-list-alt
-                        a.tag.tag-default.tag-pill.float-xs-right(href="#") Dashboard
+                        a.tag.tag-default.tag-pill.float-xs-right(href="/user") Dashboard
                 li.list-group-item
                     span.glyphicon.glyphicon-list-alt
-                        a.tag.tag-default.tag-pill.float-xs-right(href="#") Activities
+                        a.tag.tag-default.tag-pill.float-xs-right(href="/user/activities") Activities
                 li.list-group-item
                     span.glyphicon.glyphicon-list-alt
                         a.tag.tag-default.tag-pill.float-xs-right(href="#") Favorites
@@ -30,32 +30,29 @@ block content
                     li.breadcrumb-item
                         a(href="/") Home
                     li.breadcrumb-item.active
-                        // a Dashboard
+                    if view === 'dashboard'
+                        a Dashboard
+                    if view === 'activities'
                         a Activities
 
             div.row
-                h4#success-message.alert.alert-success.w-100
-
-                // TODO :: DISABLE BUTTON ON VIEW
-                // TODO :: ENABLE FORM ON SELECT EDIT
-                legend
-                    a#View(href="#") View
-                    a#Edit(href="#") Edit
-                    a#New(href="#") New
+                h4#message.alert.alert-success.w-100
 
 
                 // TODO :: ADD CONDITIONAL TO DISPLAY DASHBOARD
-                // UNCOMMENT DASHBOARD COMMENT TO SHOW
-                // include user-dashboard
+                if view === "dashboard"
+                    include user-dashboard
 
                 // TODO :: ADD CONDITIONAL TO DISPLAY ACTIVITIES
 
                 // FOR VIEWING ALL ACTIVITIES CREATED BY USER
-                if view === "view"
+                if view === "activities"
+                    legend
+                        a(href="/user/activity/new") Add New
                     include activity-all
 
                 // CREATE A NEW ACTIVITY
-                if view === "new"
+                if view === "activities-new"
                     include activity-new
 
 
