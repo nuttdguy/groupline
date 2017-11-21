@@ -43,8 +43,8 @@ module.exports = {
         onDelete: 'cascade',
         onUpdate: 'cascade',
         references: {
-            model: 'Activities',
-            key: 'activity_id'
+          model: 'Activities',
+          key: 'activity_id'
         }
       }
     });

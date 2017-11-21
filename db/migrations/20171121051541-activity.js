@@ -38,12 +38,10 @@ module.exports = {
         field: 'is_active'
       },
       createdAt: {
-        allowNull: false,
         type: Sequelize.DATE,
         field: 'created_at'
       },
       updatedAt: {
-        allowNull: false,
         type: Sequelize.DATE,
         field: 'updated_at'
       },
