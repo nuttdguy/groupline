@@ -11,13 +11,14 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     underscored: true,
     classMethods: {}
-    }
   });
+
   ActivityMeetLocation.associate = function(models) {
-      ActivityMeetLocation.belongsTo(models.Activity,{
-          foreignKey: 'activity_id',
-          sourceKey: 'activity_id'
-      })
+    ActivityMeetLocation.belongsTo(models.Activity, {
+      foreignKey: 'activity_id',
+      sourceKey: 'activity_id'
+    });
+  };
 
   return ActivityMeetLocation;
 };
