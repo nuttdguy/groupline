@@ -26,22 +26,18 @@ module.exports = (sequelize, DataTypes) => {
   Activity.associate = function (m) {
 
     Activity.hasMany(m.ActivityCategory, {
-      foreignKey: 'activity_id',
       targetKey: 'activity_id'
     });
 
     Activity.hasMany(m.ActivityTag, {
-      foreignKey: 'activity_id',
       targetKey: 'activity_id'
     });
 
     Activity.hasMany(m.ActivityImage, {
-      foreignKey: 'activity_id',
       targetKey: 'activity_id'
     });
 
     Activity.hasMany(m.ActivityMeetLocation, {
-      foreignKey: 'activity_id',
       targetKey: 'activity_id'
     });
 
