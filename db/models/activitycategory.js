@@ -16,10 +16,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.BOOLEAN,
         field: 'is_active',
         defaultValue: true
-      },
-      activityId: {
-        type: DataTypes.INTEGER,
-        field: 'activity_id'
       }
     },
     {
@@ -29,12 +25,11 @@ module.exports = (sequelize, DataTypes) => {
 
 
   ActivityCategory.associate = function (m) {
-    ActivityCategory.belongsTo(m.Activity, {
-      foreignKey: 'activity_id',
-      sourceKey: 'activity_id',
-      onDelete: 'cascade',
-      onUpdate: 'cascade'
-    })
+
+    ActivityCategory.hasMany(m.ActivityCategoryActivity, {
+      foreignKey: 'activity_category_id',
+      targetKey: 'activity_category_id'
+    });
   };
   return ActivityCategory;
 };

@@ -47,21 +47,6 @@ module.exports = (sequelize, DataTypes) => {
 
   UserProfile.associate = function (m) {
 
-    // m.UserProfile.belongsToMany(m.Activity, {
-    //   as: 'Activities',
-    //   through: {
-    //     model: m.ProfileActivityFavorite
-    //   },
-    //   foreignKey: 'activity_id',
-    //   onDelete: 'cascade',
-    //   onUpdate: 'cascade'
-    // });
-
-    // UserProfile.hasMany(m.Activity, {
-    //   foreignKey: 'user_profile_id',
-    //   targetKey: 'user_profile_id'
-    // });
-
     UserProfile.hasMany(m.ProfileActivityFavorite, {
       foreignKey: 'user_profile_id',
       targetKey: 'user_profile_id'

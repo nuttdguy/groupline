@@ -15,22 +15,41 @@ VALUES (4, 'VR wednesdays', 'VR summary', now(), now(), 2, 4, true, now(), now()
 INSERT INTO public."Activities"(activity_id, title, summary, start_date, end_date, min_actor, max_actor, is_active, created_at, updated_at)
 VALUES (5, 'Lets pair program', 'Program summary', now(), now(), 2, 4, true, now(), now());
 
+
 -- SEED DATA FOR ACTIVITIES_CATEGORIES
 
-INSERT INTO public."ActivityCategories"(activity_category_id, category_name, is_active, created_at, updated_at, activity_id)
-VALUES (1, 'Bar', true, now(), now(), 1);
+INSERT INTO public."ActivityCategories"(activity_category_id, category_name, is_active, created_at, updated_at)
+VALUES (1, 'Bar', true, now(), now());
 
-INSERT INTO public."ActivityCategories"(activity_category_id, category_name, is_active, created_at, updated_at, activity_id)
-VALUES (2, 'Hiking', true, now(), now(), 2);
+INSERT INTO public."ActivityCategories"(activity_category_id, category_name, is_active, created_at, updated_at)
+VALUES (2, 'Hiking', true, now(), now());
 
-INSERT INTO public."ActivityCategories"(activity_category_id, category_name, is_active, created_at, updated_at, activity_id)
-VALUES (3, 'Dancing', true, now(), now(), 3);
+INSERT INTO public."ActivityCategories"(activity_category_id, category_name, is_active, created_at, updated_at)
+VALUES (3, 'Dancing', true, now(), now());
 
-INSERT INTO public."ActivityCategories"(activity_category_id, category_name, is_active, created_at, updated_at, activity_id)
-VALUES (4, 'Gaming', true, now(), now(), 4);
+INSERT INTO public."ActivityCategories"(activity_category_id, category_name, is_active, created_at, updated_at)
+VALUES (4, 'Gaming', true, now(), now());
 
-INSERT INTO public."ActivityCategories"(activity_category_id, category_name, is_active, created_at, updated_at, activity_id)
-VALUES (5, 'Technology', true, now(), now(), 5);
+INSERT INTO public."ActivityCategories"(activity_category_id, category_name, is_active, created_at, updated_at)
+VALUES (5, 'Technology', true, now(), now());
+
+-- SEED DATA FOR ACTIVITIES_CATEGORY_ACTIVITIES JOIN TABLE
+
+INSERT INTO public."ActivityCategoryActivities"(id, is_active, created_at, updated_at, activity_category_id, activity_id)
+VALUES (1, true,  now(), now(), 1, 1);
+
+INSERT INTO public."ActivityCategoryActivities"(id, is_active, created_at, updated_at, activity_category_id, activity_id)
+VALUES (2, true, now(), now(), 2, 2);
+
+INSERT INTO public."ActivityCategoryActivities"(id, is_active, created_at, updated_at, activity_category_id, activity_id)
+VALUES (3, true,now(), now(), 3, 3);
+
+INSERT INTO public."ActivityCategoryActivities"(id, is_active, created_at, updated_at, activity_category_id, activity_id)
+VALUES (4, true, now(), now(), 4, 4);
+
+INSERT INTO public."ActivityCategoryActivities"(id, is_active, created_at, updated_at, activity_category_id, activity_id)
+VALUES (5, true, now(), now(),  5, 5);
+
 
 -- SEED DATA FOR USERS_PROFILES
 
@@ -122,6 +141,7 @@ VALUES (4, 2, 4, true, now(), now());
 
 INSERT INTO public."ProfileActivityFavorites"(profile_activity_favorite_id, user_profile_id, activity_id, is_active, created_at, updated_at)
 VALUES (5, 2, 4, true, now(), now());
+
 
 
 

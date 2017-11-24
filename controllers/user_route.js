@@ -3,6 +3,7 @@ const ActivityMeetLocation = require('../db/models/index').ActivityMeetLocation;
 const Activity = require('../db/models/index').Activity;
 const ActivityFavorite = require('../db/models/index').ProfileActivityFavorite;
 const ActivityCategories = require('../db/models/index').ActivityCategory;
+const ActivityCategoryActivity = require('../db/models/index').ActivityCategoryActivity;
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 
@@ -127,41 +128,68 @@ module.exports = (app, passport) => {
     });
   });
 
-
+  // TODO :: 11/23 --> REQUIRES REVIEW OF CONSTRAINT ERROR
   // METHOD [POST] == CREATE NEW ACTIVITY
   app.post('/user/activity/new', function (req, res, next) {
     console.log('POSTING ACTIVITY NEW');
     let model = new Activity(req.body);
     let userId = 1;
+    let activityId = 0;
+    let categoryId = req.body.category;
 
     // STEP 1: CREATE A NEW RECORD, IN ORDER TO GENERATE ID
     Activity.create().then(activity => {
 
-      // STEP 2: UPDATE THE RECORD WITH FORM DATA
-      let activityToUpdate = setActivityProperties(activity, model);
-      return activity.updateAttributes(activityToUpdate);
+        // STEP 2: UPDATE THE RECORD WITH FORM DATA
+        let activityToUpdate = setActivityProperties(activity, model.dataValues);
+        return activity.updateAttributes(activityToUpdate);
 
-    }).then(result => {
+      }).then(activity => {
 
-      // STEP 3: CREATE A NEW RECORD, IN ORDER TO ASSOCIATE USER TO ACTIVITY
-      ActivityFavorite.create().then(activityFav => {
+        // STEP 3: UPDATE THE RECORD WITH ACTIVITY ID & USER ID
+        // STEP 4: CREATE A NEW RECORD, IN ORDER TO ASSOCIATE USER TO ACTIVITY
+        ActivityFavorite.create().then(activityFav => {
 
-        // STEP 2: UPDATE THE RECORD WITH ACTIVITY ID & USER ID
-        let activityId = result.activityId;
-        let activityFavToUpdate = setActivityFavProperties(activityFav, userId, activityId);
+          activityId = activity.activityId;
+          let activityFavToUpdate = setActivityFavProperties(activityFav, userId, activityId);
 
+          return activityFav.updateAttributes(activityFavToUpdate);
+      }).then(activityFav => {
 
+          // STEP 5: UPDATE THE RECORD WITH ACTIVITY ID & CATEGORY ID
+          // STEP 6: CREATE A NEW RECORD, IN ORDER TO ASSOCIATE ACTIVITY TO CATEGORY
+          ActivityCategoryActivity.create().then(activityCategoryRecord => {
 
-        return activityFav.updateAttributes(activityFavToUpdate);
+            let categoryActivity = setActivityCatActivityProperties(activityCategoryRecord, activityId, categoryId);
 
-      }).then(result => {
+            return activityCategoryRecord.updateAttributes(categoryActivity);
 
-        const data = { "success": "Activity added", "view": "activities-new"};
-        res.json(data);
-        // res.json('index-dashboard', {
-        //   success: 'Activity saved',
-        //   view: 'activities-new'});
+        }).then(activityCategoryRecord => {
+
+            // STEP 7: UPDATE THE RECORD WITH ACTIVITY ID & LOCATION
+            // STEP 8: CREATE A NEW RECORD, IN ORDER TO ASSOCIATE ACTIVITY TO LOCATION
+            ActivityMeetLocation.create().then(activityLocationRecord => {
+
+              // STEP 9: UPDATE THE RECORD WITH ACTIVITY ID & LOCATION
+              // STEP 10: CREATE A NEW RECORD, IN ORDER TO ASSOCIATE ACTIVITY TO LOCATION
+              let categoryLocation = setActivityLocationProperties(activityLocationRecord, activityId);
+              return activityLocationRecord.updateAttributes(categoryLocation);
+          }).then(result => {
+            console.log(result.dataValues);
+
+            const data = {"success": "Activity added", "view": "activities-new"};
+            res.json(data);
+
+          });
+
+        });
+
       });
+
+    }).catch(err => {
+      console.log(err);
+      const data = {"fail": "Server error", "view": "activities-new"};
+      res.json(data);
     });
   });
 
@@ -245,6 +273,18 @@ module.exports = (app, passport) => {
 
 
   // HELPER FUNCTIONS: SET PROPERTIES
+
+  function setActivityLocationProperties(activityLocationRecord, activityId) {
+    activityLocationRecord.set('activityId', activityId);
+    return activityLocationRecord.dataValues;
+  }
+
+  function setActivityCatActivityProperties(activityCategoryRecord, activityId, categoryId) {
+    activityCategoryRecord.set('activityId', activityId);
+    activityCategoryRecord.set('activityCategoryId', categoryId);
+    return activityCategoryRecord.dataValues;
+  }
+
   function setActivityFavProperties(activityFav, userId, activityId) {
     activityFav.set('userProfileId', userId);
     activityFav.set('activityId', activityId);

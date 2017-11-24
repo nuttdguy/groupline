@@ -26,7 +26,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     isActive: {
       type: DataTypes.INTEGER,
-      field: 'is_active'
+      field: 'is_active',
+      defaultValue: true
     },
     activityId: {
       type: DataTypes.INTEGER,
