@@ -56,27 +56,37 @@ module.exports = (sequelize, DataTypes) => {
 
     Activity.hasMany(m.ActivityTag, {
       foreignKey: 'activity_id',
-      targetKey: 'activity_id'
+      targetKey: 'activity_id',
+      onDelete: 'cascade',
+      onUpdate: 'cascade'
     });
 
     Activity.hasMany(m.ActivityImage, {
       foreignKey: 'activity_id',
-      targetKey: 'activity_id'
+      targetKey: 'activity_id',
+      onDelete: 'cascade',
+      onUpdate: 'cascade'
     });
 
     Activity.hasMany(m.ActivityMeetLocation, {
       foreignKey: 'activity_id',
-      targetKey: 'activity_id'
+      targetKey: 'activity_id',
+      onDelete: 'cascade',
+      onUpdate: 'cascade'
     });
 
     Activity.hasMany(m.ProfileActivityFavorite, {
       foreignKey: 'activity_id',
-      targetKey: 'activity_id'
+      targetKey: 'activity_id',
+      onDelete: 'cascade',
+      onUpdate: 'cascade'
     });
 
     Activity.hasMany(m.ActivityCategoryActivity, {
       foreignKey: 'activity_id',
-      targetKey: 'activity_id'
+      targetKey: 'activity_id',
+      onDelete: 'cascade',
+      onUpdate: 'cascade'
     });
 
   };

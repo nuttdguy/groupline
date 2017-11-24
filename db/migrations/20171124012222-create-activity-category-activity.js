@@ -26,7 +26,9 @@ module.exports = {
         references: {
           model: 'ActivityCategories',
           key: 'activity_category_id'
-        }
+        },
+        onDelete: 'cascade',
+        onUpdate: 'cascade'
       },
       activityId: {
         type: Sequelize.INTEGER,
@@ -34,7 +36,9 @@ module.exports = {
         references: {
           model: 'Activities',
           key: 'activity_id'
-        }
+        },
+        onDelete: 'cascade',
+        onUpdate: 'cascade'
       }
     });
   },

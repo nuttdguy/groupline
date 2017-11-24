@@ -28,6 +28,6 @@ form.activity
                     td= moment(activity.endDate).format('MM/DD/YYYY')
                     td= active
                     td
-                        a.btn.btn-outline-primary(href='/user/activity/' + activity.activityId + '/update' ) Edit
+                        a.btn.btn-outline-primary(href='/user/activity/' + activity.activityId + '/update') Edit
                     td
-                        a.btn.btn-outline-danger(href='/user/activity/' + activity.activityId + '/delete' ) Delete
+                        a#activityDelete.btn.btn-outline-danger(placeholder=activity.activityId) Delete

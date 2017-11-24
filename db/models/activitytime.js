@@ -23,8 +23,6 @@ module.exports = (sequelize, DataTypes) => {
     activityMeetLocationId: {
       type: DataTypes.INTEGER,
       field: 'activity_time_id',
-      onDelete: 'cascade',
-      onUpdate: 'cascade',
       references: {
         model: 'ActivityMeetLocation',
         key: 'activity_meet_location_id'
@@ -39,9 +37,7 @@ module.exports = (sequelize, DataTypes) => {
   ActivityTime.associate = function(m) {
     ActivityTime.belongsTo(m.ActivityMeetLocation, {
       foreignKey: 'activity_meet_location_id',
-      sourceKey: 'activity_meet_location_id',
-      onDelete: 'cascade',
-      onUpdate: 'cascade'
+      sourceKey: 'activity_meet_location_id'
     })
   };
   return ActivityTime;

@@ -28,9 +28,7 @@ module.exports = (sequelize, DataTypes) => {
   ActivityTag.associate = function (m) {
     ActivityTag.belongsTo(m.Activity, {
       foreignKey: 'activity_id',
-      sourceKey: 'activity_id',
-      onDelete: 'cascade',
-      onUpdate: 'cascade'
+      sourceKey: 'activity_id'
     })
   };
 

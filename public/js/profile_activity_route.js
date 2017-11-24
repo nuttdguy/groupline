@@ -6,14 +6,13 @@ $(document).ready(function () {
   // BEGIN == USER ACTIVITY ROUTES
   //======================================================
 
-  // METHOD [POST] == SUBMIT THE ACTIVITY LISTING
+  // METHOD [POST] == NEW ACTIVITY LISTING
   // TODO :: ADD VALIDATION TO PREVENT EMPTY FIELD ON UPDATE
   $("#activityNew").submit(function(e) {
     e.preventDefault();
 
     let data = validateForm($(this));
 
-    // SUBMIT THE FORM
     $.ajax({
       url: '/user/activity/new',
       type: 'POST',
@@ -27,7 +26,51 @@ $(document).ready(function () {
 
   });
 
+  // METHOD [PUT] == UPDATE EXISTING ACTIVITY
+  $("#activityUpdate").submit(function(e) {
+    e.preventDefault();
 
+    let data = validateForm($(this));
+    let id = $('#activityId').val();
+    console.log(id);
+    let url = '/user/activity/'+id+'/update?_method=PUT';
+
+    $.ajax({
+      url: url,
+      type: 'PUT',
+      contentType: 'application/json',
+      data: data,
+      success: function (data) {
+        displayMessage(data);
+        window.location.href = data.view;
+      }
+    });
+
+  });
+
+
+  // METHOD [POST] == NEW ACTIVITY LISTING
+  // TODO :: ADD VALIDATION TO PREVENT EMPTY FIELD ON UPDATE
+  $("#activityDelete").click(function(e) {
+    e.preventDefault();
+
+    let id = $(this)[0].getAttribute('placeholder');
+    console.log(id);
+    let url = '/user/activity/' + id + '/delete?_method=DELETE';
+
+    $.ajax({
+      url: url,
+      type: 'DELETE',
+      contentType: 'application/json',
+      success: function (data) {
+        window.location.href = data.view;
+        displayMessage(data);
+      }
+    })
+
+  });
+
+  // HELPER FUNCTION ==> TRANSFER FORM VALUES INTO JSON OBJECT
   function validateForm() {
 
     let title = $('#title').val();
@@ -39,7 +82,6 @@ $(document).ready(function () {
     let summary = $('#summary').val();
     let detail = $('#detail').val();
     let location = $('#activityLocation').val();
-
 
     let data = {
       "title": title,

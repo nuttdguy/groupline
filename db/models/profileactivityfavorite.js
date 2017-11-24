@@ -34,9 +34,7 @@ module.exports = (sequelize, DataTypes) => {
         model: m.ProfileActivityFavorite,
         as: 'ProfileActivityFavorite'
       },
-      foreignKey: 'activity_id',
-      onDelete: 'cascade',
-      onUpdate: 'cascade'
+      foreignKey: 'activity_id'
     });
 
     m.Activity.belongsToMany(m.UserProfile, {
@@ -45,9 +43,7 @@ module.exports = (sequelize, DataTypes) => {
         model: m.ProfileActivityFavorite,
         as: 'ProfileActivityFavorite'
       },
-      foreignKey: 'user_profile_id',
-      onDelete: 'cascade',
-      onUpdate: 'cascade'
+      foreignKey: 'user_profile_id'
     });
 
     // m.UserProfile.belongsToMany(m.Activity, {

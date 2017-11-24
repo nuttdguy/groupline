@@ -28,7 +28,9 @@ module.exports = (sequelize, DataTypes) => {
 
     ActivityCategory.hasMany(m.ActivityCategoryActivity, {
       foreignKey: 'activity_category_id',
-      targetKey: 'activity_category_id'
+      targetKey: 'activity_category_id',
+      onDelete: 'cascade',
+      onUpdate: 'cascade'
     });
   };
   return ActivityCategory;

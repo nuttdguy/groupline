@@ -7,7 +7,9 @@ module.exports = {
         primaryKey: true,
         autoIncrement: true,
         type: Sequelize.INTEGER,
-        field: 'user_profile_id'
+        field: 'user_profile_id',
+        onDelete: 'cascade',
+        onUpdate: 'cascade'
       },
       username: {
         type: Sequelize.STRING,

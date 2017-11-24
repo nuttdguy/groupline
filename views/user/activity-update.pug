@@ -1,0 +1,46 @@
+
+
+// UPDATE AN EXISTING ACTIVITY
+form#activityUpdate.activity
+    input#activityId(hidden value= activity.activityId)
+    div.col-md-6.form-group
+        label(for="title") Title
+            input.form-control#title(type="text" value= activity.title)
+
+        //label(for="categoryName") Category
+        //    select.form-control#categoryName
+        //        if activity[0].ActivityCategories
+        //            each category in categories
+        //                option(value=category.activity_category_id)= category.category_name
+
+        label(for="start") Listing Start Date
+            input.form-control#start(type="date" value= activity.startDate)
+
+        label(for="end") Listing End Date
+            input.form-control#end(type="date" value= activity.endDate )
+
+        label(for="minActor") Min. People
+            input.form-control#minActor(type="number" min=1 value= activity.minActor)
+        label(for="maxActor") max. People
+            input.form-control#maxActor(type="number" min=2 value= activity.maxActor)
+
+        label(for="summary") Summary
+            textarea.form-control#summary(rows="3" cols="50")= activity.summary
+
+        label(for="detail") Details
+            textarea.form-control#detail(rows="3" cols="50")= activity.detail
+
+        button.btn.btn-dark(type="submit") Update Activity
+
+
+    div.col-md-6.form-group
+        // SETTTINGS FOR SECOND HALF OF PROFILE PAGE
+        div.activity
+            //label(for="activityLocation") Location
+                //input.form-control#activityLocation(type="text"
+                //value=activity.ActivityMeetLocations[0].address )
+
+        div.activity.text-center
+            img#activityImg.activity-img.img-circle(src="http://via.placeholder.com/350x150" alt="activity image")
+            h6 Upload a different photo...
+

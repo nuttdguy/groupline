@@ -1,8 +1,10 @@
 const User = require('../db/models/index').UserProfile;
 const ActivityMeetLocation = require('../db/models/index').ActivityMeetLocation;
 const Activity = require('../db/models/index').Activity;
+const ActivityTag = require('../db/models/index').ActivityTag;
+const ActivityImage = require('../db/models/index').ActivityImage;
 const ActivityFavorite = require('../db/models/index').ProfileActivityFavorite;
-const ActivityCategories = require('../db/models/index').ActivityCategory;
+const ActivityCategory = require('../db/models/index').ActivityCategory;
 const ActivityCategoryActivity = require('../db/models/index').ActivityCategoryActivity;
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
@@ -101,7 +103,6 @@ module.exports = (app, passport) => {
     }).then(activities => {
       let data = JSON.parse(JSON.stringify(activities));
 
-      console.log(data);
       res.render('index-dashboard', {
         activitiesData: data, view: 'activities'
       })
@@ -117,7 +118,7 @@ module.exports = (app, passport) => {
   // METHOD [GET] == LOADS AVAILABLE CATEGORIES & NEW ACTIVITY FORM
   app.get('/user/activity/new', function (req, res, next) {
 
-    ActivityCategories.findAll({
+    ActivityCategory.findAll({
       attributes: ['activity_category_id', 'category_name']
     }).then(data => {
 
@@ -128,10 +129,10 @@ module.exports = (app, passport) => {
     });
   });
 
+  // TODO :: SEQUELIZE MAINTAINS OWN KEY, GET DUPLICATE KEY ERROR WHEN SEEDED
   // TODO :: 11/23 --> REQUIRES REVIEW OF CONSTRAINT ERROR
   // METHOD [POST] == CREATE NEW ACTIVITY
   app.post('/user/activity/new', function (req, res, next) {
-    console.log('POSTING ACTIVITY NEW');
     let model = new Activity(req.body);
     let userId = 1;
     let activityId = 0;
@@ -139,9 +140,10 @@ module.exports = (app, passport) => {
 
     // STEP 1: CREATE A NEW RECORD, IN ORDER TO GENERATE ID
     Activity.create().then(activity => {
-
         // STEP 2: UPDATE THE RECORD WITH FORM DATA
         let activityToUpdate = setActivityProperties(activity, model.dataValues);
+      console.log(activity.dataValues);
+      console.log(activityToUpdate);
         return activity.updateAttributes(activityToUpdate);
 
       }).then(activity => {
@@ -175,9 +177,10 @@ module.exports = (app, passport) => {
               let categoryLocation = setActivityLocationProperties(activityLocationRecord, activityId);
               return activityLocationRecord.updateAttributes(categoryLocation);
           }).then(result => {
-            console.log(result.dataValues);
 
-            const data = {"success": "Activity added", "view": "activities-new"};
+            const data = {
+              "success": "Activity added",
+              "view": "activities-new"};
             res.json(data);
 
           });
@@ -191,6 +194,7 @@ module.exports = (app, passport) => {
       const data = {"fail": "Server error", "view": "activities-new"};
       res.json(data);
     });
+
   });
 
 
@@ -198,12 +202,82 @@ module.exports = (app, passport) => {
   /*         /USER/ACTIVITY/:ACTID/UPDATE            */
   //==================================================//
 
+  // IN PROGRESS :: 11/23
+  // GET THE ACTIVITY TO UPDATE
+  app.get('/user/activity/:catId/update', function (req, res, next) {
 
-  app.put('/user/activity/:catId/update', function (req, res, next) {
-    // TODO :: update an activity created by usr
+    Activity.findOne({
+      where: { activityId: req.params.catId },
+      include: [
+          // {model: ActivityTag, as: 'activityTags'},
+        {model: ActivityImage, as: 'ActivityImages'},
+        {model: ActivityMeetLocation, as: 'ActivityMeetLocations'},
+        {model: ActivityCategory, as: 'ActivityCategories'}
+      ],
+      }).then(activity => {
 
-    // TODO :: redirect to reload view
-    res.redirect('/user/activities')
+        let data = JSON.parse(JSON.stringify(activity));
+        return res.render('index-dashboard', {
+          activity: data,
+          view: 'activity-update'
+        });
+
+    }).catch(err => {
+      console.log(err);
+      return res.json({err: err})
+    });
+
+  });
+
+  // COMPLETED :: 11/23
+  // UPDATE THE ACTIVITY
+  app.put('/user/activity/:actId/update', function (req, res, next) {
+    let model = new Activity(req.body).dataValues;
+
+    Activity.findById(req.params.actId).then(activity => {
+
+      let activityToUpdate = setActivityProperties(activity, model);
+      activity.updateAttributes(activityToUpdate).then(result => {
+
+        let data = {
+          "success": "Activity Updated",
+          "view": "/user/activities"
+        };
+        res.json(data);
+
+      });
+    }).catch(err => {
+      res.json(err);
+      console.log(err);
+    });
+
+  });
+
+  //==================================================//
+  /*         /USER/ACTIVITY/:ACTID/DELETE            */
+  //==================================================//
+
+
+  app.delete('/user/activity/:actId/delete', function (req, res, next) {
+
+    // Activity.destroy({
+    //   where: {activityId: req.params.actId}, function(result) {
+    //     res.redirect('/user/activities')
+    //   }
+    // });
+
+    Activity.destroy({
+      where: {activityId: req.params.actId},
+      cascade: true})
+      .then(result => {
+        return result;
+    }).then(result => {
+      let data = {
+        "success": "Activity Updated",
+        "view": "/user/activities"
+      };
+      res.json(data);
+    });
   });
 
 
@@ -228,19 +302,6 @@ module.exports = (app, passport) => {
     // TODO :: user should be able to add cat as favorite
 
     // TODO :: redirect to page to reload view
-    res.redirect('/user/activities')
-  });
-
-
-  //==================================================//
-  /*         /USER/ACTIVITY/:ACTID/DELETE            */
-  //==================================================//
-
-
-  app.delete('/user/activity/:catId/delete', function (req, res, next) {
-    // TODO :: delete an activity created by usr
-
-    // TODO :: redirect to reload view
     res.redirect('/user/activities')
   });
 
@@ -300,6 +361,7 @@ module.exports = (app, passport) => {
     activity.set('minActor', model.minActor);
     activity.set('maxActor', model.maxActor);
     activity.set('isActive', model.isActive);
+    console.log(activity);
     // return activity;
     return activity.dataValues;
   }

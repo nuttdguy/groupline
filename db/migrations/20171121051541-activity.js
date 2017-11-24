@@ -7,7 +7,9 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
-        field: 'activity_id'
+        field: 'activity_id',
+        onDelete: 'cascade',
+        onUpdate: 'cascade'
       },
       title: {
         type: Sequelize.STRING,

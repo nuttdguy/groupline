@@ -49,7 +49,9 @@ module.exports = (sequelize, DataTypes) => {
 
     UserProfile.hasMany(m.ProfileActivityFavorite, {
       foreignKey: 'user_profile_id',
-      targetKey: 'user_profile_id'
+      targetKey: 'user_profile_id',
+      onDelete: 'cascade',
+      onUpdate: 'cascade'
     });
 
   };
