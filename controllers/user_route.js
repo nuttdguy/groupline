@@ -1,5 +1,5 @@
 const User = require('../db/models/index').UserProfile;
-const ActivityDetail = require('../db/models/index').ActivityDetail;
+const ActivityMeetLocation = require('../db/models/index').ActivityMeetLocation;
 const Activity = require('../db/models/index').Activity;
 const ActivityFavorite = require('../db/models/index').ProfileActivityFavorite;
 const ActivityCategories = require('../db/models/index').ActivityCategory;
@@ -89,12 +89,13 @@ module.exports = (app, passport) => {
   /*                 /USER/ACTIVITY                   */
   //==================================================//
 
-  // SHOW USERS LISTED ACTIVITIES
+  // COMPLETED 11/22
+  // SHOW ACTIVITIES USER HAD CREATED
   app.get('/user/activities', function (req, res, next) {
 
     Activity.findAll({
       include: [
-        { model: ActivityFavorite, as: 'ProfileActivityFavorites', where: {userProfileId: 1 }}
+        {model: ActivityFavorite, as: 'ProfileActivityFavorites', where: {userProfileId: 1}}
       ]
     }).then(activities => {
       let data = JSON.parse(JSON.stringify(activities));
@@ -148,7 +149,9 @@ module.exports = (app, passport) => {
         // STEP 2: UPDATE THE RECORD WITH ACTIVITY ID & USER ID
         let activityId = result.activityId;
         let activityFavToUpdate = setActivityFavProperties(activityFav, userId, activityId);
-        console.log(activityFavToUpdate);
+
+
+
         return activityFav.updateAttributes(activityFavToUpdate);
 
       }).then(result => {
