@@ -29,6 +29,7 @@ module.exports = (sequelize, DataTypes) => {
   ActivityImage.associate = function (m) {
 
     ActivityImage.belongsTo(m.Activity, {
+      foreignKey: 'activity_id',
       sourceKey: 'activity_id',
       onDelete: 'cascade',
       onUpdate: 'cascade'

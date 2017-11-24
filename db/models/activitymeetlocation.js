@@ -39,12 +39,14 @@ module.exports = (sequelize, DataTypes) => {
 
   ActivityMeetLocation.associate = function(m) {
     ActivityMeetLocation.belongsTo(m.Activity, {
+      foreignKey: 'activity_id',
       sourceKey: 'activity_id',
       onDelete: 'cascade',
       onUpdate: 'cascade'
     });
 
     m.Activity.hasMany(m.ActivityTime, {
+      foreignKey: 'activity_meet_location_id',
       targetKey: 'activity_meet_location_id'
     })
   };

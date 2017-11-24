@@ -92,19 +92,16 @@ module.exports = (app, passport) => {
   // SHOW USERS LISTED ACTIVITIES
   app.get('/user/activities', function (req, res, next) {
 
-    User.findAll({
-      include: [{all: true}],
-      where: {
-        userProfileId: 1  // TODO :: REPLACE HARDCODED VALUE
-      }
+    Activity.findAll({
+      include: [
+        { model: ActivityFavorite, as: 'ProfileActivityFavorites', where: {userProfileId: 1 }}
+      ]
     }).then(activities => {
-
       let data = JSON.parse(JSON.stringify(activities));
-      let activitiesData = data[0].UserProfiles;
 
-      console.log(activitiesData);
+      console.log(data);
       res.render('index-dashboard', {
-        activitiesData: activitiesData, view: 'activities'
+        activitiesData: data, view: 'activities'
       })
     });
   });
@@ -129,21 +126,6 @@ module.exports = (app, passport) => {
     });
   });
 
-  // STEP 1: CREATE A NEW RECORD, IN ORDER TO GENERATE ID
-  // Activity.create()
-  //   .then(activity => {
-  //
-  //   // STEP 2: SET ACTIVITY ID
-  //   // activityData.set('activityId', activity.activityId);
-  //   // console.log(activityData);
-  //   // STEP 3: UPDATE THE RECORD WITH FORM DATA
-  //   activity.updateAttributes(activityData, {returning: true})
-  //     .then(result => {
-  //
-  //     console.log(result.dataValues);
-  //     res.render('index-dashboard', {success: 'Activity saved'});
-  //   });
-  // });
 
   // METHOD [POST] == CREATE NEW ACTIVITY
   app.post('/user/activity/new', function (req, res, next) {
@@ -151,14 +133,19 @@ module.exports = (app, passport) => {
     let model = new Activity(req.body);
     let userId = 1;
 
-
+    // STEP 1: CREATE A NEW RECORD, IN ORDER TO GENERATE ID
     Activity.create().then(activity => {
+
+      // STEP 2: UPDATE THE RECORD WITH FORM DATA
       let activityToUpdate = setActivityProperties(activity, model);
       return activity.updateAttributes(activityToUpdate);
 
     }).then(result => {
 
+      // STEP 3: CREATE A NEW RECORD, IN ORDER TO ASSOCIATE USER TO ACTIVITY
       ActivityFavorite.create().then(activityFav => {
+
+        // STEP 2: UPDATE THE RECORD WITH ACTIVITY ID & USER ID
         let activityId = result.activityId;
         let activityFavToUpdate = setActivityFavProperties(activityFav, userId, activityId);
         console.log(activityFavToUpdate);
@@ -166,31 +153,15 @@ module.exports = (app, passport) => {
 
       }).then(result => {
 
-        console.log(result.dataValues);
-        res.render('index-dashboard', {success: 'Activity saved'});
-
+        const data = { "success": "Activity added", "view": "activities-new"};
+        res.json(data);
+        // res.json('index-dashboard', {
+        //   success: 'Activity saved',
+        //   view: 'activities-new'});
       });
     });
   });
 
-  function setActivityFavProperties(activityFav, userId, activityId) {
-    activityFav.set('userProfileId', userId);
-    activityFav.set('activityId', activityId);
-    return activityFav.dataValues;
-  }
-
-  function setActivityProperties(activity, model) {
-    activity.set('title', model.title);
-    activity.set('summary', model.summary);
-    activity.set('detail', model.detail);
-    activity.set('startDate', model.startDate);
-    activity.set('endDate', model.endDate);
-    activity.set('minActor', model.minActor);
-    activity.set('maxActor', model.maxActor);
-    activity.set('isActive', model.isActive);
-    // return activity;
-    return activity.dataValues;
-  }
 
   //==================================================//
   /*         /USER/ACTIVITY/:ACTID/UPDATE            */
@@ -268,6 +239,27 @@ module.exports = (app, passport) => {
     // TODO :: redirect to reload view
     res.redirect('/user/activities')
   });
+
+
+  // HELPER FUNCTIONS: SET PROPERTIES
+  function setActivityFavProperties(activityFav, userId, activityId) {
+    activityFav.set('userProfileId', userId);
+    activityFav.set('activityId', activityId);
+    return activityFav.dataValues;
+  }
+
+  function setActivityProperties(activity, model) {
+    activity.set('title', model.title);
+    activity.set('summary', model.summary);
+    activity.set('detail', model.detail);
+    activity.set('startDate', model.startDate);
+    activity.set('endDate', model.endDate);
+    activity.set('minActor', model.minActor);
+    activity.set('maxActor', model.maxActor);
+    activity.set('isActive', model.isActive);
+    // return activity;
+    return activity.dataValues;
+  }
 
 
 };

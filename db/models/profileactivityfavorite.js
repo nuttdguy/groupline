@@ -31,7 +31,8 @@ module.exports = (sequelize, DataTypes) => {
     m.UserProfile.belongsToMany(m.Activity, {
       as: 'Activities',
       through: {
-        model: ProfileActivityFavorite
+        model: m.ProfileActivityFavorite,
+        as: 'ProfileActivityFavorite'
       },
       foreignKey: 'activity_id',
       onDelete: 'cascade',
@@ -39,14 +40,35 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     m.Activity.belongsToMany(m.UserProfile, {
-      as: 'userProfiles',
+      as: 'UserProfiles',
       through: {
-        model: ProfileActivityFavorite
+        model: m.ProfileActivityFavorite,
+        as: 'ProfileActivityFavorite'
       },
       foreignKey: 'user_profile_id',
       onDelete: 'cascade',
       onUpdate: 'cascade'
     });
+
+    // m.UserProfile.belongsToMany(m.Activity, {
+    //   // as: 'Activities',
+    //   through: {
+    //     model: m.ProfileActivityFavorite
+    //   },
+    //   foreignKey: 'user_profile_id',
+    //   onDelete: 'cascade',
+    //   onUpdate: 'cascade'
+    // });
+    //
+    // m.Activity.belongsToMany(m.UserProfile, {
+    //   // as: 'userProfiles',
+    //   through: {
+    //     model: m.ProfileActivityFavorite,
+    //   },
+    //   foreignKey: 'activity_id',
+    //   onDelete: 'cascade',
+    //   onUpdate: 'cascade'
+    // });
 
   };
   return ProfileActivityFavorite;

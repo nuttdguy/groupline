@@ -10,6 +10,7 @@ $(document).ready(function () {
   // TODO :: ADD VALIDATION TO PREVENT EMPTY FIELD ON UPDATE
   $("#activityNew").submit(function(e) {
     e.preventDefault();
+
     let data = validateForm($(this));
 
     // SUBMIT THE FORM
@@ -19,14 +20,16 @@ $(document).ready(function () {
       contentType: 'application/json',
       data: data,
       success: function (data) {
+        // location = '/user/activity/new';
         displayMessage(data);
       }
-    });
+    })
 
   });
 
 
   function validateForm() {
+
     let title = $('#title').val();
     let category = $('#categoryName option:selected').val();
     let start = $('#start').val();
@@ -36,6 +39,7 @@ $(document).ready(function () {
     let summary = $('#summary').val();
     let detail = $('#detail').val();
     let location = $('#activityLocation').val();
+
 
     let data = {
       "title": title,
@@ -91,6 +95,7 @@ $(document).ready(function () {
   function displayMessage(data) {
     setTimeout(function () {
       $('#fileToUpload').val('');
+      $('form')[0].reset();
       $('#message').css({'display': 'none'});
     }, 4000);
 
