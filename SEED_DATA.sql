@@ -65,23 +65,24 @@ VALUES (3, 'user3@example.com', 'password', 'user3', 'last3', '', 'simple bio 3'
 
 -- SEED DATA FOR ACTIVITIES_TAGS
 
-INSERT INTO public."ActivityTags"(activity_tag_id, activity_tag_name, is_active, created_at, updated_at, activity_id)
-VALUES (1, 'drink', true, now(), now(), 1);
+INSERT INTO public."ActivityTags"(activity_tag_id, activity_tag_name, is_active, created_at, updated_at)
+VALUES (1, 'drink', true, now(), now());
 
-INSERT INTO public."ActivityTags"(activity_tag_id, activity_tag_name, is_active, created_at, updated_at, activity_id)
-VALUES (6, 'eat', true, now(), now(), 1);
+INSERT INTO public."ActivityTags"(activity_tag_id, activity_tag_name, is_active, created_at, updated_at)
+VALUES (6, 'eat', true, now(), now());
 
-INSERT INTO public."ActivityTags"(activity_tag_id, activity_tag_name, is_active, created_at, updated_at, activity_id)
-VALUES (2, 'outdoor', true, now(), now(), 2);
+INSERT INTO public."ActivityTags"(activity_tag_id, activity_tag_name, is_active, created_at, updated_at)
+VALUES (2, 'outdoor', true, now(), now());
 
-INSERT INTO public."ActivityTags"(activity_tag_id, activity_tag_name, is_active, created_at, updated_at, activity_id)
-VALUES (3, 'fun', true, now(), now(), 3);
+INSERT INTO public."ActivityTags"(activity_tag_id, activity_tag_name, is_active, created_at, updated_at)
+VALUES (3, 'fun', true, now(), now());
 
-INSERT INTO public."ActivityTags"(activity_tag_id, activity_tag_name, is_active, created_at, updated_at, activity_id)
-VALUES (4, 'game', true, now(), now(), 4);
+INSERT INTO public."ActivityTags"(activity_tag_id, activity_tag_name, is_active, created_at, updated_at)
+VALUES (4, 'game', true, now(), now());
 
-INSERT INTO public."ActivityTags"(activity_tag_id, activity_tag_name, is_active, created_at, updated_at, activity_id)
-VALUES (5, 'python', true, now(), now(), 5);
+INSERT INTO public."ActivityTags"(activity_tag_id, activity_tag_name, is_active, created_at, updated_at)
+VALUES (5, 'python', true, now(), now());
+
 
 -- SEED DATA FOR MEET LOCATION TABLE
 

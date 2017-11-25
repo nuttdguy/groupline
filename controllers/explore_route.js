@@ -64,11 +64,7 @@ module.exports = (app) => {
               {
                 model: ActivityMeetLocation,
                 as: 'ActivityMeetLocations'
-              },
-              // {
-              //   model: ActivityTime,
-              //   as: 'ActivityTimes'
-              // }
+              }
               ]
     })
       .then((activities) => {
@@ -102,13 +98,9 @@ module.exports = (app) => {
               },
               {
                 model: ActivityMeetLocation,
-                as: 'ActivityMeetLocations'
-              },
-              // {
-              //   model: ActivityTime,
-              //   as: 'ActivityTimes'
-              // }
-              ]
+                as: 'ActivityMeetLocations',
+              }
+        ]
       }
     )
       .then((activities) => {
@@ -116,10 +108,10 @@ module.exports = (app) => {
         // console.log(JSON.stringify(activities));
         console.log(JSON.parse(JSON.stringify(activities)));
         activities = JSON.parse(JSON.stringify(activities));
+
         res.render('explore-all', {
           title: 'Explore',
           activities: activities,
-          activityDetails: activities.ActivityDetails,
           user: req.user
         });
       });
@@ -129,32 +121,36 @@ module.exports = (app) => {
   /* GET home page. */
   app.get('/explore/:id', function (req, res, next) {
     const activity_param = req.params.id;
-    console.log("ACTIVITY PARAM\n\n", activity_param)
+    console.log("ACTIVITY PARAM\n\n", activity_param);
     if (activity_param !== null) {
-      Activity.findById(activity_param, {
+      Activity.findOne( {
         include: [
-            // {
-            //   model: ActivityCategory,
-            //   as: 'ActivityCategories',
-            //   where: {activity_id: activity_param}
-            // },
-            //   {
-            //     model: ActivityActivityTag,
-            //     as: 'ActivityActivityTags',
-            //     where: {activity_id: activity_param}
-            //   },
+            {
+              model: ActivityCategory,
+              as: 'ActivityCategories',
+              // where: {activity_id: activity_param}
+            },
+              {
+                model: ActivityTag,
+                as: 'ActivityTags',
+                // where: {activity_id: activity_param}
+              },
               {
                 model: ActivityImage,
                 as: 'ActivityImages',
-                where: {activity_id: activity_param}
+                // where: {activity_id: activity_param}
 
               },
               {
                 model: ActivityMeetLocation,
                 as: 'ActivityMeetLocations',
-                where: {activity_id: activity_param}
-            }
-        ]
+                include: {
+                  model: ActivityTime,
+                  as: 'ActivityTimes'
+                }
+              },
+        ],
+        where: {activity_id: activity_param}
             //   This needs fixing later; needs to go to match MeetLocation
             //  then that location's activityid
             //   ,{
@@ -166,7 +162,8 @@ module.exports = (app) => {
       )
         .then((activities) => {
           console.log('========================');
-        //   console.log(JSON.stringify(activities));
+          console.log(JSON.stringify(activities));
+
           res.render('explore', {
             title: 'Explore',
             activities: activities,

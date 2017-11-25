@@ -5,8 +5,6 @@ extends ./layout
 block content
     h1(style="text-align: center")=activities.title
     br
-    //p=activities.Activity
-    //p=activities.isActive
 
     //if (activities)
     //    each item in activityDetails
@@ -47,8 +45,8 @@ block content
             img.img-fluid(src="../img/testimg.png")
             div.categories
             p Tags:
-            //- each category in activities.ActivityCategories
-                //- button.btn.btn-outline-primary(href="#")=category.categoryName
+            each category in activities.ActivityCategories
+                button.btn.btn-outline-primary(href="#")=category.categoryName
         div.col-sm-6
             //- This is where the summary would be
             p= activities.summary
