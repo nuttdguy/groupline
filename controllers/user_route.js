@@ -130,7 +130,7 @@ module.exports = (app, passport) => {
   });
 
   // TODO :: SEQUELIZE MAINTAINS OWN KEY, GET DUPLICATE KEY ERROR WHEN SEEDED
-  // TODO :: 11/23 --> REQUIRES REVIEW OF CONSTRAINT ERROR
+  // TODO :: Change primary key to UUID
   // METHOD [POST] == CREATE NEW ACTIVITY
   app.post('/user/activity/new', function (req, res, next) {
     let model = new Activity(req.body);
@@ -142,8 +142,6 @@ module.exports = (app, passport) => {
     Activity.create().then(activity => {
         // STEP 2: UPDATE THE RECORD WITH FORM DATA
         let activityToUpdate = setActivityProperties(activity, model.dataValues);
-      console.log(activity.dataValues);
-      console.log(activityToUpdate);
         return activity.updateAttributes(activityToUpdate);
 
       }).then(activity => {
@@ -260,15 +258,7 @@ module.exports = (app, passport) => {
 
   app.delete('/user/activity/:actId/delete', function (req, res, next) {
 
-    // Activity.destroy({
-    //   where: {activityId: req.params.actId}, function(result) {
-    //     res.redirect('/user/activities')
-    //   }
-    // });
-
-    Activity.destroy({
-      where: {activityId: req.params.actId},
-      cascade: true})
+    Activity.destroy({where: {activityId: req.params.actId}, cascade: true})
       .then(result => {
         return result;
     }).then(result => {
@@ -282,24 +272,34 @@ module.exports = (app, passport) => {
 
 
   //==================================================//
-  /*          /USER/ACTIVITY/:CATID/LIKE               */
+  /*         /USER/ACTIVITY/:CATID/FAVORITE            */
   //==================================================//
 
-  app.post('/user/activity/:catId/like', function (req, res, next) {
-    // TODO :: user should be able to like an activity
+  // TODO :: VIEW ACTIVITIES ADDED AS FAVORITES
+  app.get('/user/favorite', function (req, res, next) {
+    // TODO :: user should be able to add cat as favorite
 
+    // TODO :: redirect to page to reload view
+    res.redirect('/user/activities')
+  });
+
+  // TODO :: ADD ACTIVITIES TO USER FAVORITES
+  app.post('/user/favorite/:activityId', function (req, res, next) {
+    // TODO :: user should be able to add cat as favorite
 
     // TODO :: redirect to page to reload view
     res.redirect('/user/activities')
   });
 
 
+
   //==================================================//
-  /*         /USER/ACTIVITY/:CATID/FAVORITE            */
+  /*          /USER/ACTIVITY/:CATID/LIKE               */
   //==================================================//
 
-  app.post('/user/activity/:catId/favorite', function (req, res, next) {
-    // TODO :: user should be able to add cat as favorite
+  app.post('/user/activity/:catId/like', function (req, res, next) {
+    // TODO :: user should be able to like an activity
+
 
     // TODO :: redirect to page to reload view
     res.redirect('/user/activities')

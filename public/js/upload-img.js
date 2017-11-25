@@ -30,6 +30,19 @@ $(document).ready(function () {
   });
 
 
+  function displayMessage(data) {
+    setTimeout(function () {
+      $('#fileToUpload').val('');
+      $(':input').val('');
+      $('#message').css({'display': 'none'});
+    }, 4000);
+
+    $('#message').text(data.success);
+    $('#message').text(data.fail);
+    $('#message').css({'display': 'block'});
+  }
+
+
 });
 
 
