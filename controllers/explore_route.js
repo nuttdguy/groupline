@@ -65,10 +65,11 @@ module.exports = (app) => {
                 model: ActivityMeetLocation,
                 as: 'ActivityMeetLocations'
               },
-              {
-                model: ActivityTime,
-                as: 'ActivityTimes'
-              }]
+              // {
+              //   model: ActivityTime,
+              //   as: 'ActivityTimes'
+              // }
+              ]
     })
       .then((activities) => {
         console.log('========================');
@@ -103,10 +104,11 @@ module.exports = (app) => {
                 model: ActivityMeetLocation,
                 as: 'ActivityMeetLocations'
               },
-              {
-                model: ActivityTime,
-                as: 'ActivityTimes'
-              }]
+              // {
+              //   model: ActivityTime,
+              //   as: 'ActivityTimes'
+              // }
+              ]
       }
     )
       .then((activities) => {

@@ -6,6 +6,7 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true,
       allowNull: false,
       type: DataTypes.INTEGER,
+      field: 'activity_activity_tag_id'
     },
     isActive: {
       type: DataTypes.BOOLEAN,

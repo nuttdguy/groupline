@@ -10,19 +10,19 @@ module.exports = (sequelize, DataTypes) => {
     },
     startTime:{
       type: DataTypes.TIME,
-      field: 'activity_time_id'
+      field: 'start_time'
     },
     endTime: {
       type: DataTypes.TIME,
-      field: 'activity_time_id'
+      field: 'end_time'
     },
     isActive: {
       type: DataTypes.BOOLEAN,
-      field: 'activity_time_id'
+      field: 'is_active'
     },
     activityMeetLocationId: {
       type: DataTypes.INTEGER,
-      field: 'activity_time_id',
+      field: 'activity_meet_location_id',
       references: {
         model: 'ActivityMeetLocation',
         key: 'activity_meet_location_id'
