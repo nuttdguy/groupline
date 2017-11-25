@@ -53,14 +53,6 @@ module.exports = (sequelize, DataTypes) => {
 
   Activity.associate = function (m) {
 
-
-    Activity.hasMany(m.ActivityTag, {
-      foreignKey: 'activity_id',
-      targetKey: 'activity_id',
-      onDelete: 'cascade',
-      onUpdate: 'cascade'
-    });
-
     Activity.hasMany(m.ActivityImage, {
       foreignKey: 'activity_id',
       targetKey: 'activity_id',
@@ -83,6 +75,13 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     Activity.hasMany(m.ActivityCategoryActivity, {
+      foreignKey: 'activity_id',
+      targetKey: 'activity_id',
+      onDelete: 'cascade',
+      onUpdate: 'cascade'
+    });
+
+    Activity.hasMany(m.ActivityActivityTag, {
       foreignKey: 'activity_id',
       targetKey: 'activity_id',
       onDelete: 'cascade',

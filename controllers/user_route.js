@@ -123,6 +123,7 @@ module.exports = (app, passport) => {
     }).then(data => {
 
       let categories = JSON.parse(JSON.stringify(data));
+      console.log(categories);
       res.render('index-dashboard', {
         categories: categories, view: 'activities-new'
       });
@@ -215,6 +216,7 @@ module.exports = (app, passport) => {
       }).then(activity => {
 
         let data = JSON.parse(JSON.stringify(activity));
+        console.log(data);
         return res.render('index-dashboard', {
           activity: data,
           view: 'activity-update'

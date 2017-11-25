@@ -27,16 +27,6 @@ module.exports = {
         type: Sequelize.DATE,
         field: 'updated_at'
       },
-      activityId: {
-        type: Sequelize.INTEGER,
-        field: 'activity_id',
-        onDelete: 'cascade',
-        onUpdate: 'cascade',
-        references: {
-          model: 'Activities',
-          key: 'activity_id'
-        }
-      }
     });
   },
   down: (queryInterface, Sequelize) => {

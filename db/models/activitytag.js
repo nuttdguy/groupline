@@ -15,10 +15,6 @@ module.exports = (sequelize, DataTypes) => {
     isActive: {
       type: DataTypes.BOOLEAN,
       field: 'is_active'
-    },
-    activityId: {
-      type: DataTypes.INTEGER,
-      field: 'activity_id'
     }
   }, {
     underscored: true,
@@ -26,10 +22,14 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   ActivityTag.associate = function (m) {
-    ActivityTag.belongsTo(m.Activity, {
-      foreignKey: 'activity_id',
-      sourceKey: 'activity_id'
-    })
+
+    ActivityTag.hasMany(m.ActivityActivityTag, {
+      foreignKey: 'activity_tag_id',
+      targetKey: 'activity_tag_id',
+      onDelete: 'cascade',
+      onUpdate: 'cascade'
+    });
+
   };
 
   return ActivityTag;
