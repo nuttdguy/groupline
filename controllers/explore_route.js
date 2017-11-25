@@ -164,8 +164,7 @@ module.exports = (app) => {
       )
         .then((activities) => {
           console.log('========================');
-          console.log(activities)
-          console.log(JSON.stringify(activities));
+        //   console.log(JSON.stringify(activities));
           res.render('explore', {
             title: 'Explore',
             activities: activities,
