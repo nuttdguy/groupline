@@ -3,7 +3,7 @@ extends ./layout
 //- include navbar
 
 block content
-    h1(style="text-align: center")=activities.activityHeading
+    h1(style="text-align: center")=activities.title
     br
     //p=activities.Activity
     //p=activities.isActive
@@ -38,6 +38,8 @@ block content
     
     div.row.justify-content-center
         div.col-sm-6
+            form.add-favorite
+                button.btn.btn-outline-primary(type="submit") Add to favorite!
     
     
     div.row.justify-content-center
@@ -45,33 +47,31 @@ block content
             img.img-fluid(src="../img/testimg.png")
             div.categories
             p Tags:
-            each category in activities.ActivityCategories
-                button.btn.btn-outline-primary(href="#")=category.categoryName
-                //-    button.btn.btn-outline-primary(href="#")=tags.activityTagName
+            //- each category in activities.ActivityCategories
+                //- button.btn.btn-outline-primary(href="#")=category.categoryName
         div.col-sm-6
             //- This is where the summary would be
-            each detail in activities.ActivityDetails
-                p= detail.summary
+            p= activities.summary
+        
     hr.style1
     
     div.row
         div.col-sm-6
-            each detail in activities.ActivityDetails
-                table.table.table-bordered
-                    thead
-                        th(colspan="2") Details
-                    tbody
-                        tr
-                            th(scope="row") Start Date
-                            td= detail.startDate
-                        tr
-                            th(scope="row") End Date
-                            td= detail.endDate
-                        tr
-                            th(scope="row") Min Participants
-                            td= detail.minActor
-                        tr
-                            th(scope="row") Max Participants
-                            td= detail.maxActor
+            table.table.table-bordered
+                thead
+                    th(colspan="2") Details
+                tbody
+                    tr
+                        th(scope="row") Start Date
+                        td= activities.startDate
+                    tr
+                        th(scope="row") End Date
+                        td= activities.endDate
+                    tr
+                        th(scope="row") Min Participants
+                        td= activities.minActor
+                    tr
+                        th(scope="row") Max Participants
+                        td= activities.maxActor
     
                 

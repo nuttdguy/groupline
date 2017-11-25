@@ -4,7 +4,9 @@ const express = require('express');
 const Activity = require('../db/models/index').Activity;
 const ActivityCategory = require('../db/models/index').ActivityCategory;
 const ActivityTag = require('../db/models/index').ActivityTag;
-const ActivityDetail = require('../db/models/index').ActivityDetail;
+const ActivityImage = require('../db/models/index').ActivityImage;
+const ActivityMeetLocation = require('../db/models/index').ActivityMeetLocation;
+const ActivityTime = require('../db/models/index').ActivityTime;
 
 module.exports = (app) => {
     // Currently using as reference
@@ -56,9 +58,17 @@ module.exports = (app) => {
                 as: 'ActivityTags'
               },
               {
-                model: ActivityDetail,
-                as: 'ActivityDetails'
-        }]
+                model: ActivityImage,
+                as: 'ActivityImages'
+              },
+              {
+                model: ActivityMeetLocation,
+                as: 'ActivityMeetLocations'
+              },
+              {
+                model: ActivityTime,
+                as: 'ActivityTimes'
+              }]
     })
       .then((activities) => {
         console.log('========================');
@@ -78,17 +88,25 @@ module.exports = (app) => {
   app.get('/explore', function (req, res, next) {
     Activity.findAll({
         include: [{
-          model: ActivityCategory,
-          as: 'ActivityCategories'
-        },
-          {
-            model: ActivityTag,
-            as: 'ActivityTags'
-          },
-          {
-            model: ActivityDetail,
-            as: 'ActivityDetails'
-          }]
+              model: ActivityCategory,
+              as: 'ActivityCategories'
+            },
+              {
+                model: ActivityTag,
+                as: 'ActivityTags'
+              },
+              {
+                model: ActivityImage,
+                as: 'ActivityImages'
+              },
+              {
+                model: ActivityMeetLocation,
+                as: 'ActivityMeetLocations'
+              },
+              {
+                model: ActivityTime,
+                as: 'ActivityTimes'
+              }]
       }
     )
       .then((activities) => {
@@ -108,29 +126,45 @@ module.exports = (app) => {
 
   /* GET home page. */
   app.get('/explore/:id', function (req, res, next) {
-    const categories_id = req.params.id;
+    const activity_param = req.params.id;
+    console.log("ACTIVITY PARAM\n\n", activity_param)
+    if (activity_param !== null) {
+      Activity.findById(activity_param, {
+        include: [
+            // {
+            //   model: ActivityCategory,
+            //   as: 'ActivityCategories',
+            //   where: {activity_id: activity_param}
+            // },
+            //   {
+            //     model: ActivityActivityTag,
+            //     as: 'ActivityActivityTags',
+            //     where: {activity_id: activity_param}
+            //   },
+              {
+                model: ActivityImage,
+                as: 'ActivityImages',
+                where: {activity_id: activity_param}
 
-    if (categories_id !== undefined) {
-      Activity.findById(categories_id, {
-          include: [{
-            model: ActivityCategory,
-            as: 'ActivityCategories',
-            where: {activity_id: categories_id}
-          },
-            {
-              model: ActivityTag,
-              as: 'ActivityTags',
-              where: {activity_id: categories_id}
-            },
-            {
-              model: ActivityDetail,
-              as: 'ActivityDetails',
-              where: {activity_id: categories_id}
-            }]
+              },
+              {
+                model: ActivityMeetLocation,
+                as: 'ActivityMeetLocations',
+                where: {activity_id: activity_param}
+            }
+        ]
+            //   This needs fixing later; needs to go to match MeetLocation
+            //  then that location's activityid
+            //   ,{
+            //     model: ActivityTime,
+            //     as: 'ActivityTimes',
+            //     where: {activity_id: categories_id}
+            //   }]
         }
       )
         .then((activities) => {
           console.log('========================');
+          console.log(activities)
           console.log(JSON.stringify(activities));
           res.render('explore', {
             title: 'Explore',

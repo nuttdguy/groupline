@@ -18,24 +18,22 @@ block content
                 hr
                 div.col-sm-6
                     h3 Summary: 
-                    each detail in activity.ActivityDetails
-                        p= detail.summary
+                        p= activities.summary
                 div.col-sm-6.justify-content-end
-                    each detail in activity.ActivityDetails
-                        table.table.table-bordered
-                            tbody
-                                tr
-                                    th(scope="row") Start Date
-                                    td= detail.startDate
-                                tr
-                                    th(scope="row") End Date
-                                    td= detail.endDate
-                                tr
-                                    th(scope="row") Min Participants
-                                    td= detail.minActor
-                                tr
-                                    th(scope="row") Max Participants
-                                    td= detail.maxActor
+                    table.table.table-bordered
+                        tbody
+                            tr
+                                th(scope="row") Start Date
+                                td= activities.startDate
+                            tr
+                                th(scope="row") End Date
+                                td= activities.endDate
+                            tr
+                                th(scope="row") Min Participants
+                                td= activities.minActor
+                            tr
+                                th(scope="row") Max Participants
+                                td= activities.maxActor
                         button.btn.btn-outline-primary
                             a(href="/explore/" + activity.activityId) Details
 
