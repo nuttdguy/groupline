@@ -67,7 +67,7 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: 'cascade'
     });
 
-    Activity.hasMany(m.ProfileActivityFavorite, {
+    Activity.hasMany(m.UserProfileActivity, {
       foreignKey: 'activity_id',
       targetKey: 'activity_id',
       onDelete: 'cascade',

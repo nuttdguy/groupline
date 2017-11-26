@@ -3,7 +3,7 @@ const ActivityMeetLocation = require('../db/models/index').ActivityMeetLocation;
 const Activity = require('../db/models/index').Activity;
 const ActivityTag = require('../db/models/index').ActivityTag;
 const ActivityImage = require('../db/models/index').ActivityImage;
-const ActivityFavorite = require('../db/models/index').ProfileActivityFavorite;
+const UserProfileActivity = require('../db/models/index').UserProfileActivity;
 const ActivityCategory = require('../db/models/index').ActivityCategory;
 const ActivityCategoryActivity = require('../db/models/index').ActivityCategoryActivity;
 const Sequelize = require('sequelize');
@@ -98,7 +98,7 @@ module.exports = (app, passport) => {
 
     Activity.findAll({
       include: [
-        {model: ActivityFavorite, as: 'ProfileActivityFavorites', where: {userProfileId: 1}}
+        {model: UserProfileActivity, as: 'UserProfileActivities', where: {userProfileId: 1}}
       ]
     }).then(activities => {
       let data = JSON.parse(JSON.stringify(activities));
@@ -149,13 +149,13 @@ module.exports = (app, passport) => {
 
         // STEP 3: UPDATE THE RECORD WITH ACTIVITY ID & USER ID
         // STEP 4: CREATE A NEW RECORD, IN ORDER TO ASSOCIATE USER TO ACTIVITY
-        ActivityFavorite.create().then(activityFav => {
+        UserProfileActivity.create().then(userActivity => {
 
           activityId = activity.activityId;
-          let activityFavToUpdate = setActivityFavProperties(activityFav, userId, activityId);
+          let userActivityToUpdate = setUserActivityProperties(userActivity, userId, activityId);
 
-          return activityFav.updateAttributes(activityFavToUpdate);
-      }).then(activityFav => {
+          return userActivity.updateAttributes(userActivityToUpdate);
+      }).then(userActivity => {
 
           // STEP 5: UPDATE THE RECORD WITH ACTIVITY ID & CATEGORY ID
           // STEP 6: CREATE A NEW RECORD, IN ORDER TO ASSOCIATE ACTIVITY TO CATEGORY
@@ -292,7 +292,6 @@ module.exports = (app, passport) => {
     console.log('POSTING TO ACTIVITY FAVORITE');
 
 
-
     res.redirect('/explore/'+req.params.activityId)
   });
 
@@ -351,10 +350,10 @@ module.exports = (app, passport) => {
     return activityCategoryRecord.dataValues;
   }
 
-  function setActivityFavProperties(activityFav, userId, activityId) {
-    activityFav.set('userProfileId', userId);
-    activityFav.set('activityId', activityId);
-    return activityFav.dataValues;
+  function setUserActivityProperties(userActivity, userId, activityId) {
+    userActivity.set('userProfileId', userId);
+    userActivity.set('activityId', activityId);
+    return userActivity.dataValues;
   }
 
   function setActivityProperties(activity, model) {

@@ -47,7 +47,7 @@ module.exports = (sequelize, DataTypes) => {
 
   UserProfile.associate = function (m) {
 
-    UserProfile.hasMany(m.ProfileActivityFavorite, {
+    UserProfile.hasMany(m.UserProfileActivity, {
       foreignKey: 'user_profile_id',
       targetKey: 'user_profile_id',
       onDelete: 'cascade',
