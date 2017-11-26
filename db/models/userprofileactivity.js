@@ -2,28 +2,39 @@
 module.exports = (sequelize, DataTypes) => {
   var UserProfileActivity = sequelize.define('UserProfileActivity', {
     profileActivityFavoriteId: {
-      primaryKey: true,
       autoIncrement: true,
       allowNull: false,
       type: DataTypes.INTEGER,
       field: 'user_profile_activity_id'
     },
-    activityId: {
-      type: DataTypes.INTEGER,
-      field: 'activity_id'
-    },
-    userProfileId: {
-      type: DataTypes.INTEGER,
-      field: 'user_profile_id'
-    },
     isActive: {
       type: DataTypes.BOOLEAN,
       field: 'is_active',
       defaultValue: true
-    }
+    },
+    activityId: {
+      type: DataTypes.INTEGER,
+      field: 'activity_id',
+      primaryKey: true,
+      // defaultValue: 1
+    },
+    userProfileId: {
+      type: DataTypes.INTEGER,
+      field: 'user_profile_id',
+      primaryKey: true,
+      // defaultValue: 1
+    },
   }, {
     underscored: true,
-    classMethods: {}
+    classMethods: {},
+    hooks: {
+      beforeCreate: activity => {
+        // code here
+      },
+      beforeUpdate: activity => {
+        // code here
+      }
+    }
   });
 
   UserProfileActivity.associate = function (m) {

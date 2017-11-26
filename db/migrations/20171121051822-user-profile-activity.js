@@ -5,13 +5,13 @@ module.exports = {
       profileActivityFavoriteId: {
         allowNull: false,
         autoIncrement: true,
-        primaryKey: true,
         type: Sequelize.INTEGER,
         field: 'user_profile_activity_id'
       },
       userProfileId: {
         type: Sequelize.INTEGER,
         field: 'user_profile_id',
+        primaryKey: true,
         onDelete: 'cascade',
         onUpdate: 'cascade',
         references: {
@@ -22,6 +22,7 @@ module.exports = {
       activityId: {
         type: Sequelize.INTEGER,
         field: 'activity_id',
+        primaryKey: true,
         references: {
           model: 'Activities',
           key: 'activity_id'

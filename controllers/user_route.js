@@ -27,17 +27,17 @@ module.exports = (app, passport) => {
     // TEMPORARY USER -- REMOVE AFTER ROUTE IS COMPLETED
 
     // REMOVE THIS
-    User.findById(1).then(user => {
-      res.render('index-dashboard', {user: user, view: 'dashboard'});
-    })
+    // User.findById(1).then(user => {
+    //   res.render('index-dashboard', {user: user, view: 'dashboard'});
+    // })
 
 
     // ENABLE THIS WHEN COMPLETE
-    // if (req.user) {
-    // res.render('index-dashboard', {user: req.user, view: 'dashboard' });
-    // } else {
-    //   res.redirect('/');
-    // }
+    if (req.user) {
+      res.render('index-dashboard', {user: req.user, view: 'dashboard' });
+    } else {
+      res.redirect('/');
+    }
 
   });
 
@@ -95,16 +95,17 @@ module.exports = (app, passport) => {
   // COMPLETED 11/22
   // SHOW ACTIVITIES USER HAD CREATED
   app.get('/user/activities', function (req, res, next) {
+    const userId = req.user.userProfileId;
 
     Activity.findAll({
       include: [
-        {model: UserProfileActivity, as: 'UserProfileActivities', where: {userProfileId: 1}}
+        {model: UserProfileActivity, as: 'UserProfileActivities', where: {userProfileId: userId}}
       ]
     }).then(activities => {
       let data = JSON.parse(JSON.stringify(activities));
 
       res.render('index-dashboard', {
-        activitiesData: data, view: 'activities'
+        activitiesData: data, user: req.user, view: 'activities'
       })
     });
   });
@@ -125,7 +126,9 @@ module.exports = (app, passport) => {
       let categories = JSON.parse(JSON.stringify(data));
       console.log(categories);
       res.render('index-dashboard', {
-        categories: categories, view: 'activities-new'
+        categories: categories,
+        user: req.user,
+        view: 'activities-new'
       });
     });
   });
@@ -135,10 +138,12 @@ module.exports = (app, passport) => {
   // METHOD [POST] == CREATE NEW ACTIVITY
   app.post('/user/activity/new', function (req, res, next) {
     let model = new Activity(req.body);
-    let userId = 1;
+    let userId = req.user.userProfileId;
+    // let userId = 1;
     let activityId = 0;
     let categoryId = req.body.category;
     let address = req.body.address;
+
 
     // STEP 1: CREATE A NEW RECORD, IN ORDER TO GENERATE ID
     Activity.create().then(activity => {
@@ -147,10 +152,12 @@ module.exports = (app, passport) => {
         return activity.updateAttributes(activityToUpdate);
 
       }).then(activity => {
-
+        // console.log('==============  ' + userId);
         // STEP 3: UPDATE THE RECORD WITH ACTIVITY ID & USER ID
         // STEP 4: CREATE A NEW RECORD, IN ORDER TO ASSOCIATE USER TO ACTIVITY
-        UserProfileActivity.create().then(userActivity => {
+        UserProfileActivity.create({
+          userProfileId: userId,
+          activityId: activity.activityId}).then(userActivity => {
 
           activityId = activity.activityId;
           let userActivityToUpdate = setUserActivityProperties(userActivity, userId, activityId);
@@ -174,14 +181,14 @@ module.exports = (app, passport) => {
 
               // STEP 9: UPDATE THE RECORD WITH ACTIVITY ID & LOCATION
               // STEP 10: CREATE A NEW RECORD, IN ORDER TO ASSOCIATE ACTIVITY TO LOCATION
-              console.log(address);
+              // console.log(address);
               let categoryLocation = setActivityLocationProperties(activityLocationRecord, activityId, address);
               return activityLocationRecord.updateAttributes(categoryLocation);
           }).then(result => {
 
             const data = {
               "success": "Activity added",
-              "view": "activities-new"};
+              "view": "activities"};
             res.json(data);
 
           });
@@ -356,6 +363,7 @@ module.exports = (app, passport) => {
   function setUserActivityProperties(userActivity, userId, activityId) {
     userActivity.set('userProfileId', userId);
     userActivity.set('activityId', activityId);
+    // console.log('============  ' + userActivity.dataValues);
     return userActivity.dataValues;
   }
 
@@ -368,7 +376,7 @@ module.exports = (app, passport) => {
     activity.set('minActor', model.minActor);
     activity.set('maxActor', model.maxActor);
     activity.set('isActive', model.isActive);
-    console.log(activity);
+    // console.log(activity);
     // return activity;
     return activity.dataValues;
   }
