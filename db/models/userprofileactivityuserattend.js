@@ -1,50 +1,52 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  var UserProfileActivity = sequelize.define('UserProfileActivity', {
-    profileActivityFavoriteId: {
+  var UserProfileActivityUserAttend = sequelize.define('UserProfileActivityUserAttend', {
+    id: {
       autoIncrement: true,
       allowNull: false,
       type: DataTypes.INTEGER,
-      field: 'user_profile_activity_id',
     },
     isActive: {
       type: DataTypes.BOOLEAN,
-      field: 'is_active',
+      field: "is_active",
       defaultValue: true
     },
-    activityId: {
-      type: DataTypes.INTEGER,
-      field: 'activity_id',
+    userProfileId: {
       primaryKey: true,
+      allowNull: false,
+      type: DataTypes.INTEGER,
+      field: 'user_profile_id',
       onDelete: 'cascade',
       onUpdate: 'cascade'
     },
-    userProfileId: {
-      type: DataTypes.INTEGER,
-      field: 'user_profile_id',
+    activityId: {
       primaryKey: true,
+      allowNull: false,
+      type: DataTypes.INTEGER,
+      field: 'activity_id',
+      onDelete: 'cascade',
+      onUpdate: 'cascade'
+    },
+    userAttendId: {
+      primaryKey: true,
+      allowNull: false,
+      type: DataTypes.INTEGER,
+      field: 'user_attend_id',
       onDelete: 'cascade',
       onUpdate: 'cascade'
     },
   }, {
     underscored: true,
-    classMethods: {},
-    hooks: {
-      beforeCreate: activity => {
-        // code here
-      },
-      beforeUpdate: activity => {
-        // code here
-      }
+    classMethods: {
     }
   });
 
-  UserProfileActivity.associate = function (m) {
+  UserProfileActivityUserAttend.associate = function(m) {
 
     m.UserProfile.belongsToMany(m.Activity, {
-      as: 'Activities',
       through: {
-        model: m.UserProfileActivity,
+        model: UserProfileActivityUserAttend,
+        as: 'user_profile_activity_user_attends'
       },
       foreignKey: 'activity_id',
       onDelete: 'cascade',
@@ -52,15 +54,15 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     m.Activity.belongsToMany(m.UserProfile, {
-      as: 'UserProfiles',
       through: {
-        model: m.UserProfileActivity,
+        model: UserProfileActivityUserAttend,
+        as: 'user_profile_activity_user_attends'
       },
       foreignKey: 'user_profile_id',
       onDelete: 'cascade',
       onUpdate: 'cascade'
-    });
+    })
 
   };
-  return UserProfileActivity;
+  return UserProfileActivityUserAttend;
 };

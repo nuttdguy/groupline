@@ -10,7 +10,9 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true,
       allowNull: false,
       type: DataTypes.INTEGER,
-      field: 'user_profile_id'
+      field: 'user_profile_id',
+      onDelete: 'cascade',
+      onUpdate: 'cascade'
     },
     username: {
       type: DataTypes.STRING,
@@ -38,7 +40,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     isActive: {
       type: DataTypes.BOOLEAN,
-      field: 'is_active'
+      field: 'is_active',
+      defaultValue: true
     }
   }, {
     underscored: true,
@@ -53,6 +56,14 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'cascade',
       onUpdate: 'cascade'
     });
+
+    UserProfile.hasMany(m.UserProfileActivityUserAttend, {
+      foreignKey: 'user_profile_id',
+      targetKey: 'user_profile_id',
+      onDelete: 'cascade',
+      onUpdate: 'cascade'
+    });
+
 
   };
 

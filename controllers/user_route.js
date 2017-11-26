@@ -3,10 +3,13 @@ const ActivityMeetLocation = require('../db/models/index').ActivityMeetLocation;
 const Activity = require('../db/models/index').Activity;
 const ActivityTag = require('../db/models/index').ActivityTag;
 const ActivityImage = require('../db/models/index').ActivityImage;
+const UserAttend = require('../db/models/index').UserAttend;
+
 const UserProfileActivity = require('../db/models/index').UserProfileActivity;
 const ActivityCategory = require('../db/models/index').ActivityCategory;
 const ActivityCategoryActivity = require('../db/models/index').ActivityCategoryActivity;
-const ProfileActivityFavorite = require('../db/models/index').ProfileActivityFavorite;
+const UserProfileActivityAttend = require('../db/models/index').UserProfileActivityUserAttend;
+const ActivityActivityTag = require('../db/models/index').ActivityActivityTag;
 
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
@@ -95,16 +98,19 @@ module.exports = (app, passport) => {
   //==================================================//
 
   // COMPLETED 11/22
-  // SHOW ACTIVITIES USER HAD CREATED
+  // SHOW ACTIVITIES USER HAD CREATED, INCLUDING THOSE ATTENDING DEFAULT
   app.get('/user/activities', function (req, res, next) {
     const userId = req.user.userProfileId;
+    // const userId = 1;
 
     Activity.findAll({
       include: [
-        {model: UserProfileActivity, as: 'UserProfileActivities', where: {userProfileId: userId}}
-      ]
+        {model: UserProfileActivity, as: 'UserProfileActivities', where: {userProfileId: userId}},
+        {model: UserProfileActivityAttend, as: 'UserProfileActivityUserAttends', where: {userProfileId: userId}}
+      ],
     }).then(activities => {
       let data = JSON.parse(JSON.stringify(activities));
+      console.log(data);
 
       res.render('index-dashboard', {
         activitiesData: data, user: req.user, view: 'activities'
@@ -135,75 +141,79 @@ module.exports = (app, passport) => {
     });
   });
 
-  // TODO :: SEQUELIZE MAINTAINS OWN KEY, GET DUPLICATE KEY ERROR WHEN SEEDED
-  // TODO :: Change primary key to UUID
+
   // METHOD [POST] == CREATE NEW ACTIVITY
   app.post('/user/activity/new', function (req, res, next) {
     let model = new Activity(req.body);
     let userId = req.user.userProfileId;
     // let userId = 1;
     let activityId = 0;
+    let userAttendId = 0;
     let categoryId = req.body.category;
     let address = req.body.address;
 
-
-    // STEP 1: CREATE A NEW RECORD, IN ORDER TO GENERATE ID
     Activity.create().then(activity => {
-        // STEP 2: UPDATE THE RECORD WITH FORM DATA
-        let activityToUpdate = setActivityProperties(activity, model.dataValues);
-        return activity.updateAttributes(activityToUpdate);
+      let activityObject = activity.dataValues;
+      activityId = activityObject.activityId;
 
-      }).then(activity => {
-        // console.log('==============  ' + userId);
-        // STEP 3: UPDATE THE RECORD WITH ACTIVITY ID & USER ID
-        // STEP 4: CREATE A NEW RECORD, IN ORDER TO ASSOCIATE USER TO ACTIVITY
-        UserProfileActivity.create({
-          userProfileId: userId,
-          activityId: activity.activityId}).then(userActivity => {
+      // CREATE ALL INSTANCES REQUIRED TO SATISFY CONSTRAINTS
+      // STEP 1: CREATE A NEW RECORD, IN ORDER TO GENERATE ACTIVITY ID
+      UserProfileActivity.create({
+        userProfileId: userId,
+        activityId: activityId,
+      }).then(() => {
 
-          activityId = activity.activityId;
-          let userActivityToUpdate = setUserActivityProperties(userActivity, userId, activityId);
+        // STEP 2: USER HAS TO ATTEND THEIR EVENT, CREATE A RECORD
+        UserAttend.create({})
+          .then(userAttend => {
 
-          return userActivity.updateAttributes(userActivityToUpdate);
-      }).then(userActivity => {
+            let userAttendObject = userAttend.dataValues;
+            userAttendId = userAttendObject.userAttendId;
 
-          // STEP 5: UPDATE THE RECORD WITH ACTIVITY ID & CATEGORY ID
-          // STEP 6: CREATE A NEW RECORD, IN ORDER TO ASSOCIATE ACTIVITY TO CATEGORY
-          ActivityCategoryActivity.create().then(activityCategoryRecord => {
+            // STEP 3: CREATE RECORD WITH ID'S IN ORDER TO SATISFY CONSTRAINTS
+            UserProfileActivityAttend.create({
+              userProfileId: userId,
+              activityId: activityId,
+              userAttendId: userAttendId
+            }).then(() => {
 
-            let categoryActivity = setActivityCatActivityProperties(activityCategoryRecord, activityId, categoryId);
+              // STEP 4: CREATE RECORD WITH ID'S IN ORDER TO SATISFY CONSTRAINTS
+              ActivityCategoryActivity.create({
+                activityCategoryId: categoryId,
+                activityId: activityId,
+              }).then(() => {
 
-            return activityCategoryRecord.updateAttributes(categoryActivity);
+                // STEP 5: CREATE RECORD WITH ID'S IN ORDER TO SATISFY CONSTRAINTS
+                ActivityMeetLocation.create({
+                  activityId: activityId,
+                  address: address
+                }).then(() => {
 
-        }).then(activityCategoryRecord => {
-
-            // STEP 7: UPDATE THE RECORD WITH ACTIVITY ID & LOCATION
-            // STEP 8: CREATE A NEW RECORD, IN ORDER TO ASSOCIATE ACTIVITY TO LOCATION
-            ActivityMeetLocation.create().then(activityLocationRecord => {
-
-              // STEP 9: UPDATE THE RECORD WITH ACTIVITY ID & LOCATION
-              // STEP 10: CREATE A NEW RECORD, IN ORDER TO ASSOCIATE ACTIVITY TO LOCATION
-              // console.log(address);
-              let categoryLocation = setActivityLocationProperties(activityLocationRecord, activityId, address);
-              return activityLocationRecord.updateAttributes(categoryLocation);
-          }).then(result => {
-
-            const data = {
-              "success": "Activity added",
-              "view": "activities"};
-            res.json(data);
-
-          });
-
-        });
-
+                })
+              })
+            })
+          }).catch(err => {
+            console.log(err);
+        })
       });
+
+      return activity;
+    }).then(activity => {
+
+      // STEP 6: SET ACTIVITY PROPERTIES
+      let activityToUpdate = setActivityProperties(activity, model.dataValues);
+      return activity.updateAttributes(activityToUpdate);
 
     }).catch(err => {
       console.log(err);
-      const data = {"fail": "Server error", "view": "activities-new"};
-      res.json(data);
     });
+
+    // SET 7: RETURN A JSON RESPONSE, SINCE WE ARE USING AJAX
+    const data = {
+      "success": "Activity added",
+      "view": "activities"};
+
+    res.json(data);
 
   });
 
@@ -219,7 +229,7 @@ module.exports = (app, passport) => {
     Activity.findOne({
       where: { activityId: req.params.catId },
       include: [
-          // {model: ActivityTag, as: 'activityTags'},
+        {model: ActivityTag, as: 'activityTags'},
         {model: ActivityImage, as: 'ActivityImages'},
         {model: ActivityMeetLocation, as: 'ActivityMeetLocations'},
         {model: ActivityCategory, as: 'ActivityCategories'}
@@ -303,22 +313,22 @@ module.exports = (app, passport) => {
     console.log('POSTING TO ACTIVITY FAVORITE\n');
     console.log('============================');
 
-    let model = new ProfileActivityFavorite({
-        activityId: req.params.activityId,
-        userProfileId: req.user.dataValues.userProfileId,
-        // Need looking into; does it need to be true?
-        isActive: true
-    })
-
-    // Checking
-    console.log("\n\n", model, "\n\n\n")
-    // Using "new activity" as reference
-    ProfileActivityFavorite.create().then((activity) =>{
-        let favoriteToUpdate = setProfileActivityFavoriteProperties(activity, model.dataValues);
-        return activity.updateAttributes(favoriteToUpdate)
-    })
-    //Not quite sure
-    res.redirect('/explore/'+req.params.activityId)
+    // let model = new UserProfileActivity({
+    //     activityId: req.params.activityId,
+    //     userProfileId: req.user.dataValues.userProfileId,
+    //     // Need looking into; does it need to be true?
+    //     isActive: true
+    // });
+    //
+    // // Checking
+    // console.log("\n\n", model, "\n\n\n");
+    // // Using "new activity" as reference
+    // UserProfileActivity.create().then((activity) =>{
+    //     let userProfileActivityToUpdate = setProfileActivityFavoriteProperties(activity, model.dataValues);
+    //     return activity.updateAttributes(userProfileActivityToUpdate)
+    // });
+    // //Not quite sure
+    // res.redirect('/explore/'+req.params.activityId)
   });
 
 

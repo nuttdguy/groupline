@@ -7,6 +7,48 @@ block content
     h1(style="text-align: center")=activities.title
     br
 
+<<<<<<< HEAD
+=======
+    //if (activities)
+    //    each item in activityDetails
+    //        p= item.startDate
+        //each value, key in activities
+        //    - var categories = activities.ActivityCategories
+        //    - var tags = activities.ActivityTags
+        //    - var details = activities.ActivityDetails
+        //
+        //
+        //    if value == 'ActivityCategories'
+        //        each category in categories
+        //            li=category.categoryName
+        //            li=category.isActive
+        //            li=category.created_at
+        //
+        //    if key == 'ActivityTags'
+        //        each tag in tags
+        //            li=tag.activityTagName
+        //            li=tag.isActive
+        //            li=tag.created_at
+        //
+        //    if key == 'ActivityDetails'
+        //        each detail in details
+        //            li=detail.startDate
+        //            li=detail.endDate
+        //            li=detail.minActor
+        //            li=detail.maxActor
+    
+    div.row.justify-content-center
+        div.col-sm-6
+            //form.add-favorite.form-inline(data-id=activities.activity_id)
+            //    button.btn.btn-outline-primary(type="submit") Add to favorite!
+            // TEMPORARY -- YOU CAN CONVERT YOUR CODE TO USE AJAX
+            form.add-favorite.form-inline(
+                method="POST"
+                action="/user/favorite/"+activities.activityId)
+                button.btn.btn-outline-primary(type="submit") Add Activity!
+    
+    
+>>>>>>> dc2fd7a7fb4472d7f2dd5239fd5fa6690b4757da
     div.row.justify-content-center
         //- First column set for image alon e
         div.col-sm-4
