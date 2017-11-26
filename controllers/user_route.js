@@ -6,6 +6,8 @@ const ActivityImage = require('../db/models/index').ActivityImage;
 const ActivityFavorite = require('../db/models/index').ProfileActivityFavorite;
 const ActivityCategory = require('../db/models/index').ActivityCategory;
 const ActivityCategoryActivity = require('../db/models/index').ActivityCategoryActivity;
+const ProfileActivityFavorite = require('../db/models/index').ProfileActivityFavorite;
+
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 
@@ -289,10 +291,24 @@ module.exports = (app, passport) => {
   app.post('/user/favorite/:activityId', function (req, res, next) {
 
     console.log('============================');
-    console.log('POSTING TO ACTIVITY FAVORITE');
+    console.log('POSTING TO ACTIVITY FAVORITE\n');
+    console.log('============================');
 
+    let model = new ProfileActivityFavorite({
+        activityId: req.params.activityId,
+        userProfileId: req.user.dataValues.userProfileId,
+        // Need looking into; does it need to be true?
+        isActive: true
+    })
 
-
+    // Checking
+    console.log("\n\n", model, "\n\n\n")
+    // Using "new activity" as reference
+    ProfileActivityFavorite.create().then((activity) =>{
+        let favoriteToUpdate = setProfileActivityFavoriteProperties(activity, model.dataValues);
+        return activity.updateAttributes(favoriteToUpdate)
+    })
+    //Not quite sure
     res.redirect('/explore/'+req.params.activityId)
   });
 
@@ -369,6 +385,12 @@ module.exports = (app, passport) => {
     console.log(activity);
     // return activity;
     return activity.dataValues;
+  }
+
+  function setProfileActivityFavoriteProperties(activity, model){
+      activity.set('activityId', model.activityId)
+      activity.set('userProfileId', model.userProfileId)
+      activity.set('isActive', model.isActive)
   }
 
 
