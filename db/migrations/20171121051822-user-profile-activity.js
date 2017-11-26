@@ -1,17 +1,17 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('ProfileActivityFavorites', {
+    return queryInterface.createTable('UserProfileActivities', {
       profileActivityFavoriteId: {
         allowNull: false,
         autoIncrement: true,
-        primaryKey: true,
         type: Sequelize.INTEGER,
-        field: 'profile_activity_favorite_id'
+        field: 'user_profile_activity_id'
       },
       userProfileId: {
         type: Sequelize.INTEGER,
         field: 'user_profile_id',
+        primaryKey: true,
         onDelete: 'cascade',
         onUpdate: 'cascade',
         references: {
@@ -22,6 +22,7 @@ module.exports = {
       activityId: {
         type: Sequelize.INTEGER,
         field: 'activity_id',
+        primaryKey: true,
         references: {
           model: 'Activities',
           key: 'activity_id'
@@ -45,6 +46,6 @@ module.exports = {
   },
   down: (queryInterface, Sequelize) => {
 
-    return queryInterface.dropTable('ProfileActivityFavorites');
+    return queryInterface.dropTable('UserProfileActivities');
   }
 };

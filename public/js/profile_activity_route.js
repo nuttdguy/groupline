@@ -81,7 +81,7 @@ $(document).ready(function () {
     let maxActor = $('#maxActor').val();
     let summary = $('#summary').val();
     let detail = $('#detail').val();
-    let location = $('#activityLocation').val();
+    let address = $('#activityLocation').val();
 
     let data = {
       "title": title,
@@ -92,7 +92,7 @@ $(document).ready(function () {
       "maxActor": maxActor,
       "summary": summary,
       "detail": detail,
-      "location": location
+      "address": address
     };
 
     return JSON.stringify(data);
