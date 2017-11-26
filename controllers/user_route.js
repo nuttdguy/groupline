@@ -229,7 +229,7 @@ module.exports = (app, passport) => {
     Activity.findOne({
       where: { activityId: req.params.catId },
       include: [
-          // {model: ActivityTag, as: 'activityTags'},
+        {model: ActivityTag, as: 'activityTags'},
         {model: ActivityImage, as: 'ActivityImages'},
         {model: ActivityMeetLocation, as: 'ActivityMeetLocations'},
         {model: ActivityCategory, as: 'ActivityCategories'}
