@@ -121,7 +121,7 @@ module.exports = (app) => {
   /* GET home page. */
   app.get('/explore/:id', function (req, res, next) {
     const activity_param = req.params.id;
-    console.log("ACTIVITY PARAM\n\n", activity_param);
+    // console.log("ACTIVITY PARAM\n\n", activity_param);
     if (activity_param !== null) {
       Activity.findOne( {
         include: [
@@ -165,7 +165,6 @@ module.exports = (app) => {
           console.log(JSON.stringify(activities));
 
           res.render('explore', {
-            title: 'Explore',
             activities: activities,
             user: req.user
           });

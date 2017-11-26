@@ -274,23 +274,26 @@ module.exports = (app, passport) => {
 
 
   //==================================================//
-  /*         /USER/ACTIVITY/:CATID/FAVORITE            */
+  /*         /USER/FAVORITE            */
   //==================================================//
 
-  // TODO :: VIEW ACTIVITIES ADDED AS FAVORITES
+  // GET ACTIVITIES USER ADDED AS FAVORITES
   app.get('/user/favorite', function (req, res, next) {
-    // TODO :: user should be able to add cat as favorite
+    // TODO :: VIEW FAVORITES
 
-    // TODO :: redirect to page to reload view
-    res.redirect('/user/activities')
+    res.render('favorite-all', {view: 'favorite-all'})
   });
 
-  // TODO :: ADD ACTIVITIES TO USER FAVORITES
-  app.post('/user/favorite/:activityId', function (req, res, next) {
-    // TODO :: user should be able to add cat as favorite
 
-    // TODO :: redirect to page to reload view
-    res.redirect('/user/activities')
+  // ADD AN ACTIVITY TO USER FAVORITE
+  app.post('/user/favorite/:activityId', function (req, res, next) {
+
+    console.log('============================');
+    console.log('POSTING TO ACTIVITY FAVORITE');
+
+
+
+    res.redirect('/explore/'+req.params.activityId)
   });
 
 

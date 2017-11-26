@@ -36,7 +36,12 @@ block content
     
     div.row.justify-content-center
         div.col-sm-6
-            form.add-favorite.form-inline(data-id=activities.activity_id)
+            //form.add-favorite.form-inline(data-id=activities.activity_id)
+            //    button.btn.btn-outline-primary(type="submit") Add to favorite!
+            // TEMPORARY -- YOU CAN CONVERT YOUR CODE TO USE AJAX
+            form.add-favorite.form-inline(
+                method="POST"
+                action="/user/favorite/"+activities.activityId)
                 button.btn.btn-outline-primary(type="submit") Add to favorite!
     
     
