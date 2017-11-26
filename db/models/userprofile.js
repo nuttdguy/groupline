@@ -40,7 +40,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     isActive: {
       type: DataTypes.BOOLEAN,
-      field: 'is_active'
+      field: 'is_active',
+      defaultValue: true
     }
   }, {
     underscored: true,
