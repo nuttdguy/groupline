@@ -138,6 +138,7 @@ module.exports = (app, passport) => {
     let userId = 1;
     let activityId = 0;
     let categoryId = req.body.category;
+    let address = req.body.address;
 
     // STEP 1: CREATE A NEW RECORD, IN ORDER TO GENERATE ID
     Activity.create().then(activity => {
@@ -173,7 +174,8 @@ module.exports = (app, passport) => {
 
               // STEP 9: UPDATE THE RECORD WITH ACTIVITY ID & LOCATION
               // STEP 10: CREATE A NEW RECORD, IN ORDER TO ASSOCIATE ACTIVITY TO LOCATION
-              let categoryLocation = setActivityLocationProperties(activityLocationRecord, activityId);
+              console.log(address);
+              let categoryLocation = setActivityLocationProperties(activityLocationRecord, activityId, address);
               return activityLocationRecord.updateAttributes(categoryLocation);
           }).then(result => {
 
@@ -339,8 +341,9 @@ module.exports = (app, passport) => {
 
   // HELPER FUNCTIONS: SET PROPERTIES
 
-  function setActivityLocationProperties(activityLocationRecord, activityId) {
+  function setActivityLocationProperties(activityLocationRecord, activityId, address) {
     activityLocationRecord.set('activityId', activityId);
+    activityLocationRecord.set('address', address);
     return activityLocationRecord.dataValues;
   }
 
