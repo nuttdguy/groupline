@@ -6,7 +6,7 @@ const ActivityImage = require('../db/models/index').ActivityImage;
 const UserProfileActivity = require('../db/models/index').UserProfileActivity;
 const ActivityCategory = require('../db/models/index').ActivityCategory;
 const ActivityCategoryActivity = require('../db/models/index').ActivityCategoryActivity;
-const ProfileActivityFavorite = require('../db/models/index').ProfileActivityFavorite;
+const ProfileActivityAttend = require('../db/models/index').UserProfileActivityUserAttend;
 
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
@@ -98,13 +98,16 @@ module.exports = (app, passport) => {
   // SHOW ACTIVITIES USER HAD CREATED
   app.get('/user/activities', function (req, res, next) {
     const userId = req.user.userProfileId;
+    // const userId = 1;
 
     Activity.findAll({
       include: [
-        {model: UserProfileActivity, as: 'UserProfileActivities', where: {userProfileId: userId}}
-      ]
+        {model: UserProfileActivity, as: 'UserProfileActivities', where: {userProfileId: userId}},
+        {model: ProfileActivityAttend, as: 'UserProfileActivityUserAttends', where: {userProfileId: userId}}
+      ],
     }).then(activities => {
       let data = JSON.parse(JSON.stringify(activities));
+      console.log(data);
 
       res.render('index-dashboard', {
         activitiesData: data, user: req.user, view: 'activities'
@@ -303,22 +306,22 @@ module.exports = (app, passport) => {
     console.log('POSTING TO ACTIVITY FAVORITE\n');
     console.log('============================');
 
-    let model = new ProfileActivityFavorite({
-        activityId: req.params.activityId,
-        userProfileId: req.user.dataValues.userProfileId,
-        // Need looking into; does it need to be true?
-        isActive: true
-    })
-
-    // Checking
-    console.log("\n\n", model, "\n\n\n")
-    // Using "new activity" as reference
-    ProfileActivityFavorite.create().then((activity) =>{
-        let favoriteToUpdate = setProfileActivityFavoriteProperties(activity, model.dataValues);
-        return activity.updateAttributes(favoriteToUpdate)
-    })
-    //Not quite sure
-    res.redirect('/explore/'+req.params.activityId)
+    // let model = new UserProfileActivity({
+    //     activityId: req.params.activityId,
+    //     userProfileId: req.user.dataValues.userProfileId,
+    //     // Need looking into; does it need to be true?
+    //     isActive: true
+    // });
+    //
+    // // Checking
+    // console.log("\n\n", model, "\n\n\n");
+    // // Using "new activity" as reference
+    // UserProfileActivity.create().then((activity) =>{
+    //     let userProfileActivityToUpdate = setProfileActivityFavoriteProperties(activity, model.dataValues);
+    //     return activity.updateAttributes(userProfileActivityToUpdate)
+    // });
+    // //Not quite sure
+    // res.redirect('/explore/'+req.params.activityId)
   });
 
 

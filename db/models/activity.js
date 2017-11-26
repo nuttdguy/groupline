@@ -7,7 +7,9 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true,
       allowNull: false,
       type: DataTypes.INTEGER,
-      field: 'activity_id'
+      field: 'activity_id',
+      onDelete: 'cascade',
+      onUpdate: 'cascade'
     },
     title: {
       type: DataTypes.STRING,
@@ -68,6 +70,20 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     Activity.hasMany(m.UserProfileActivity, {
+      foreignKey: 'activity_id',
+      targetKey: 'activity_id',
+      onDelete: 'cascade',
+      onUpdate: 'cascade'
+    });
+
+    Activity.hasMany(m.UserProfileActivity, {
+      foreignKey: 'activity_id',
+      targetKey: 'activity_id',
+      onDelete: 'cascade',
+      onUpdate: 'cascade'
+    });
+
+    Activity.hasMany(m.UserProfileActivityUserAttend, {
       foreignKey: 'activity_id',
       targetKey: 'activity_id',
       onDelete: 'cascade',

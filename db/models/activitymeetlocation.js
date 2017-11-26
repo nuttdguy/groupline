@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
       field: 'detail'
     },
     isActive: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.BOOLEAN,
       field: 'is_active',
       defaultValue: true
     },

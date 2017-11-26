@@ -6,18 +6,20 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         type: Sequelize.INTEGER,
-        field: 'user_profile_activity_id'
+        field: 'user_profile_activity_id',
+        onDelete: 'cascade',
+        onUpdate: 'cascade'
       },
       userProfileId: {
         type: Sequelize.INTEGER,
         field: 'user_profile_id',
         primaryKey: true,
-        onDelete: 'cascade',
-        onUpdate: 'cascade',
         references: {
           model: 'UserProfiles',
           key: 'user_profile_id'
-        }
+        },
+        onDelete: 'cascade',
+        onUpdate: 'cascade'
       },
       activityId: {
         type: Sequelize.INTEGER,

@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true,
       allowNull: false,
       type: DataTypes.INTEGER,
-      field: 'user_profile_activity_id'
+      field: 'user_profile_activity_id',
     },
     isActive: {
       type: DataTypes.BOOLEAN,
@@ -16,13 +16,15 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       field: 'activity_id',
       primaryKey: true,
-      // defaultValue: 1
+      onDelete: 'cascade',
+      onUpdate: 'cascade'
     },
     userProfileId: {
       type: DataTypes.INTEGER,
       field: 'user_profile_id',
       primaryKey: true,
-      // defaultValue: 1
+      onDelete: 'cascade',
+      onUpdate: 'cascade'
     },
   }, {
     underscored: true,
@@ -43,18 +45,20 @@ module.exports = (sequelize, DataTypes) => {
       as: 'Activities',
       through: {
         model: m.UserProfileActivity,
-        as: 'UserProfileActivity'
       },
-      foreignKey: 'activity_id'
+      foreignKey: 'activity_id',
+      onDelete: 'cascade',
+      onUpdate: 'cascade'
     });
 
     m.Activity.belongsToMany(m.UserProfile, {
       as: 'UserProfiles',
       through: {
         model: m.UserProfileActivity,
-        as: 'UserProfileActivity'
       },
-      foreignKey: 'user_profile_id'
+      foreignKey: 'user_profile_id',
+      onDelete: 'cascade',
+      onUpdate: 'cascade'
     });
 
   };
