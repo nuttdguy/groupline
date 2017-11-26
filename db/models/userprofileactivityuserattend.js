@@ -43,7 +43,6 @@ module.exports = (sequelize, DataTypes) => {
   UserProfileActivityUserAttend.associate = function(m) {
 
     m.UserProfile.belongsToMany(m.Activity, {
-      // as: 'Activities',
       through: {
         model: UserProfileActivityUserAttend,
         as: 'user_profile_activity_user_attends'
@@ -54,7 +53,6 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     m.Activity.belongsToMany(m.UserProfile, {
-      // as: 'UserProfiles',
       through: {
         model: UserProfileActivityUserAttend,
         as: 'user_profile_activity_user_attends'
