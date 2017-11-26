@@ -2,79 +2,58 @@ extends ./layout
 
 //- include navbar
 
+//- Title for now
 block content
     h1(style="text-align: center")=activities.title
     br
 
-    //if (activities)
-    //    each item in activityDetails
-    //        p= item.startDate
-        //each value, key in activities
-        //    - var categories = activities.ActivityCategories
-        //    - var tags = activities.ActivityTags
-        //    - var details = activities.ActivityDetails
-        //
-        //
-        //    if value == 'ActivityCategories'
-        //        each category in categories
-        //            li=category.categoryName
-        //            li=category.isActive
-        //            li=category.created_at
-        //
-        //    if key == 'ActivityTags'
-        //        each tag in tags
-        //            li=tag.activityTagName
-        //            li=tag.isActive
-        //            li=tag.created_at
-        //
-        //    if key == 'ActivityDetails'
-        //        each detail in details
-        //            li=detail.startDate
-        //            li=detail.endDate
-        //            li=detail.minActor
-        //            li=detail.maxActor
-    
     div.row.justify-content-center
-        div.col-sm-6
-            //form.add-favorite.form-inline(data-id=activities.activity_id)
-            //    button.btn.btn-outline-primary(type="submit") Add to favorite!
-            // TEMPORARY -- YOU CAN CONVERT YOUR CODE TO USE AJAX
-            form.add-favorite.form-inline(
-                method="POST"
-                action="/user/favorite/"+activities.activityId)
-                button.btn.btn-outline-primary(type="submit") Add to favorite!
-    
-    
-    div.row.justify-content-center
+        //- First column set for image alon e
         div.col-sm-4
             img.img-fluid(src="../img/testimg.png")
+            //- Shouldn't show anything YET
+            img.img-fluid(src="#{activity.ActivityImage.imageUrl}")
             div.categories
             p Tags:
             each category in activities.ActivityCategories
                 button.btn.btn-outline-primary(href="#")=category.categoryName
-        div.col-sm-6
-            //- This is where the summary would be
-            p= activities.summary
         
+        //- Second column for details; underneath are buttons
+        div.col-sm-6
+            div.row
+                table.table.table-bordered
+                    thead
+                        th(colspan="2") Details
+                    tbody
+                        tr
+                            th(scope="row") Start Date
+                            td= activities.startDate
+                        tr
+                            th(scope="row") End Date
+                            td= activities.endDate
+                        tr
+                            th(scope="row") Min Participants
+                            td= activities.minActor
+                        tr
+                            th(scope="row") Max Participants
+                            td= activities.maxActor
+            //- All buttons here!
+            div.row
+                //- form.add-favorite.form-inline(data-id=activities.activity_id)
+                //-    button.btn.btn-outline-primary(type="submit") Add to favorite!
+                //- TEMPORARY -- YOU CAN CONVERT YOUR CODE TO USE AJAX
+                p= Testingtesting
+                form.add-favorite.form-inline(
+                    method="POST"
+                    action="/user/favorite/"+activities.activityId)
+                    button.btn.btn-outline-primary(type="submit") Favorite
+
     hr.style1
     
-    div.row
-        div.col-sm-6
-            table.table.table-bordered
-                thead
-                    th(colspan="2") Details
-                tbody
-                    tr
-                        th(scope="row") Start Date
-                        td= activities.startDate
-                    tr
-                        th(scope="row") End Date
-                        td= activities.endDate
-                    tr
-                        th(scope="row") Min Participants
-                        td= activities.minActor
-                    tr
-                        th(scope="row") Max Participants
-                        td= activities.maxActor
+    //- Probably have a bulk of the information.
+    div.row.justify-content-center
+        //- Trying to center
+        div.col-9
+            p= activities.summary
     
                 

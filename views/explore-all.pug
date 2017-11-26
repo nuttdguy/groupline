@@ -4,12 +4,14 @@ extends ./layout
 
 block content
 
-    div.row
+    div.row.justify-content-end.mr-5
         form(method="GET", action="/explore/search", class="form-inline")
             input(name="term")
             select(name="search")
                 option(value="title") Title
-                option(value="ActivityDetails.minActor") Min Participants 
+                option(value="minActor") Min Participants 
+                option(value="maxActor") Min Participants 
+
                 
     div.row
         each activity in activities
