@@ -301,16 +301,18 @@ module.exports = (app, passport) => {
   // GET ACTIVITIES USER ADDED AS FAVORITES
   app.get('/user/favorite', function (req, res, next) {
     // TODO :: VIEW FAVORITES
-    UserProfileActivity.findAll({
-        where: {userProfileId: req.user.dataValues.userProfileId},
-        include: [
-            { model: Activity, as: 'activities'}
-        ]
+
+    Activity.findAll({
+        include: {
+            model: UserProfileActivity,
+            where: {userProfileId: req.user.dataValues.userProfileId}
+        }
     }).then((favorites) => {
         let data = JSON.parse(JSON.stringify(favorites))
         console.log(data)
         res.render('favorite-all', {view: 'favorite-all', favorites: data})
     })
+
 
   });
 
@@ -321,20 +323,7 @@ module.exports = (app, passport) => {
     console.log('============================');
     console.log('POSTING TO ACTIVITY FAVORITE\n');
     console.log('============================');
-    // console.log(req.params.activityId)
-    // console.log(req.user.dataValues.userProfileId)
-    // let model = new UserProfileActivity({
-    //     profileActivityFavoriteId: 0,
-    //     activityId: req.params.activityId,
-    //     userProfileId: req.user.dataValues.userProfileId,
-    //     // Need looking into; does it need to be true?
-    //     isActive: true
-    // });
 
-
-    // Checking
-    // console.log("\n\n", model, "\n\n\n");
-    // Using "new activity" as reference
     console.log("PRE USER PROFILE ACTIVITY CREATION")
     UserProfileActivity.create({
         profileActivityFavoriteId: 0,
@@ -343,11 +332,10 @@ module.exports = (app, passport) => {
         // Need looking into; does it need to be true?
         isActive: true
     }).then(() => {
-        console.log('============================');
-        console.log('POSTING OVER\n');
-        console.log('============================');
+        console.log("Complete!")
         res.redirect('/explore/'+req.params.activityId)
-
+    }).catch(() => {
+        console.log("ERROR!")
     })
     //Not quite sure
 
