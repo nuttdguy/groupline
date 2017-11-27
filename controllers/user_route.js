@@ -319,12 +319,7 @@ module.exports = (app, passport) => {
 
   // ADD AN ACTIVITY TO USER FAVORITE
   app.post('/user/favorite/:activityId', function (req, res, next) {
-
-    console.log('============================');
-    console.log('POSTING TO ACTIVITY FAVORITE\n');
-    console.log('============================');
-
-    console.log("PRE USER PROFILE ACTIVITY CREATION")
+    // Create user-activity join?
     UserProfileActivity.create({
         profileActivityFavoriteId: 0,
         activityId: req.params.activityId,
@@ -335,7 +330,7 @@ module.exports = (app, passport) => {
         console.log("Complete!")
         res.redirect('/explore/'+req.params.activityId)
     }).catch(() => {
-        console.log("ERROR!")
+        console.log("It's already in there!")
     })
     //Not quite sure
 

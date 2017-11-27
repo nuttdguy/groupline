@@ -22,7 +22,9 @@ a:hover {
 
 #err-message,
 #message,
-#message {
+#message,
+#success,
+#failure {
     display: none;
     text-transform: capitalize;
 }

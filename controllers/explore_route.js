@@ -163,7 +163,7 @@ module.exports = (app) => {
         .then((activities) => {
           console.log('========================');
         //   console.log(JSON.stringify(activities));
-
+            console.log(req.user)
           res.render('explore', {
             activities: activities,
             user: req.user
