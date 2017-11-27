@@ -301,8 +301,17 @@ module.exports = (app, passport) => {
   // GET ACTIVITIES USER ADDED AS FAVORITES
   app.get('/user/favorite', function (req, res, next) {
     // TODO :: VIEW FAVORITES
+    UserProfileActivity.findAll({
+        where: {userProfileId: req.user.dataValues.userProfileId},
+        include: [
+            { model: Activity, as: 'activities'}
+        ]
+    }).then((favorites) => {
+        let data = JSON.parse(JSON.stringify(favorites))
+        console.log(data)
+        res.render('favorite-all', {view: 'favorite-all', favorites: data})
+    })
 
-    res.render('favorite-all', {view: 'favorite-all'})
   });
 
 
@@ -312,23 +321,36 @@ module.exports = (app, passport) => {
     console.log('============================');
     console.log('POSTING TO ACTIVITY FAVORITE\n');
     console.log('============================');
-
+    // console.log(req.params.activityId)
+    // console.log(req.user.dataValues.userProfileId)
     // let model = new UserProfileActivity({
+    //     profileActivityFavoriteId: 0,
     //     activityId: req.params.activityId,
     //     userProfileId: req.user.dataValues.userProfileId,
     //     // Need looking into; does it need to be true?
     //     isActive: true
     // });
-    //
-    // // Checking
+
+
+    // Checking
     // console.log("\n\n", model, "\n\n\n");
-    // // Using "new activity" as reference
-    // UserProfileActivity.create().then((activity) =>{
-    //     let userProfileActivityToUpdate = setProfileActivityFavoriteProperties(activity, model.dataValues);
-    //     return activity.updateAttributes(userProfileActivityToUpdate)
-    // });
-    // //Not quite sure
-    // res.redirect('/explore/'+req.params.activityId)
+    // Using "new activity" as reference
+    console.log("PRE USER PROFILE ACTIVITY CREATION")
+    UserProfileActivity.create({
+        profileActivityFavoriteId: 0,
+        activityId: req.params.activityId,
+        userProfileId: req.user.dataValues.userProfileId,
+        // Need looking into; does it need to be true?
+        isActive: true
+    }).then(() => {
+        console.log('============================');
+        console.log('POSTING OVER\n');
+        console.log('============================');
+        res.redirect('/explore/'+req.params.activityId)
+
+    })
+    //Not quite sure
+
   });
 
 
@@ -410,8 +432,11 @@ module.exports = (app, passport) => {
 
   function setProfileActivityFavoriteProperties(activity, model){
       activity.set('activityId', model.activityId)
+      console.log("ESDGESNGI", model.userProfileId)
       activity.set('userProfileId', model.userProfileId)
       activity.set('isActive', model.isActive)
+
+      return activity.dataValues
   }
 
 
