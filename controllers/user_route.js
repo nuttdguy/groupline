@@ -20,7 +20,6 @@ module.exports = (app, passport) => {
   // TODO :: Double check all redirections lead to a valid view
   // TODO :: double every render is to a valid view
 
-  const page_title = "user profile";
 
   //==================================================//
   /*                 /USER/                   */
@@ -28,14 +27,6 @@ module.exports = (app, passport) => {
 
   // GET USERS PROFILE
   app.get('/user', function (req, res, next) {
-    console.log("IN USER SHOW ROUTE");
-    // TEMPORARY USER -- REMOVE AFTER ROUTE IS COMPLETED
-
-    // REMOVE THIS
-    // User.findById(1).then(user => {
-    //   res.render('index-dashboard', {user: user, view: 'dashboard'});
-    // })
-
 
     // ENABLE THIS WHEN COMPLETE
     if (req.user) {
