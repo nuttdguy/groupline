@@ -229,7 +229,7 @@ module.exports = (app, passport) => {
     Activity.findOne({
       where: { activityId: req.params.catId },
       include: [
-        {model: ActivityTag, as: 'activityTags'},
+        {model: ActivityTag, as: 'ActivityTags'},
         {model: ActivityImage, as: 'ActivityImages'},
         {model: ActivityMeetLocation, as: 'ActivityMeetLocations'},
         {model: ActivityCategory, as: 'ActivityCategories'}
@@ -237,10 +237,12 @@ module.exports = (app, passport) => {
       }).then(activity => {
 
         let data = JSON.parse(JSON.stringify(activity));
-        console.log(data);
+        // console.log(data);
+
         return res.render('index-dashboard', {
           activity: data,
-          view: 'activity-update'
+          view: 'activity-update',
+          user: req.user
         });
 
     }).catch(err => {
